@@ -12,5 +12,5 @@ This repository should be used to track and control project code. Do not upload
 non-code related documents.
 
 The repository documentation will be updated as soon as we have gotten the relevant
-tasks.
+tasks and information.
 
