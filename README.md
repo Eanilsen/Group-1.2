@@ -14,3 +14,5 @@ non-code related documents.
 The repository documentation will be updated as soon as we have gotten the relevant
 tasks.
 
+You should not need to push to the master branch. Use your own branch and the 
+web master will take care of the merging.
