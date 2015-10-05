@@ -6,8 +6,8 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            MainMenu mainMenu = new MainMenu();
-            Scene scene = mainMenu.makeScene();
+            Login login = new Login();
+            Scene scene = login.makeScene();
             primaryStage.setScene(scene);
             primaryStage.show();
         }
