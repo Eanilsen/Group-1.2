@@ -12,6 +12,7 @@ public class Launcher extends Application {
         try {
             Login login = new Login();
             Scene scene = login.makeScene();
+            //primaryStage.setResizable(false);
             primaryStage.setScene(scene);
             primaryStage.show();
         }
