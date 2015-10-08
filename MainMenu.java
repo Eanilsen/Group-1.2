@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package slit;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 /**
  *
  * @author Sifu
@@ -15,10 +17,13 @@ public class MainMenu {
         
     }
     
-    protected Pane getPane() {
-        Pane pane = new Pane();
-        Button bt = new Button("Here goes the main menu!");
-        pane.getChildren().add(bt);
+    protected BorderPane getPane() {
+        BorderPane pane = new BorderPane();
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        Text text = new Text("Here goes the main menu!");
+        vBox.getChildren().add(text);
+        pane.setCenter(vBox);
         return pane;
     }
 }

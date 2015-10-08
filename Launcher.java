@@ -31,6 +31,7 @@ public class Launcher extends Application {
     }
     static void makeMain(Stage stage) {
         main = new MainMenu();
+        //Scene scene;
         Scene scene = new Scene(main.getPane(), MENU_WIDTH, MENU_HEIGHT);
         stage.setScene(scene);
         stage.show();

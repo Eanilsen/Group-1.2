@@ -11,11 +11,7 @@ package slit;
 * This document describes the implementation of the login screen for the
 * SLIT/LES project.
 */
-import java.util.*;
-import java.io.*;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -24,13 +20,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.geometry.Pos;
 import javafx.scene.shape.Circle;
-import javafx.scene.Node;
 import javafx.scene.shape.Line;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
-import javafx.event.EventHandler;
-import javafx.util.Duration;
-import javafx.geometry.Bounds;
+
 import javafx.scene.input.MouseEvent;
 
 public class Login {
