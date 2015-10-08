@@ -1,14 +1,21 @@
 /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package slit;
+/*
 * @Author Simen Fuglestad
 * @Date 30.09.2015
 * Desc:
 * This document describes the implementation of the login screen for the
 * SLIT/LES project.
 */
-
+import java.util.*;
+import java.io.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -21,12 +28,14 @@ import javafx.scene.Node;
 import javafx.scene.shape.Line;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.util.Duration;
 import javafx.geometry.Bounds;
+import javafx.scene.input.MouseEvent;
 
 public class Login {
-    private static final double MENU_HEIGHT = 700.0;
-    private static final double MENU_WIDTH = 800.0;
+    private static final double MENU_WIDTH = Launcher.MENU_WIDTH;
+    private static final double MENU_HEIGHT = Launcher.MENU_HEIGHT;
     private BorderPane pane = new BorderPane();
     private Circle circleDrag;
     private double circleDragXPos;
@@ -41,8 +50,7 @@ public class Login {
     Login() {
     }
     
-    protected Scene makeScene() {
-        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
+    protected BorderPane getPane() {
         
         VBox leftVBox = new VBox();
         VBox topVBox = new VBox();
@@ -60,8 +68,9 @@ public class Login {
         bottomVBox.setAlignment(Pos.CENTER);
         
         circleDrop = new Circle(50);
-        circleDropXPos =
-            MENU_WIDTH - rightVBox.getInsets().getRight() - circleDrop.getRadius();
+        circleDropXPos = 
+                MENU_WIDTH - rightVBox.getInsets().getRight() - 
+                circleDrop.getRadius();
         circleDropYPos = MENU_HEIGHT / 2;
         pane.getChildren().add(circleDrop);
         circleDrop.setCenterX(circleDropXPos);
@@ -89,15 +98,16 @@ public class Login {
         pane.setRight(rightVBox);
         pane.setBottom(bottomVBox);
         
-        Line line = new Line(0, MENU_HEIGHT / 2, MENU_WIDTH, MENU_HEIGHT / 2);
+        Line line = 
+                new Line(0, MENU_HEIGHT / 2, MENU_WIDTH, MENU_HEIGHT / 2);
         pane.getChildren().add(line);
         
-        return scene;
+        return pane;
     }
     
             
     
-    private void makeCircleDraggable(Circle circle) {
+    void makeCircleDraggable(Circle circle) {
         circle.setOnMouseDragged(e -> {
              if ((e.getX() > 0) && (e.getX() <= MENU_WIDTH) &&
                     (e.getY() > 0) && (e.getY() <= MENU_HEIGHT)) {
@@ -107,11 +117,11 @@ public class Login {
         });
     }
     
-    private void makeCircleDropable(Circle circle) {
+    void makeCircleDropable(Circle circle) {
         //Bounds bounds = circle.localToScene(circle.getBoundsInLocal());
         //System.out.println(bounds);
         double dropRadius = circleDrop.getRadius();
-        circle.setOnMouseReleased(e -> {
+        circle.setOnMouseReleased((MouseEvent e) -> {
             if (!((e.getX() > circleDropXPos - dropRadius)
                     && (e.getX() < circleDropXPos + dropRadius)
                     && (e.getY() > circleDropYPos - dropRadius)
@@ -121,6 +131,9 @@ public class Login {
             }
             else {
                 System.out.println("dropped!");
+                
+                pane.getChildren().clear();
+                Launcher.makeMain(Launcher.getStage());
             }
         });
     }
