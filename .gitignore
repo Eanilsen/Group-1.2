@@ -10,3 +10,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/SLITv3_byProfessor/SLITv3/SLITv3-client/nbproject/private/
+/SLITv3_byProfessor/SLITv3/SLITv3-common/nbproject/private/
+/SLITv3_byProfessor/SLITv3/SLITv3-ejb/nbproject/private/
+/SLITv3_byProfessor/SLITv3/nbproject/private/
