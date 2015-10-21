@@ -55,7 +55,7 @@ public class Plan implements Serializable {
 
     @Override
     public String toString() {
-        return "slit.entities.plan.Plan[ id=" + id + " ]";
+        return "les.entities.plan.Plan[ id=" + id + " ]";
     }
     
 }

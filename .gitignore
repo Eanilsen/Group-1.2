@@ -31,3 +31,7 @@ hs_err_pid*
 /SLITv3_byProfessor/SLITv3/SLITv3-ejb/dist/
 /LES/LES-client/dist/
 /LES/LES-client/build/
+/SLITv3_byProfessor/SLITv3/SLITv3-client/build/
+/SLITv3_byProfessor/SLITv3/SLITv3-client/dist/
+/LES/TestGUI/nbproject/private/
+/LES/TestGUI/build/

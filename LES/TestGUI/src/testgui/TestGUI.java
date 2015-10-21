@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package les.client;
+package testgui;
 
 import javafx.geometry.Insets;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,6 +24,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+
 
 //test if works
 
@@ -31,7 +34,7 @@ import javafx.stage.Stage;
  *
  * @author Jorgen
  */
-public class Login extends Application {
+public class TestGUI extends Application {
     
     @Override
     public void start(Stage primaryStage) {
@@ -54,14 +57,41 @@ public class Login extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
         
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e){
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");               
-            }
+        btn.setOnAction((ActionEvent e) -> {
+            actiontarget.setFill(Color.FIREBRICK);
+            actiontarget.setText("Sign in button pressed");
         });
+        
+        /**
+         * Create the something cool button
+         */
+        Button testButton = new Button();
+        testButton.setText("Somethin' cool");
+        
+        testButton.setOnAction((ActionEvent event) -> {
+            
+            Label secondLabel = new Label("Thiz cool");
+                 
+            StackPane secondaryLayout = new StackPane();
+            secondaryLayout.getChildren().add(secondLabel);
 
+            Scene secondScene = new Scene(secondaryLayout, 200, 100);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Second Stage");
+            secondStage.setScene(secondScene);
+
+            //Set position of second window, related to primary window.
+            secondStage.setX(primaryStage.getX() + 250);
+            secondStage.setY(primaryStage.getY() + 100);
+
+            secondStage.show();
+        });
+        
+        grid.add(testButton, 1, 4, 4, 7);
+        
+        
+        
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
