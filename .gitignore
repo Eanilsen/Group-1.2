@@ -29,3 +29,5 @@ hs_err_pid*
 /SLITv3_byProfessor/SLITv3/SLITv3-common/build/
 /SLITv3_byProfessor/SLITv3/build/
 /SLITv3_byProfessor/SLITv3/SLITv3-ejb/dist/
+/LES/LES-client/dist/
+/LES/LES-client/build/
