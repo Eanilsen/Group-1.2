@@ -3,24 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package les.client;
+package les.ejb.plan;
 
-
+import javax.ejb.Remote;
 
 /**
  *
- * @author Jorgen
+ * @author Tyrion
  */
-public class Main {
+@Remote
+public interface PlanBeanRemote {
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
+    public String testTheEJB(String input);
+     
+   public void testDataSource();
     
 }
-
-    
-
