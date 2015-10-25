@@ -16,6 +16,6 @@ public interface PlanBeanRemote {
     
     public String testTheEJB(String input);
      
-   public void testDataSource();
+    public void testDataSource();
     
 }

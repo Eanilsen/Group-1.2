@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package les.main;
+package testGUI;
 
-import javax.ejb.EJB;
-import les.ejb.plan.PlanBeanRemote;
-import les.client.Login;
+import testGUI.Login;
 
 
 
@@ -17,10 +15,7 @@ import les.client.Login;
  */
 public class Main {
     
-    
-    @EJB
-    static PlanBeanRemote planBean;
-    
+
     //static variable thats called in main() further down
     public static final Main instance = new Main();
     //Make a connection to les.client.Login class
@@ -35,21 +30,13 @@ public class Main {
      * application
      */
     public void run() {
-        // the first few linex just test the connection to the server
-        if (null == planBean) {
-            throw new IllegalStateException("EJB connection failed");
-        }
-        System.out.println("Will be using planBean=" + planBean);
         
-        //This will make Login the first window to launch when running main.java
+        System.out.println("Will be using planBean=" );
+        
         Login.launch(Login.class);
     }
     
-    //main method further down call this togheter with static variable instance
-    public static PlanBeanRemote getPlanBean() {
-        System.out.println("Getting planBean=" + planBean);
-        return planBean;
-    }
+ 
 
     /**
      * @param args the command line arguments
