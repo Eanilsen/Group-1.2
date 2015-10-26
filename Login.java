@@ -1,7 +1,4 @@
 /*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
 * @Author Simen Fuglestad
 * @Date 30.09.2015
 * Desc:
@@ -19,12 +16,11 @@ import javafx.scene.text.Font;
 import javafx.geometry.Pos;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-
 import javafx.scene.input.MouseEvent;
 
 public class Login {
-    private static final double MENU_WIDTH = Launcher.MENU_WIDTH;
-    private static final double MENU_HEIGHT = Launcher.MENU_HEIGHT;
+    private static final double MENU_WIDTH = MenuManager.MENU_WIDTH;
+    private static final double MENU_HEIGHT = MenuManager.MENU_HEIGHT;
     private BorderPane pane = new BorderPane();
     private Circle circleDrag;
     private double circleDragXPos;
@@ -94,8 +90,6 @@ public class Login {
         return pane;
     }
     
-            
-    
     void makeCircleDraggable(Circle circle) {
         circle.setOnMouseDragged(e -> {
              if ((e.getX() > 0) && (e.getX() <= MENU_WIDTH) &&
@@ -122,7 +116,7 @@ public class Login {
                 System.out.println("dropped!");
                 
                 pane.getChildren().clear();
-                Launcher.makeMain(Launcher.getStage());
+                MenuManager.makeMain();
             }
         });
     }
