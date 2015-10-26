@@ -1,6 +1,3 @@
-
-package slit;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,15 +20,14 @@ public class Launcher extends Application {
     }
     
     static void makeLogin(Stage stage) {
-        
         login = new Login();
         Scene scene = new Scene(login.getPane(), MENU_WIDTH, MENU_HEIGHT);
         stage.setScene(scene);
         stage.show();
     }
+    
     static void makeMain(Stage stage) {
         main = new MainMenu();
-        //Scene scene;
         Scene scene = new Scene(main.getPane(), MENU_WIDTH, MENU_HEIGHT);
         stage.setScene(scene);
         stage.show();
