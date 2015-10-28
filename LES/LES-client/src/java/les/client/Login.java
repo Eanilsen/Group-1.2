@@ -1,7 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * System:
+ * To change between scenes I will use the setScene() method of Scene
+ * Lambda expressions for Action Handlers
+ * BorderPane with LEFT, CENTER and BOTTOM active
+ * Make methods for everything and call them instead of writing all in start()
+ *      See handleButtonAction() further down
+ * --- insert pattern theories here
+ * 
+ * Links:
+ * http://blog.netopyr.com/2012/01/24/advantages-of-javafx-builders/ 
+ * 
+ * Do we use one or multiple windows? (except login). We could use borderpane 
+ * and e.g. only change center for every new feature.
  */
 package les.client;
 
@@ -33,52 +43,84 @@ import javafx.stage.Stage;
  */
 public class Login extends Application {
     
-    @Override
+    private GridPane grid = new GridPane();
+    private Button btn = new Button("Sign in");
+    private HBox hbBtn = new HBox(10);
+    private Text actiontarget = new Text();
+    private Text scenetitle = new Text("Welcome");
+    private Label userName = new Label("User Name:");
+    private TextField userTextField = new TextField();
+    private Label pw = new Label("Password:");
+    private PasswordField pwBox = new PasswordField();
+    private ComboBox choiceBox = new ComboBox();
+    private Scene scene = new Scene(grid, 300, 275);
+    
+     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("JavaFX Welcome");
                 
-        GridPane grid = new GridPane();
+        createGrid();
+        loginButtonAction();
+        addLoginBars();
+        addHBox();
+        addText();
+        addChoiceBox();
+        
+
+        primaryStage.setScene(scene);             
+        primaryStage.show();
+    }
+    
+    /**
+     * Here to show how an action event method should look like
+     * @param event 
+     */
+    public void handleButtonAction(ActionEvent event) {
+        System.out.println("I'm clicked");
+        //Insert this in a lambda action event 
+    }
+    
+    /**
+     * Create the grid for the login layout by using the GridPane from field
+     */
+    public void createGrid(){
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        
-        Button btn = new Button("Sign in");
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 4);
-        
-        
-        
-        final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 6);
-        
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e){
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");               
-            }
+    }
+    
+    public void loginButtonAction(){
+        //ActionEvent for what happens when btn is clicked
+        btn.setOnAction((ActionEvent e) -> {
+            actiontarget.setFill(Color.FIREBRICK);
+            actiontarget.setText("Sign in button pressed");
+            handleButtonAction(e);
         });
-
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        Label userName = new Label("User Name:");
-        grid.add(userName, 0, 1);
-
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
-
-        Label pw = new Label("Password:");
+    }
+    
+    public void addLoginBars(){    
+        grid.add(scenetitle, 0, 0, 2, 1);           
+        grid.add(userName, 0, 1);                   
         grid.add(pw, 0, 2);
-
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
+        grid.add(pwBox, 1, 2);   
+    }
+    
+    public void addHBox(){
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btn);       
+        grid.add(hbBtn, 1, 4);
+    }
+    
+    public void addText(){
+        grid.add(actiontarget, 1, 6);       
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         
-        ComboBox choiceBox = new ComboBox();
+        grid.add(userTextField, 1, 1); 
+    }
+    
+    public void addChoiceBox(){
+        grid.add(choiceBox, 0, 4);
         choiceBox.getItems().addAll(
             "Lecturer", 
             "Student",
@@ -87,20 +129,8 @@ public class Login extends Application {
             "Hawaii"
         );
         choiceBox.setPromptText("Alias");
-        
-        grid.add(choiceBox, 0, 4);
-        
-        Scene scene = new Scene(grid, 300, 275);
-        primaryStage.setScene(scene);        
-        
-        primaryStage.show();
     }
-    
-    
-    //Add open() method here and call it in main.run() method. It should show()
-    // the stage:
-    
-    
+
 
     /**
      * @param args the command line arguments

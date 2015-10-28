@@ -36,7 +36,7 @@ public class Login extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("JavaFX Welcome");
+        primaryStage.setTitle("Learning Enhancement System");
                 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -55,12 +55,9 @@ public class Login extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
         
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e){
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");               
-            }
+        btn.setOnAction((ActionEvent e) -> {
+            actiontarget.setFill(Color.FIREBRICK);
+            actiontarget.setText("Sign in button pressed");
         });
 
         Text scenetitle = new Text("Welcome");
