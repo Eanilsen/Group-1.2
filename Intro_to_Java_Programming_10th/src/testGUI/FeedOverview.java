@@ -20,17 +20,16 @@ import javafx.stage.Stage;
  *
  * @author Tyrion
  */
-public class FeedOverview extends Application {
+public class FeedOverview {
     
     public static void main(String[] args) {
         Application.launch(args);
     }
     
-    
     private BorderPane bPane = new BorderPane();
     private VBox vbox = new VBox(10); //spacing 10
     private HBox hbox = new HBox(10); //spacing 10
-    private Scene scene = new Scene(bPane, 1200, 800);
+    //private Scene scene = new Scene(bPane, 1200, 800);
     
     public void setVBox(){
         vbox.setPadding(new Insets(20, 20, 20, 20));
@@ -56,24 +55,17 @@ public class FeedOverview extends Application {
 //        bPane.setBottom();
     }
     
-    @Override
-    public void start(Stage PrimaryStage) {
-
+    private void setupFeedOverview(){
         setVBox();
         setHBox();
         fixBorderPane();
-        
-        PrimaryStage.setTitle("LES");
-        PrimaryStage.setScene(scene);        
-        PrimaryStage.show(); 
-    }
-    
-    public void setScene(){
-        
-        
-        
-        
+
         
     }
     
+    
+    protected BorderPane getFeedOverviewPane(){
+        
+        return bPane;
+    }
 }
