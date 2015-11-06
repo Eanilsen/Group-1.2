@@ -1,33 +1,37 @@
+/*
+* @Author Simen Fuglestad
+* @Date 30.09.2015
+* Desc:
+* MenuManager is the class repsonsible for getting menu-panes from the various
+* menu classes and setting them to the window. Fields and methods are entirely
+* static so that the menu classes can use the methods without unecessary
+* object creation.
+*/
+
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 public class MenuManager {
-	protected static final double MENU_WIDTH = 800.0;
-    protected static final double MENU_HEIGHT = 700.0;
     private static Login login;
     private static MainMenu main;
-    private static LoginNoDrag loginNoDrag;
+    private static Stage stage = Launcher.getStage();
     
-	static void makeLogin() {
-	    Stage stage = Launcher.getStage();
-        login = new Login();
-        Scene scene = new Scene(login.getPane(), MENU_WIDTH, MENU_HEIGHT);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
-    static void makeMain() {
-        Stage stage = Launcher.getStage();
+    protected static void makeMain() {
         main = new MainMenu();
-        Scene scene = new Scene(main.getPane(), MENU_WIDTH, MENU_HEIGHT);
+        Scene scene = main.getScene();
+        stage.setMinWidth(MainMenu.MENU_WIDTH);
+        stage.setMinHeight(MainMenu.MENU_HEIGHT);
+        stage.setTitle("Main Window");
         stage.setScene(scene);
         stage.show();
     }
     
-    static void makeLoginNoDrag() {
-        Stage stage = Launcher.getStage();
-        loginNoDrag = new LoginNoDrag();
-        Scene scene = new Scene(loginNoDrag.getPane(), MENU_WIDTH, MENU_HEIGHT);
+    protected static void makeLogin() {
+        login = new Login();
+        Scene scene = loginNoDrag.getScene();
+        stage.setMinWidth(LoginNoDrag.MENU_WIDTH);
+        stage.setMinHeight(LoginNoDrag.MENU_HEIGHT);
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
 	}

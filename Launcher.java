@@ -3,12 +3,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
-	private static Stage stage;
+    private static Stage stage;
     @Override
     public void start(Stage stage) {
         this.stage = stage;
         try {
-            MenuManager.makeLogin();
+            MenuManager.makeLoginNoDrag();
         } catch (Exception e) {
         	e.printStackTrace(); 
         }
