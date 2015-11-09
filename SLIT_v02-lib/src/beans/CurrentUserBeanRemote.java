@@ -8,10 +8,14 @@ package beans;
 import javax.ejb.Remote;
 
 /**
- *
+ * This bean has control over the current user
  * @author Jons
  */
 @Remote
 public interface CurrentUserBeanRemote {
+
+    public String getName();
+
+    public ModuleManagerBeanRemote getModuleManager();
     
 }
