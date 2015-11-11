@@ -18,7 +18,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 
-public class Login {
+public class LoginDraggable {
     private static final double MENU_WIDTH = 800;
     private static final double MENU_HEIGHT = 700;
     private Scene scene;

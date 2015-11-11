@@ -20,7 +20,7 @@ public class LoginNoDrag {
     private Button loginBtn;
     private Circle circle;
     
-    LoginNoDrag() {
+    Login() {
     }
     
     protected Scene getScene() {
