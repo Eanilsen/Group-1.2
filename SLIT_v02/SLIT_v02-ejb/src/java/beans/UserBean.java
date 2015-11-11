@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateful
 public class UserBean implements CurrentUserBeanRemote {
+
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
     private UsersFacade myFacade;
@@ -25,33 +26,33 @@ public class UserBean implements CurrentUserBeanRemote {
 
     /**
      * returns the combined First and Lastname
+     *
      * @return
      */
     @Override
-    public String getName(){
-        return user.getFirstname()+ " " +  user.getLastname();
+    public String getName() {
+        return user.getFirstname() + " " + user.getLastname();
     }
-    
-    public String getLastname(){
-        myFacade.
+
+    public String getLastname() {
         return user.getLastname();
     }
-    public String getFirstname(){
+
+    public String getFirstname() {
         return user.getFirstname();
     }
+
     @Override
-    public ModuleManagerBean getModuleManager(){
-        if(myManager == null){
+    public ModuleManagerBean getModuleManager() {
+        if (myManager == null) {
             myManager = new ModuleManagerBean(user);
         }
         return myManager;
     }
-    
 
     public void persist(Object object) {
-        em.persist(object);               
+        em.persist(object);
     }
-    
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

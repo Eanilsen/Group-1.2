@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
@@ -32,7 +33,7 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
     }
     
     public List<Module> getAllModules(){
-        return Module
+        throw new NotImplementedException();
     }
     
     
