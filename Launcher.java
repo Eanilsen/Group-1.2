@@ -8,7 +8,7 @@ public class Launcher extends Application {
     public void start(Stage stage) {
         this.stage = stage;
         try {
-            MenuManager.makeLoginNoDrag();
+            MenuManager.makeLogin();
         } catch (Exception e) {
         	e.printStackTrace(); 
         }

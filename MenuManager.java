@@ -4,8 +4,8 @@
 * Desc:
 * MenuManager is the class repsonsible for getting menu-panes from the various
 * menu classes and setting them to the window. Fields and methods are entirely
-* static so that the menu classes can use the methods without unecessary
-* object creation.
+* static so that the menu classes can use the methods without unecessarily
+* creating an instance of MenuManager.
 */
 
 import javafx.stage.Stage;
@@ -28,9 +28,9 @@ public class MenuManager {
     
     protected static void makeLogin() {
         login = new Login();
-        Scene scene = loginNoDrag.getScene();
-        stage.setMinWidth(LoginNoDrag.MENU_WIDTH);
-        stage.setMinHeight(LoginNoDrag.MENU_HEIGHT);
+        Scene scene = login.getScene();
+        stage.setMinWidth(Login.MENU_WIDTH);
+        stage.setMinHeight(Login.MENU_HEIGHT);
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();

@@ -2,7 +2,7 @@
 * @Author Simen Fuglestad
 * @Date 30.09.2015
 * Desc:
-* This document describes the implementation of the login screen for the
+* This is the prototype for a draggable login menu.
 * SLIT/LES project.
 */
 
@@ -32,7 +32,7 @@ public class LoginDraggable {
     private double circleDropYPos;
     private Button btHelp;
     
-    Login() {
+    LoginDraggable() {
     }
     
     protected Scene getScene() {

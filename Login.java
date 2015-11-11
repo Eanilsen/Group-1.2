@@ -7,7 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.shape.Circle;
 import javafx.scene.control.TextField;
 
-public class LoginNoDrag {
+public class Login {
     protected static final double MENU_WIDTH = 300.0;
     protected static final double MENU_HEIGHT = 250.0;
     private Scene scene;
