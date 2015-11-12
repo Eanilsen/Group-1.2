@@ -9,11 +9,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,14 +31,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Jons
  */
 @Entity
-@Table(name = "progress", catalog = "slit_v01", schema = "")
+@Table(name = "progress")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Progress.findAll", query = "SELECT p FROM Progress p"),
     @NamedQuery(name = "Progress.findByIdprogress", query = "SELECT p FROM Progress p WHERE p.idprogress = :idprogress"),
-    @NamedQuery(name = "Progress.findByUser", query = "SELECT p FROM Progress p WHERE p.user = :user"),
-    @NamedQuery(name = "Progress.findByModule", query = "SELECT p FROM Progress p WHERE p.module = :module"),
-    @NamedQuery(name = "Progress.findByDateApproved", query = "SELECT p FROM Progress p WHERE p.dateApproved = :dateApproved")})
+    @NamedQuery(name = "Progress.findByDateApproved", query = "SELECT p FROM Progress p WHERE p.dateApproved = :dateApproved"),
+    @NamedQuery(name = "Progress.findByDifficultyRating", query = "SELECT p FROM Progress p WHERE p.difficultyRating = :difficultyRating")})
 public class Progress implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,17 +45,21 @@ public class Progress implements Serializable {
     @Basic(optional = false)
     @Column(name = "idprogress")
     private Integer idprogress;
-    @Column(name = "user")
-    private Integer user;
-    @Column(name = "module")
-    private Integer module;
     @Column(name = "dateApproved")
     @Temporal(TemporalType.DATE)
     private Date dateApproved;
-    @OneToMany(mappedBy = "progress")
-    private Collection<Feedback> feedbackCollection;
+    @Column(name = "difficultyRating")
+    private Integer difficultyRating;
     @OneToMany(mappedBy = "progress")
     private Collection<File> fileCollection;
+    @JoinColumn(name = "module", referencedColumnName = "idmodule")
+    @ManyToOne
+    private Module module;
+    @JoinColumn(name = "user", referencedColumnName = "iduser")
+    @ManyToOne
+    private Users user;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "progressIdprogress")
+    private Collection<Comment> commentCollection;
 
     public Progress() {
     }
@@ -70,22 +76,6 @@ public class Progress implements Serializable {
         this.idprogress = idprogress;
     }
 
-    public Integer getUser() {
-        return user;
-    }
-
-    public void setUser(Integer user) {
-        this.user = user;
-    }
-
-    public Integer getModule() {
-        return module;
-    }
-
-    public void setModule(Integer module) {
-        this.module = module;
-    }
-
     public Date getDateApproved() {
         return dateApproved;
     }
@@ -94,13 +84,12 @@ public class Progress implements Serializable {
         this.dateApproved = dateApproved;
     }
 
-    @XmlTransient
-    public Collection<Feedback> getFeedbackCollection() {
-        return feedbackCollection;
+    public Integer getDifficultyRating() {
+        return difficultyRating;
     }
 
-    public void setFeedbackCollection(Collection<Feedback> feedbackCollection) {
-        this.feedbackCollection = feedbackCollection;
+    public void setDifficultyRating(Integer difficultyRating) {
+        this.difficultyRating = difficultyRating;
     }
 
     @XmlTransient
@@ -110,6 +99,31 @@ public class Progress implements Serializable {
 
     public void setFileCollection(Collection<File> fileCollection) {
         this.fileCollection = fileCollection;
+    }
+
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
+
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
     }
 
     @Override

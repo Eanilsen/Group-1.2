@@ -13,7 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Jons
  */
 @Entity
-@Table(name = "module", catalog = "slit_v01", schema = "")
+@Table(name = "module")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Module.findAll", query = "SELECT m FROM Module m"),
@@ -47,8 +50,13 @@ public class Module implements Serializable {
     @Size(max = 65535)
     @Column(name = "description")
     private String description;
+    @JoinTable(name = "module_has_ressource", joinColumns = {
+        @JoinColumn(name = "module_idmodule", referencedColumnName = "idmodule")}, inverseJoinColumns = {
+        @JoinColumn(name = "ressource_idressource", referencedColumnName = "idressource")})
+    @ManyToMany
+    private Collection<Ressource> ressourceCollection;
     @OneToMany(mappedBy = "module")
-    private Collection<ModuleRessourceCollection> moduleRessourceCollectionCollection;
+    private Collection<Progress> progressCollection;
 
     public Module() {
     }
@@ -82,12 +90,21 @@ public class Module implements Serializable {
     }
 
     @XmlTransient
-    public Collection<ModuleRessourceCollection> getModuleRessourceCollectionCollection() {
-        return moduleRessourceCollectionCollection;
+    public Collection<Ressource> getRessourceCollection() {
+        return ressourceCollection;
     }
 
-    public void setModuleRessourceCollectionCollection(Collection<ModuleRessourceCollection> moduleRessourceCollectionCollection) {
-        this.moduleRessourceCollectionCollection = moduleRessourceCollectionCollection;
+    public void setRessourceCollection(Collection<Ressource> ressourceCollection) {
+        this.ressourceCollection = ressourceCollection;
+    }
+
+    @XmlTransient
+    public Collection<Progress> getProgressCollection() {
+        return progressCollection;
+    }
+
+    public void setProgressCollection(Collection<Progress> progressCollection) {
+        this.progressCollection = progressCollection;
     }
 
     @Override

@@ -28,36 +28,36 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jons
  */
 @Entity
-@Table(name = "feedback", catalog = "slit_v01", schema = "")
+@Table(name = "comment")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Feedback.findAll", query = "SELECT f FROM Feedback f"),
-    @NamedQuery(name = "Feedback.findByIdfeedback", query = "SELECT f FROM Feedback f WHERE f.idfeedback = :idfeedback"),
-    @NamedQuery(name = "Feedback.findByCreatedBy", query = "SELECT f FROM Feedback f WHERE f.createdBy = :createdBy"),
-    @NamedQuery(name = "Feedback.findByDateCreated", query = "SELECT f FROM Feedback f WHERE f.dateCreated = :dateCreated")})
-public class Feedback implements Serializable {
+    @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
+    @NamedQuery(name = "Comment.findByIdfeedback", query = "SELECT c FROM Comment c WHERE c.idfeedback = :idfeedback"),
+    @NamedQuery(name = "Comment.findByDateCreated", query = "SELECT c FROM Comment c WHERE c.dateCreated = :dateCreated")})
+public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idfeedback")
     private Integer idfeedback;
-    @Column(name = "createdBy")
-    private Integer createdBy;
     @Column(name = "dateCreated")
     @Temporal(TemporalType.DATE)
     private Date dateCreated;
     @Lob
     @Column(name = "text")
     private byte[] text;
-    @JoinColumn(name = "progress", referencedColumnName = "idprogress")
+    @JoinColumn(name = "createdBy", referencedColumnName = "iduser")
     @ManyToOne
-    private Progress progress;
+    private Users createdBy;
+    @JoinColumn(name = "progress_idprogress", referencedColumnName = "idprogress")
+    @ManyToOne(optional = false)
+    private Progress progressIdprogress;
 
-    public Feedback() {
+    public Comment() {
     }
 
-    public Feedback(Integer idfeedback) {
+    public Comment(Integer idfeedback) {
         this.idfeedback = idfeedback;
     }
 
@@ -67,14 +67,6 @@ public class Feedback implements Serializable {
 
     public void setIdfeedback(Integer idfeedback) {
         this.idfeedback = idfeedback;
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
     }
 
     public Date getDateCreated() {
@@ -93,12 +85,20 @@ public class Feedback implements Serializable {
         this.text = text;
     }
 
-    public Progress getProgress() {
-        return progress;
+    public Users getCreatedBy() {
+        return createdBy;
     }
 
-    public void setProgress(Progress progress) {
-        this.progress = progress;
+    public void setCreatedBy(Users createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Progress getProgressIdprogress() {
+        return progressIdprogress;
+    }
+
+    public void setProgressIdprogress(Progress progressIdprogress) {
+        this.progressIdprogress = progressIdprogress;
     }
 
     @Override
@@ -111,10 +111,10 @@ public class Feedback implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Feedback)) {
+        if (!(object instanceof Comment)) {
             return false;
         }
-        Feedback other = (Feedback) object;
+        Comment other = (Comment) object;
         if ((this.idfeedback == null && other.idfeedback != null) || (this.idfeedback != null && !this.idfeedback.equals(other.idfeedback))) {
             return false;
         }
@@ -123,7 +123,7 @@ public class Feedback implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Feedback[ idfeedback=" + idfeedback + " ]";
+        return "entities.Comment[ idfeedback=" + idfeedback + " ]";
     }
     
 }

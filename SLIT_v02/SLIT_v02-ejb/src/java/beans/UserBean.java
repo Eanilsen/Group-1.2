@@ -7,6 +7,8 @@ package beans;
 
 import basicBeans.UsersFacade;
 import entities.Users;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,21 +18,27 @@ import javax.persistence.PersistenceContext;
  * @author Jons
  */
 @Stateful
-public class UserBean implements CurrentUserBeanRemote {
+public class UserBean implements UserBeanRemote {
 
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
-    private UsersFacade myFacade;
     private Users user;
-    private ModuleManagerBean myManager;
+
+    public UserBean() {
+    }
 
     /**
      * returns the combined First and Lastname
      *
      * @return
      */
+    
+    public UserBean(int id){
+        user = em.find(Users.class, id);
+    }
+    
     @Override
-    public String getName() {
+    public String getName() {          
         return user.getFirstname() + " " + user.getLastname();
     }
 
@@ -42,13 +50,6 @@ public class UserBean implements CurrentUserBeanRemote {
         return user.getFirstname();
     }
 
-    @Override
-    public ModuleManagerBean getModuleManager() {
-        if (myManager == null) {
-            myManager = new ModuleManagerBean(user);
-        }
-        return myManager;
-    }
 
     public void persist(Object object) {
         em.persist(object);
@@ -56,4 +57,5 @@ public class UserBean implements CurrentUserBeanRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
 }

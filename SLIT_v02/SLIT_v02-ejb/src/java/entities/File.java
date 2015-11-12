@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jons
  */
 @Entity
-@Table(name = "file", catalog = "slit_v01", schema = "")
+@Table(name = "file")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "File.findAll", query = "SELECT f FROM File f"),

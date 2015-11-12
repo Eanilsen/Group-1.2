@@ -14,9 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Jons
  */
 @Entity
-@Table(name = "ressource", catalog = "slit_v01", schema = "")
+@Table(name = "ressource")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ressource.findAll", query = "SELECT r FROM Ressource r"),
@@ -46,8 +46,8 @@ public class Ressource implements Serializable {
     @Lob
     @Column(name = "file")
     private byte[] file;
-    @OneToMany(mappedBy = "ressource")
-    private Collection<ModuleRessourceCollection> moduleRessourceCollectionCollection;
+    @ManyToMany(mappedBy = "ressourceCollection")
+    private Collection<Module> moduleCollection;
 
     public Ressource() {
     }
@@ -81,12 +81,12 @@ public class Ressource implements Serializable {
     }
 
     @XmlTransient
-    public Collection<ModuleRessourceCollection> getModuleRessourceCollectionCollection() {
-        return moduleRessourceCollectionCollection;
+    public Collection<Module> getModuleCollection() {
+        return moduleCollection;
     }
 
-    public void setModuleRessourceCollectionCollection(Collection<ModuleRessourceCollection> moduleRessourceCollectionCollection) {
-        this.moduleRessourceCollectionCollection = moduleRessourceCollectionCollection;
+    public void setModuleCollection(Collection<Module> moduleCollection) {
+        this.moduleCollection = moduleCollection;
     }
 
     @Override
