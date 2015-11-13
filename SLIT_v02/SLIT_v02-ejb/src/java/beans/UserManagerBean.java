@@ -5,8 +5,11 @@
  */
 package beans;
 
+import entities.AvailableRoles;
 import entities.Users;
+import enums.RolesEnum;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,12 +28,8 @@ public class UserManagerBean implements UserManagerBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
 
-    @EJB
-    UserBean currentUser;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     
-     
+    
     
     /**
      * @author JH
@@ -45,6 +44,18 @@ public class UserManagerBean implements UserManagerBeanRemote {
         return foundUsers;
                
     }
+    
+    /**
+     * @author JH
+     * returns a list of users that are in the specified role
+     * @param role
+     * @return 
+     */
+    public Collection<Users> findUserByRole(RolesEnum role){
+        return em.find(AvailableRoles.class, role.ordinal()).getUsersCollection();        
+    }
+    
+    
 
     public void persist(Object object) {
         em.persist(object);

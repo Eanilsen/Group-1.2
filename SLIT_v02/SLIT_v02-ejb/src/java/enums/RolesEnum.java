@@ -26,7 +26,6 @@ public enum RolesEnum {
                 return "Santas little helper";
             case Student:
                 return "last victim in the food chain";
-
         }
         return null;
     }
