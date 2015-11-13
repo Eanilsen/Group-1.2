@@ -7,6 +7,7 @@ package beans;
 
 import entities.*;
 import enums.RolesEnum;
+import java.sql.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -62,6 +63,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         createRessources();
         em.flush();
         addRoleToUser();
+        addProgress();
 
     }
 
@@ -110,6 +112,21 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
                 + "    After the pastry has chilled, heat the oven to 190C/fan 170C/gas 5. Lightly beat the egg white with a fork. Cut off a third of the pastry and keep it wrapped while you roll out the rest, and use this to line a pie tin – 20-22cm round and 4cm deep – leaving a slight overhang. Roll the remaining third to a circle about 28cm in diameter. Pat the apples dry with kitchen paper, and tip them into the bowl with the cinnamon-sugar mix. Give a quick mix with your hands and immediately pile high into the pastry-lined tin.\n"
                 + "    Brush a little water around the pastry rim and lay the pastry lid over the apples pressing the edges together to seal. Trim the edge with a sharp knife and make 5 little slashes on top of the lid for the steam to escape. (Can be frozen at this stage.) Brush it all with the egg white and sprinkle with caster sugar. Bake for 40-45 mins, until golden, then remove and let it sit for 5-10 mins. Sprinkle with more sugar and serve while still warm from the oven with softly whipped cream.").getBytes());
 
+    }
+
+    private void addProgress() {
+        
+        File myFile = new File(); 
+        myFile.setName("File for progress");
+        Date uploadDate = new Date(System.currentTimeMillis());
+        myFile.setUploadDate(uploadDate);
+        em.persist(myFile);
+        
+        
+        Progress myProgress = new Progress();
+        myProgress.setModule(em.find(Module.class, 1));
+        myProgress.setUser(em.find(Users.class, 7));
+        em.persist(myProgress);
     }
 
 }

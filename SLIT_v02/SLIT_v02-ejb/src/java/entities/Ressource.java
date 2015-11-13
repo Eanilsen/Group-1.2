@@ -34,6 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ressource.findByIdressource", query = "SELECT r FROM Ressource r WHERE r.idressource = :idressource"),
     @NamedQuery(name = "Ressource.findByName", query = "SELECT r FROM Ressource r WHERE r.name = :name")})
 public class Ressource implements Serializable {
+    @Lob
+    @Column(name = "file")
+    private byte[] file;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +46,6 @@ public class Ressource implements Serializable {
     @Size(max = 45)
     @Column(name = "name")
     private String name;
-    @Lob
-    @Column(name = "file")
-    private byte[] file;
     @ManyToMany(mappedBy = "ressourceCollection")
     private Collection<Module> moduleCollection;
 
@@ -72,13 +72,6 @@ public class Ressource implements Serializable {
         this.name = name;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
 
     @XmlTransient
     public Collection<Module> getModuleCollection() {
@@ -112,6 +105,14 @@ public class Ressource implements Serializable {
     @Override
     public String toString() {
         return "entities.Ressource[ idressource=" + idressource + " ]";
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
     }
     
 }
