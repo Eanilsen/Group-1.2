@@ -15,6 +15,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TextArea;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
+import java.util.ArrayList;
 
 public class MainMenu {
     protected static final double MENU_WIDTH = 800.0;
@@ -29,65 +31,64 @@ public class MainMenu {
     private Circle circle5;    
     private Line line;
     private TextArea moduleText;
+    private ArrayList<Shape> shapes;
     
     MainMenu(){
-    }
-    
-    protected Scene getScene() {
-        pane = new BorderPane();
+   	    pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-        
-        //line = new Line(50, MENU_HEIGHT/2, MENU_WIDTH-50, MENU_HEIGHT/2);
+        //Note that is is irrelevant to give line any parameteres since it
+        //will be given coordinates when bound to the width and height of the 
+        //scene
         line = new Line();
-        pane.getChildren().add(line);
-        
-
-        //hBox = new HBox(100);
-        //hBox.setAlignment(Pos.CENTER);
-        //pane.setCenter(hBox);
-        
         circle1 = new Circle(35);
         circle2 = new Circle(35);
         circle3 = new Circle(35);
         circle4 = new Circle(35);
         circle5 = new Circle(35);
-
+        shapes = new ArrayList<>();
+    }
+    
+    protected Scene getScene() {
+        pane.getChildren().add(line);
+        
         circle2.setFill(Color.RED);
         circle4.setFill(Color.BLUE);
-        displayModuleTextOnClick(circle1);
-        displayModuleTextOnClick(circle2);
-        displayModuleTextOnClick(circle3);
-        displayModuleTextOnClick(circle4);
-        displayModuleTextOnClick(circle5);
+        
+        shapes.add(line);
+        shapes.add(circle1);
+        shapes.add(circle2); 
+        shapes.add(circle3);
+        shapes.add(circle4);
+        shapes.add(circle5);
+        
+        displayModuleTextOnClick(shapes);
+        
         pane.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
 
-        alignNodes(line, circle1, circle2, circle3, circle4, circle5);
-
-        //hBox.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
+        alignShapes(line, circle1, circle2, circle3, circle4, circle5);
         
-        moduleText = new TextArea();
-        moduleText.setEditable(false);
-        pane.setBottom(moduleText);
-
         return scene;
     }
 
-    private void displayModuleTextOnClick(Circle circle) {
-        circle.setOnMouseClicked(e -> {
-            if (moduleText == null) {
-                //insert path to the text as the param for new TextArea
-                moduleText = new TextArea("Insert path to text here!");
-                moduleText.setEditable(false);
-                //moduleText.setPrefRowCount(20);
-                //moduleText.setPrefColumnCount(20);
-                //moduleText.setPadding(new Insets(50, 50, 50, 50));
-                pane.setBottom(moduleText);
+    protected void displayModuleTextOnClick(ArrayList<Shape> shapes) {
+        for (Shape shape : shapes) {
+            if (shape instanceof Circle) {
+                shape.setOnMouseClicked(e -> {
+                    if (moduleText == null) {
+                        //insert path to the text as the param for new TextArea
+                        moduleText = new TextArea("Insert path to text here!");
+                        moduleText.setEditable(false);
+                        moduleText.setMaxSize(
+                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+                        pane.setCenter(moduleText);
             
-            } else {
-                pane.setBottom(null);
-                moduleText = null;
+                    } else {
+                        pane.setCenter(null);
+                        moduleText = null;
+                    }
+                });
             }
-        });
+        }
     }
 
     /*
@@ -97,7 +98,7 @@ public class MainMenu {
     * changes in scene's WidthProperty and HeightProperty. Whenever a change
     * occurs in either, the position of the nodes is adjusted to fit the scene.
     */
-    private void alignNodes(
+    protected void alignShapes(
             Line line, 
             Circle circle1, 
             Circle circle2, 
@@ -111,14 +112,10 @@ public class MainMenu {
                 double x = (double)newVal;
                 line.setStartX(0);
                 line.setEndX(x);
-                //NOTE: These positions needs to be adjusted, circle 4 is
-                //inaccurate.
                 circle1.setCenterX(line.getStartX() + circle1.getRadius() + 20);
-                circle2.setCenterX(line.getEndX() / 3.5);
-                
+                circle2.setCenterX(line.getEndX() * 0.25 + 20);
                 circle3.setCenterX(line.getEndX() / 2);
-                
-                circle4.setCenterX(line.getEndX() / 2 + (line.getEndX() / 5));
+                circle4.setCenterX(line.getEndX() * 0.75 - 20);
                 circle5.setCenterX(line.getEndX() - circle5.getRadius() - 20);
             }
         });
@@ -128,13 +125,13 @@ public class MainMenu {
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double y = (double)newVal;
-                line.setStartY(y / 2);
-                line.setEndY(y / 2);
-                circle1.setCenterY(y / 2);
-                circle2.setCenterY(y / 2);
-                circle3.setCenterY(y / 2);
-                circle4.setCenterY(y / 2);
-                circle5.setCenterY(y / 2);
+                line.setStartY(y / 4);
+                line.setEndY(y / 4);
+                circle1.setCenterY(y / 4);
+                circle2.setCenterY(y / 4);
+                circle3.setCenterY(y / 4);
+                circle4.setCenterY(y / 4);
+                circle5.setCenterY(y / 4);
             }
         });
     }
