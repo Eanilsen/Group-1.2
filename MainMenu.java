@@ -1,5 +1,7 @@
 /**
  * @author Sifu
+ * This class serves as the main GUI window. Use this as a basis for creating
+ * student and teacher views.
  */
 
 import javafx.scene.layout.BorderPane;
@@ -46,36 +48,54 @@ public class MainMenu {
         circle4 = new Circle(35);
         circle5 = new Circle(35);
         shapes = new ArrayList<>();
-    }
-    
-    protected Scene getScene() {
-        pane.getChildren().add(line);
-        
-        circle2.setFill(Color.RED);
-        circle4.setFill(Color.BLUE);
-        
         shapes.add(line);
         shapes.add(circle1);
         shapes.add(circle2); 
         shapes.add(circle3);
         shapes.add(circle4);
         shapes.add(circle5);
+    }
+    
+    protected Scene getScene() {
+        //Adding these colors are, temporarily, just to distingiush the
+        //the distance between the circles 
+        
+        circle2.setFill(Color.RED);
+        circle4.setFill(Color.BLUE);
+        
+        /*
+        *Simplify adding new elements to the stage by keeping them all in an
+        *arraylist. Note that this requires custom positioning and/or binding.
+        */
+        
+        for (Shape shape : shapes) {
+            pane.getChildren().add(shape);
+        }
+        
+        /*
+        *Calling this method 
+        */
         
         displayModuleTextOnClick(shapes);
         
-        pane.getChildren().addAll(circle1, circle2, circle3, circle4, circle5);
-
-        alignShapes(line, circle1, circle2, circle3, circle4, circle5);
+        bindShapes(line, circle1, circle2, circle3, circle4, circle5);
         
         return scene;
     }
-
+    /*
+    * @method displayModuleTextOnClick
+    * @param ArrayList<Shape> shapes: the shapes that recevies an actionevent
+    * listener
+    * This method adds actionevent listeners to all shapes of type circle in 
+    * the ArrayList shapes. The event itself brings up a textbox or closes the
+    * the textbox if it already exists.
+    */
     protected void displayModuleTextOnClick(ArrayList<Shape> shapes) {
         for (Shape shape : shapes) {
             if (shape instanceof Circle) {
                 shape.setOnMouseClicked(e -> {
                     if (moduleText == null) {
-                        //insert path to the text as the param for new TextArea
+                        //insert path to the text as the param for moduleText
                         moduleText = new TextArea("Insert path to text here!");
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
@@ -93,12 +113,17 @@ public class MainMenu {
 
     /*
     * @method alignNodes()
-    * @param Line line: line to be centered
+    * @param Line line: line to be bound
+    * @param Circle circle1: circle to be bound
+    * @param Circle circl2: same as above, etc
     * This method uses the functional interface "ChangeListener" to listen for
     * changes in scene's WidthProperty and HeightProperty. Whenever a change
     * occurs in either, the position of the nodes is adjusted to fit the scene.
+    * Note that we create a ChangeListener with Number generic type since we
+    * are listening for Number values to change, namely the scene's width and
+    * height. This also removes errors about unsafe compilation.
     */
-    protected void alignShapes(
+    protected void bindShapes(
             Line line, 
             Circle circle1, 
             Circle circle2, 
