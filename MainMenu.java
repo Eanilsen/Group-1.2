@@ -46,11 +46,12 @@ public class MainMenu {
         //scene
         line = new Line();
         
-        circle1 = new ModuleCircle(35);
-        circle2 = new ModuleCircle(35);
-        circle3 = new ModuleCircle(35);
-        circle4 = new ModuleCircle(35);
-        circle5 = new ModuleCircle(35);
+        
+        circle1 = new ModuleCircle(35, "Module 1 text");
+        circle2 = new ModuleCircle(35, "Moudle 2 text");
+        circle3 = new ModuleCircle(35, "Module 3 text");
+        circle4 = new ModuleCircle(35, "Module 4 text");
+        circle5 = new ModuleCircle(35, "Module 5 text");
         
         circles = new ArrayList<>();
         circles.add(circle1);
@@ -99,10 +100,9 @@ public class MainMenu {
         for (ModuleCircle circle : circles) {
             if (circle instanceof Circle) {
                 circle.setOnMouseClicked(e -> {
-                    if (moduleText == null && circle.isSelected() == false) {
+                    if (moduleText == null || circle.isSelected() == false) {
                         circle.setSelected(true);
-                        //insert path to the text as the param for moduleText
-                        moduleText = new TextArea("Insert path to text here!");
+                        moduleText = new TextArea(circle.getText());
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
                                 MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
@@ -127,8 +127,8 @@ public class MainMenu {
     * changes in scene's WidthProperty and HeightProperty. Whenever a change
     * occurs in either, the position of the nodes is adjusted to fit the scene.
     * Note that we create a ChangeListener with Number generic type since we
-    * are listening for Number values to change, namely the scene's width
-    * (double) and (double)height. 
+    * are listening for Number values to change, namely the scene's 
+    * width(double) and (double)height. 
     * Also removes errors about unsafe compilation.
     */
     protected void bindShapes(

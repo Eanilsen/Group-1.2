@@ -2,7 +2,7 @@ import javafx.scene.shape.Circle;
 
 public class ModuleCircle extends Circle {
     private boolean selected;
-    private String name;
+    private String text;
     
     ModuleCircle() {
         super();
@@ -13,9 +13,9 @@ public class ModuleCircle extends Circle {
         this.selected = false;
     }
     
-    ModuleCircle(double radius, String name) {
+    ModuleCircle(double radius, String text) {
         super(radius);
-        this.name = name;
+        this.text = text;
         this.selected = false;
     }
     
@@ -25,5 +25,9 @@ public class ModuleCircle extends Circle {
     
     protected boolean isSelected() {
         return selected;
+    }
+    
+    protected String getText() {
+        return text;
     }
 }
