@@ -18,70 +18,75 @@ import javafx.scene.control.TextArea;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
 
 public class MainMenu {
     protected static final double MENU_WIDTH = 800.0;
-    protected static final double MENU_HEIGHT = 700.0;
+    protected static final double MENU_HEIGHT = 600.0;
     private Scene scene;
     private BorderPane pane;
     private HBox hBox;
-    private Circle circle1;
-    private Circle circle2;
-    private Circle circle3;
-    private Circle circle4;
-    private Circle circle5;    
+    private ModuleCircle circle1;
+    private ModuleCircle circle2;
+    private ModuleCircle circle3;
+    private ModuleCircle circle4;
+    private ModuleCircle circle5;    
     private Line line;
     private TextArea moduleText;
-    private ArrayList<Shape> shapes;
-    
+    private ArrayList<ModuleCircle> circles;
+    private ProgressIndicator progressIndicator;
+        
     MainMenu(){
    	    pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
+        
         //Note that is is irrelevant to give line any parameteres since it
         //will be given coordinates when bound to the width and height of the 
         //scene
         line = new Line();
-        circle1 = new Circle(35);
-        circle2 = new Circle(35);
-        circle3 = new Circle(35);
-        circle4 = new Circle(35);
-        circle5 = new Circle(35);
-        shapes = new ArrayList<>();
-        shapes.add(line);
-        shapes.add(circle1);
-        shapes.add(circle2); 
-        shapes.add(circle3);
-        shapes.add(circle4);
-        shapes.add(circle5);
+        
+        circle1 = new ModuleCircle(35);
+        circle2 = new ModuleCircle(35);
+        circle3 = new ModuleCircle(35);
+        circle4 = new ModuleCircle(35);
+        circle5 = new ModuleCircle(35);
+        
+        circles = new ArrayList<>();
+        circles.add(circle1);
+        circles.add(circle2); 
+        circles.add(circle3);
+        circles.add(circle4);
+        circles.add(circle5);
+        
+        progressIndicator = new ProgressIndicator(0.1);
+        progressIndicator.setMinSize(100, 100);
     }
     
     protected Scene getScene() {
         //Adding these colors are, temporarily, just to distingiush the
         //the distance between the circles 
-        
         circle2.setFill(Color.RED);
         circle4.setFill(Color.BLUE);
         
-        /*
-        *Simplify adding new elements to the stage by keeping them all in an
-        *arraylist. Note that this requires custom positioning and/or binding.
-        */
+        pane.setTop(progressIndicator);
+        pane.getChildren().add(line);
         
-        for (Shape shape : shapes) {
-            pane.getChildren().add(shape);
+        for(Circle c : circles) {
+            pane.getChildren().add(c);
         }
         
         /*
-        *Calling this method 
+        *Calling this method to make textfield appear when clicking
+        *modulecircles.
         */
-        
-        displayModuleTextOnClick(shapes);
+        displayModuleTextOnClick(circles);
         
         bindShapes(line, circle1, circle2, circle3, circle4, circle5);
         
         return scene;
     }
+    
     /*
     * @method displayModuleTextOnClick
     * @param ArrayList<Shape> shapes: the shapes that recevies an actionevent
@@ -90,19 +95,21 @@ public class MainMenu {
     * the ArrayList shapes. The event itself brings up a textbox or closes the
     * the textbox if it already exists.
     */
-    protected void displayModuleTextOnClick(ArrayList<Shape> shapes) {
-        for (Shape shape : shapes) {
-            if (shape instanceof Circle) {
-                shape.setOnMouseClicked(e -> {
-                    if (moduleText == null) {
+    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+        for (ModuleCircle circle : circles) {
+            if (circle instanceof Circle) {
+                circle.setOnMouseClicked(e -> {
+                    if (moduleText == null && circle.isSelected() == false) {
+                        circle.setSelected(true);
                         //insert path to the text as the param for moduleText
                         moduleText = new TextArea("Insert path to text here!");
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
                                 MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
                         pane.setCenter(moduleText);
-            
-                    } else {
+                        
+                    } else if (circle.isSelected() == true)  {
+                        circle.setSelected(false);
                         pane.setCenter(null);
                         moduleText = null;
                     }
@@ -120,8 +127,9 @@ public class MainMenu {
     * changes in scene's WidthProperty and HeightProperty. Whenever a change
     * occurs in either, the position of the nodes is adjusted to fit the scene.
     * Note that we create a ChangeListener with Number generic type since we
-    * are listening for Number values to change, namely the scene's width and
-    * height. This also removes errors about unsafe compilation.
+    * are listening for Number values to change, namely the scene's width
+    * (double) and (double)height. 
+    * Also removes errors about unsafe compilation.
     */
     protected void bindShapes(
             Line line, 
@@ -137,7 +145,7 @@ public class MainMenu {
                 double x = (double)newVal;
                 line.setStartX(0);
                 line.setEndX(x);
-                circle1.setCenterX(line.getStartX() + circle1.getRadius() + 20);
+                circle1.setCenterX(line.getStartX() + circle1.getRadius() +20);
                 circle2.setCenterX(line.getEndX() * 0.25 + 20);
                 circle3.setCenterX(line.getEndX() / 2);
                 circle4.setCenterX(line.getEndX() * 0.75 - 20);
