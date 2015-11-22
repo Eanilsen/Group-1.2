@@ -19,6 +19,14 @@ import javax.persistence.PersistenceContext;
 public class LoginManagerBean implements LoginManagerBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
+    
+    private Users user;
+    
+    private void findUser(int id){
+        user = em.find(Users.class, id);
+        user.getAvailableRolesCollection();
+        System.out.println(user);
+    }
 
     
 //    public boolean isTeacher(int userId){
@@ -27,6 +35,7 @@ public class LoginManagerBean implements LoginManagerBeanRemote {
 ////        user.getAvailableRolesCollection().contains(em)
 //                
 //    }
+    
 
     public void persist(Object object) {
         em.persist(object);

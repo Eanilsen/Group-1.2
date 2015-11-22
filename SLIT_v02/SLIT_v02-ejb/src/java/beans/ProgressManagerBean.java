@@ -24,9 +24,6 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
-    private Users user;
-    private Progress progress;
-    private RolesEnum roles;
     
     /**
      * @author Jorgen L.
@@ -43,37 +40,5 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
         System.out.println(prog);
         return prog;
     }
-    /**
-     * @author JH
-     * returns a list of users that are in the specified role
-     * @param role
-     * @return 
-     */
-    public Collection<Users> findUserByRole(RolesEnum role){
-        return em.find(AvailableRoles.class, role.ordinal()).getUsersCollection();        
-    }
-    
-    /**
-     * @author Jorgen Lybeck
-     * @return allStudents a list of all students in the database
-     */
-    public Collection<Users> getStudents(){
-        Collection<Users> allStudents = new ArrayList<>();
-        
-        //for each user in Collection<Users> that is students
-        for (Users u : findUserByRole(em.find(RolesEnum.class, 4))){
-            allStudents.add(u);
-        }
-        return allStudents;
-    }
-    
-    @Override
-    public void getStudentProgress(){
-        progress.getModule();
-        for (Users u : getStudents()){
-             //u = all individual students
-             
-        }
 
-    }
 }

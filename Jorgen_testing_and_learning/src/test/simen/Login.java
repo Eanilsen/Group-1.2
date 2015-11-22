@@ -1,4 +1,4 @@
-package slit.simen;
+package test.simen;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -50,4 +50,5 @@ public class Login {
             MenuManager.makeMain();
         });
     }
+    
 }

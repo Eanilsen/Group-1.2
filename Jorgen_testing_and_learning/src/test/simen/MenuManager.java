@@ -1,4 +1,4 @@
-package simen;
+package test.simen;
 
 /*
 * @Author Simen Fuglestad

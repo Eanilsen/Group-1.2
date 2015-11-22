@@ -6,8 +6,8 @@
 package slit.jorgen;
 
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -16,28 +16,65 @@ import javafx.scene.layout.BorderPane;
 public class StudentView {
     protected static final double MENU_WIDTH = 1200.0;
     protected static final double MENU_HEIGHT = 600.0;
-    private BorderPane bPane = new BorderPane(); 
-    private Scene studentScene = new Scene(bPane, MENU_WIDTH, MENU_HEIGHT);
+    private BorderPane bPane;
+    private Scene scene;
     private Progress progress;
     private ModuleDisplay module;
     
-    public Scene getScene(){
-        //Find width and height from this scene
-        return studentScene;
-    }
-    public BorderPane makeBorderPane(){
-        //Had an JavaFX application thread error for 1 hour before I noticed
-        //I never created objects of progress and moduledisplay... 
+    /**
+     * StudentView() is called in MenuManager. 
+     * It initiates the borderpane with info from Progress and ModuleDisplay,
+     * then invoke displayModuleTextOnClick to put TextArea moduleText on the 
+     * bottom position of bPane. After this, bPane gets added to a scene.
+     */
+    public StudentView(){
+        bPane = new BorderPane();
         progress = new Progress();
         module = new ModuleDisplay();
+        
+        
+        
+        
         bPane.setTop(progress.makePI());
         bPane.setCenter(module.makeModuleHBox());
-
-        return bPane; 
-    }
-    public Scene makeStudentScene(){
-        makeBorderPane();       
-        return studentScene;
+        bPane.setBottom(module.makeModuleText());
+        scene = new Scene(bPane, MENU_WIDTH, MENU_HEIGHT);
     }
     
+    public Scene getScene(){
+        return scene;
+    }
+    
+//    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+//        for (ModuleCircle circle : circles) {
+//            if (circle instanceof Circle) {
+//                circle.setOnMouseClicked(e -> {
+//                    if (moduleText == null || circle.isSelected() == false) {
+//                        circle.setSelected(true);
+//                        moduleText = new TextArea(circle.getText());
+//                        moduleText.setEditable(false);
+//                        moduleText.setMaxSize(
+//                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+//                        bPane.setBottom(moduleText);
+//                    } else if (circle.isSelected() == true)  {
+//                        circle.setSelected(false);
+//                        bPane.setBottom(null);
+//                        moduleText = null;
+//                    }
+//                });
+//            }
+//        }
+//    }
+    
+//    public BorderPane makeBorderPane(){
+//        //Had an JavaFX application thread error for 1 hour before I noticed
+//        //I never created objects of progress and moduledisplay... 
+////        progress = new Progress();
+////        module = new ModuleDisplay();
+////        bPane.setTop(progress.makePI());
+////        bPane.setCenter(module.makeModuleHBox());
+//
+//        return bPane; 
+//    }
+
 }

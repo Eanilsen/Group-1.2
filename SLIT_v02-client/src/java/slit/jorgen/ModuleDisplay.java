@@ -9,47 +9,49 @@ import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import static slit.jorgen.StudentView.MENU_HEIGHT;
+import static slit.jorgen.StudentView.MENU_WIDTH;
 
 /**
  *
  * @author Jorgen
  */
-public class ModuleDisplay {    
-    private Button m1;
-    private Button m2;
-    private Button m3;
-    private Button m4;
-    private Button m5;
-    private HBox moduleHBox = new HBox();
+public class ModuleDisplay {
+    private ModuleCircle m1;
+    private ModuleCircle m2;
+    private ModuleCircle m3;
+    private ModuleCircle m4;
+    private ModuleCircle m5;
+    private HBox moduleHBox;
+//    private Pane pane = new Pane();
     private Line line = new Line();
+    protected ArrayList<ModuleCircle> moduleCircles;
     private TextArea moduleText = new TextArea();
-    private ArrayList<Button> moduleButtons = new ArrayList<Button>();
-    private StudentView sview = new StudentView();
-
-    public Scene getSceneProperties(){
-        return null;
-    }
-    
-    public ArrayList<Button> createModuleCircles(){
-
-        m1 = new Button("Module 1");
-        m2 = new Button("Module 2");
-        m3 = new Button("Module 3");
-        m4 = new Button("Module 4");
-        m5 = new Button("Module 5");    
-        moduleButtons.add(m1);
-        moduleButtons.add(m2);
-        moduleButtons.add(m3);
-        moduleButtons.add(m4);
-        moduleButtons.add(m5);
+    private StudentView sview;
         
-        for (Button b : moduleButtons){
-            //for each button in modulebuttons, add these properties
+    public ArrayList<ModuleCircle> createModuleCircles(){
+        
+        m1 = new ModuleCircle(35, "Module 1 text"); //See ModuleCircle for text, setActive etc.
+        m2 = new ModuleCircle(35, "Module 2 text");
+        m3 = new ModuleCircle(35, "Module 3 text");
+        m4 = new ModuleCircle(35, "Module 4 text");
+        m5 = new ModuleCircle(35, "Module 5 text");
+        
+        moduleCircles = new ArrayList();
+        moduleCircles.add(m1);
+        moduleCircles.add(m2);
+        moduleCircles.add(m3);
+        moduleCircles.add(m4);
+        moduleCircles.add(m5);
+        
+        for (ModuleCircle b : moduleCircles){
+            //for each circle in modulecircles, add these properties
+            b.setRadius(50.0f);
             b.setStyle(
             "-fx-background-radius: 5em; " +
             "-fx-background-insets:5px;" +
@@ -58,127 +60,117 @@ public class ModuleDisplay {
             "-fx-max-width: 100px; " +
             "-fx-max-height: 100px;" +
             "-fx-background-color: LIGHTGRAY;");
-            //if b is activeModule(), make b size 50px
+            
+            //if b isSelected(), make b radius 70px
+            if (b.isSelected()){
+                b.setRadius(70.0f);
+            }
             //if b is approved, make b -background-color: GREEN
             //if b is pending, make b -background-color: YELLOW
-            //if b is failed, make b -background-color: RED
-            displayModuleTextOnClick(b);
-            moduleHBox.getChildren().add(b);
-            
-        }        
-        
-        return moduleButtons;
+            //if b is failed, make b -background-color: RED           
+        }      
+        return moduleCircles;
     }
-//    
-//    protected Scene getScene() {
-//        pane = new BorderPane();
-//        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-//        
-//
-//
-//        hbox.getChildren().addAll(m1, m2, m3, m4, m5);
-//
-//
-//        return scene;
-//    }
-
-    private void displayModuleTextOnClick(Button button) {
-        button.setOnMouseClicked(e -> {
-            if (moduleText == null) {
-                //insert path to the text as the param for new TextArea
-                moduleText = new TextArea("Insert path to text here!");
-                moduleText.setEditable(false);
-                //moduleText.setPrefRowCount(20);
-                //moduleText.setPrefColumnCount(20);
-                //moduleText.setPadding(new Insets(50, 50, 50, 50));
-            } else {
-                moduleText = null;
-            }   
-        });
+    
+    /*
+    * @method displayModuleTextOnClick
+    * @param ArrayList<Shape> shapes: the shapes that recevies an actionevent
+    * listener
+    * This method adds actionevent listeners to all shapes of type circle in 
+    * the ArrayList shapes. The event itself brings up a textbox or closes the
+    * the textbox if it already exists.
+    */
+    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {       
+        for (ModuleCircle circle : circles) {
+            if (circle instanceof Circle) {
+                circle.setOnMouseClicked(e -> {
+                    if (moduleText == null || circle.isSelected() == false) {
+                        circle.setSelected(true);
+                        moduleText = new TextArea(circle.getText());
+                        moduleText.setEditable(false);
+                        moduleText.setMaxSize(
+                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+//                        bPane.setBottom(moduleText);
+                    } else if (circle.isSelected() == true)  {
+                        circle.setSelected(false);
+//                        bPane.setBottom(null);
+                        moduleText = null;
+                    }
+                });
+            }
+        }
     }
-            
+    
+    public TextArea makeModuleText(){
+        displayModuleTextOnClick(moduleCircles);
+        return moduleText;
+    }
+    
     public HBox makeModuleHBox(){
-        createModuleCircles();
-//        hbox.getChildren().addAll(m1, m2, m3, m4, m5);
-        
+        createModuleCircles(); //return ArrayList<ModuleCircles> with 5 moduleCircles 
+        bindShapes(line, m1, m2, m3, m4, m5); //
         moduleHBox.setPadding(new Insets(0, 0, 0, 50));
-        moduleHBox.setPrefSize(1200, 600); //Get these values from StudentView instead
-        moduleHBox.setStyle(
-                "-fx-border-stroke-width:2px;" +
-                "-fx-stroke:red;" +
-                "-fx-border-color:aquamarine;");
-
-//        line = new Line(50, MENU_HEIGHT/2, MENU_WIDTH-50, MENU_HEIGHT/2);
-        moduleHBox.getChildren().add(line);
-//        alignNodes(line, createModuleCircles());
-        System.out.println("8 ModuleView: Going to return moduleview now()");
+        moduleHBox.setSpacing(30);
+        moduleHBox.setStyle("-fx-background-color:aquamarine;");
+        
+        for(ModuleCircle c : moduleCircles) {
+            moduleHBox.getChildren().add(c);
+            c.setRadius(50.0f);
+            if (c.isSelected()){
+                c.setRadius(70.0f);
+            }
+        }
         return moduleHBox;      
     } 
     
-
     /*
-    * @method alignNodes()
-    * @param Line line: line to be centered
+    * @method bindShapes()
+    * @param Line line: line to be bound
+    * @param Circle circle1: circle to be bound
+    * @param Circle circl2: same as above, etc
     * This method uses the functional interface "ChangeListener" to listen for
     * changes in scene's WidthProperty and HeightProperty. Whenever a change
     * occurs in either, the position of the nodes is adjusted to fit the scene.
-    
-    private void alignNodes(Line line, ArrayList<Button> moduleButtons) { //Button m1, Button, m2 ... instead  of arralist
-        Scene scene = sview.getScene();
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
+    * Note that we create a ChangeListener with Number generic type since we
+    * are listening for Number values to change, namely the scene's 
+    * width(double) and (double)height. 
+    * Also removes errors about unsafe compilation.
+    */
+    protected void bindShapes(
+            Line line, 
+            Circle circle1, 
+            Circle circle2, 
+            Circle circle3,
+            Circle circle4,
+            Circle circle5) {
+        sview.getScene().widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double x = (double)newVal;
                 line.setStartX(0);
                 line.setEndX(x);
-                
-                
-                
-                
-                //NOTE: These positions needs to be adjusted, button 4 is
-                //inaccurate.
-                button1.setCenterX(line.getStartX() + button1.getRadius() + 20);
-                button2.setCenterX(line.getEndX() / 3.5);
-                
-                button3.setCenterX(line.getEndX() / 2);
-                
-                button4.setCenterX(line.getEndX() / 2 + (line.getEndX() / 5));
-                button5.setCenterX(line.getEndX() - button5.getRadius() - 20);
+                circle1.setCenterX(line.getStartX() + circle1.getRadius() +20);
+                circle2.setCenterX(line.getEndX() * 0.25 + 20);
+                circle3.setCenterX(line.getEndX() / 2);
+                circle4.setCenterX(line.getEndX() * 0.75 - 20);
+                circle5.setCenterX(line.getEndX() - circle5.getRadius() - 20);
             }
         });
         
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
+        sview.getScene().heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double y = (double)newVal;
-                line.setStartY(y / 2);
-                line.setEndY(y / 2);
-                button1.setCenterY(y / 2);
-                button2.setCenterY(y / 2);
-                button3.setCenterY(y / 2);
-                button4.setCenterY(y / 2);
-                button5.setCenterY(y / 2);
+                line.setStartY(y / 4);
+                line.setEndY(y / 4);
+                circle1.setCenterY(y / 4);
+                circle2.setCenterY(y / 4);
+                circle3.setCenterY(y / 4);
+                circle4.setCenterY(y / 4);
+                circle5.setCenterY(y / 4);
             }
         });
-    }*/
-    
-    public int activeModule(){
-        return 0;
-    }
-
-    public int modulePending(){
-        int pendingSize = 20;
-        return pendingSize;
-    }
-
-    public Boolean moduleApproved(){
-        return true;      
-    }
-
-    public Boolean moduleFailed(){
-        int failedSize = 20;
-        return false;       
     }
 }

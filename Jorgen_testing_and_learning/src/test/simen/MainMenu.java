@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slit.simen;
+package test.simen;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -21,10 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
-/**
- *
- * @author Jorgen
- */
 /**
  * @author Sifu
  * This class serves as the main GUI window. Use this as a basis for creating
@@ -47,7 +43,7 @@ public class MainMenu {
     private ProgressIndicator progressIndicator;
         
     MainMenu(){
-   	    pane = new BorderPane();
+        pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         
         //Note that is is irrelevant to give line any parameteres since it
@@ -80,10 +76,10 @@ public class MainMenu {
         circle4.setFill(Color.BLUE);
         
         pane.setTop(progressIndicator);
-        pane.getChildren().add(line);
+        pane.setCenter(line);
         
         for(Circle c : circles) {
-            pane.getChildren().add(c);
+            pane.setCenter(c);
         }
         
         /*
@@ -115,11 +111,11 @@ public class MainMenu {
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
                                 MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
-                        pane.setCenter(moduleText);
+                        pane.setBottom(moduleText);
                         
                     } else if (circle.isSelected() == true)  {
                         circle.setSelected(false);
-                        pane.setCenter(null);
+                        pane.setBottom(null);
                         moduleText = null;
                     }
                 });

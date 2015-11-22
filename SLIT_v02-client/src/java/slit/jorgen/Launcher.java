@@ -1,9 +1,18 @@
-package slit.simen;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package slit.jorgen;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author Jorgen
+ */
 public class Launcher extends Application {
     private static Stage stage;
     @Override
@@ -16,7 +25,7 @@ public class Launcher extends Application {
         }
     }
     
-    protected static Stage getStage() {
+    public static Stage getStage() {
         return stage;
     }
     

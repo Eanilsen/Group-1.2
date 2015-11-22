@@ -14,8 +14,6 @@ import javax.ejb.Remote;
 @Remote
 public interface ProgressManagerBeanRemote {
     
-    public void getStudentProgress();
-    
     public double theProgress();
     
 }

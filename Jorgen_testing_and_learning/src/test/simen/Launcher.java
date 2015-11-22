@@ -1,4 +1,4 @@
-package simen;
+package test.simen;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
