@@ -7,7 +7,6 @@ package slit.jorgen;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 /**
  *
@@ -32,14 +31,12 @@ public class StudentView {
         progress = new Progress();
         module = new ModuleDisplay();
         
-        
-        
-        
         bPane.setTop(progress.makePI());
         bPane.setCenter(module.makeModuleHBox());
         bPane.setBottom(module.makeModuleText());
         scene = new Scene(bPane, MENU_WIDTH, MENU_HEIGHT);
     }
+    
     
     public Scene getScene(){
         return scene;

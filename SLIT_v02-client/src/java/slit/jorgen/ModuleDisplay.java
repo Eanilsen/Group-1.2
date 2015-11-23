@@ -49,26 +49,13 @@ public class ModuleDisplay {
         moduleCircles.add(m4);
         moduleCircles.add(m5);
         
-        for (ModuleCircle b : moduleCircles){
-            //for each circle in modulecircles, add these properties
-            b.setRadius(50.0f);
-            b.setStyle(
-            "-fx-background-radius: 5em; " +
-            "-fx-background-insets:5px;" +
-            "-fx-min-width: 100px; " +
-            "-fx-min-height: 100px; " +
-            "-fx-max-width: 100px; " +
-            "-fx-max-height: 100px;" +
-            "-fx-background-color: LIGHTGRAY;");
-            
-            //if b isSelected(), make b radius 70px
-            if (b.isSelected()){
-                b.setRadius(70.0f);
+        for(ModuleCircle c : moduleCircles) {  
+            if (c.isSelected()){
+                c.setRadius(50);
             }
-            //if b is approved, make b -background-color: GREEN
-            //if b is pending, make b -background-color: YELLOW
-            //if b is failed, make b -background-color: RED           
-        }      
+//            moduleHBox.getChildren().add(c);
+        }
+        
         return moduleCircles;
     }
     
@@ -113,13 +100,8 @@ public class ModuleDisplay {
         moduleHBox.setSpacing(30);
         moduleHBox.setStyle("-fx-background-color:aquamarine;");
         
-        for(ModuleCircle c : moduleCircles) {
-            moduleHBox.getChildren().add(c);
-            c.setRadius(50.0f);
-            if (c.isSelected()){
-                c.setRadius(70.0f);
-            }
-        }
+        moduleHBox.getChildren().addAll(m1, m2, m3, m4, m5);
+        
         return moduleHBox;      
     } 
     

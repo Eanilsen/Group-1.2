@@ -14,7 +14,8 @@ import javafx.scene.control.ProgressIndicator;
  */
 public class Progress {
 
-//    @EJB
+    //TODO implement ejb into the gui: Getting error message "JavaFX Application Thread" NullPointer
+//    @EJB 
 //    private ProgressManagerBeanRemote pmbr;
     private ProgressIndicator pi;
     

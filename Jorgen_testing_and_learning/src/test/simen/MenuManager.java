@@ -1,5 +1,3 @@
-package test.simen;
-
 /*
 * @Author Simen Fuglestad
 * @Date 30.09.2015

@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Sifu
+ * This class serves as the main GUI window. Use this as a basis for creating
+ * student and teacher views.
  */
-package test.simen;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -21,11 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
-/**
- * @author Sifu
- * This class serves as the main GUI window. Use this as a basis for creating
- * student and teacher views.
- */
+
 public class MainMenu {
     protected static final double MENU_WIDTH = 800.0;
     protected static final double MENU_HEIGHT = 600.0;
@@ -43,7 +38,7 @@ public class MainMenu {
     private ProgressIndicator progressIndicator;
         
     MainMenu(){
-        pane = new BorderPane();
+   	    pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         
         //Note that is is irrelevant to give line any parameteres since it
@@ -76,10 +71,10 @@ public class MainMenu {
         circle4.setFill(Color.BLUE);
         
         pane.setTop(progressIndicator);
-        pane.setCenter(line);
+        pane.getChildren().add(line);
         
         for(Circle c : circles) {
-            pane.setCenter(c);
+            pane.getChildren().add(c);
         }
         
         /*
@@ -111,11 +106,11 @@ public class MainMenu {
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
                                 MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
-                        pane.setBottom(moduleText);
+                        pane.setCenter(moduleText);
                         
                     } else if (circle.isSelected() == true)  {
                         circle.setSelected(false);
-                        pane.setBottom(null);
+                        pane.setCenter(null);
                         moduleText = null;
                     }
                 });
