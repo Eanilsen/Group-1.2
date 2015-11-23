@@ -17,25 +17,29 @@ public class Login {
     private Circle circleBottom;
     private TextField username;
     private TextField password;
-    private Button loginBtn;
+    private Button loginBtnS;
+    private Button loginBtnT;
     private Circle circle;
     
     Login() {
     }
     
-    protected Scene getScene() {
+    protected Scene drawMenu() {
         username = new TextField("username");
         username.setMaxWidth(100);
         
         password = new TextField("password");
         password.setMaxWidth(100);
         
-        loginBtn = new Button("Login");
-        clickToOpenMain(loginBtn);
+        loginBtnS = new Button("Login Student");
+        clickToOpenStudent(loginBtnS);
         
+        loginBtnT = new Button("Login Teacher");
+        clickToOpenTeacher(loginBtnT);
+
         vBox = new VBox(5);
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(username, password, loginBtn);
+        vBox.getChildren().addAll(username, password, loginBtnS, loginBtnT);
         
         pane = new BorderPane();
         pane.setCenter(vBox);
@@ -44,9 +48,15 @@ public class Login {
         return scene;
     }
     
-    private void clickToOpenMain(Button btn) {
+    private void clickToOpenStudent(Button btn) {
         btn.setOnMousePressed(e -> {
-            MenuManager.makeMain();
+            MenuManager.makeStudentView();
+        });
+    }
+
+    private void clickToOpenTeacher(Button btn) {
+        btn.setOnMousePressed(e -> {
+            MenuManager.makeTeacherView();
         });
     }
 }

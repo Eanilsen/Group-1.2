@@ -13,26 +13,35 @@ import javafx.scene.Scene;
 
 public class MenuManager {
     private static Login login;
-    private static MainMenu main;
+    private static StudentView studentView;
+    private static TeacherView teacherView;
     private static Stage stage = Launcher.getStage();
     
-    protected static void makeMain() {
-        main = new MainMenu();
-        Scene scene = main.getScene();
-        stage.setMinWidth(MainMenu.MENU_WIDTH);
-        stage.setMinHeight(MainMenu.MENU_HEIGHT);
-        stage.setTitle("Main Window");
+    protected static void makeStudentView() {
+        studentView = new StudentView();
+        Scene scene = studentView.drawMenu();
+        stage.setMinWidth(StudentView.MENU_WIDTH);
+        stage.setMinHeight(StudentView.MENU_HEIGHT);
+        stage.setTitle("Student View");
         stage.setScene(scene);
-        stage.show();
     }
     
     protected static void makeLogin() {
         login = new Login();
-        Scene scene = login.getScene();
+        Scene scene = login.drawMenu();
         stage.setMinWidth(Login.MENU_WIDTH);
         stage.setMinHeight(Login.MENU_HEIGHT);
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
 	}
+
+    protected static void makeTeacherView() {
+        teacherView = new TeacherView();
+        Scene scene = teacherView.drawMenu();
+        stage.setMinWidth(TeacherView.MENU_WIDTH);
+        stage.setMinHeight(TeacherView.MENU_HEIGHT);
+        stage.setTitle("Teacher View");
+        stage.setScene(scene);
+    }
 }
