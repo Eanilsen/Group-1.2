@@ -45,7 +45,6 @@ public class SuperView {
         moduleCircles.add(circle3);
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
-        
     }
 
     protected Scene drawMenu() {
