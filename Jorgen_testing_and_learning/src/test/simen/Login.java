@@ -1,3 +1,5 @@
+package test.simen;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;

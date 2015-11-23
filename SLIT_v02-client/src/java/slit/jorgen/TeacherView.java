@@ -4,56 +4,38 @@
  * and open the template in the editor.
  */
 package slit.jorgen;
-
+import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import java.util.ArrayList;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-/**
- *
- * @author Jorgen
- */
-public class TeacherView {
-    
+public class TeacherView extends SuperView {
     protected static final double MENU_WIDTH = 1400.0;
-    protected static final double MENU_HEIGHT = 600.0;
-    protected BorderPane bPane;
-    private Scene scene;
-    private Progress progress;
-    private ModuleDisplay module;
-    private VBox teacherHub;
-    private Button moduleSettings;
-    private Button studentList;
-    private Button moduleList;
-    private Button pending;
-    private Button is110 = new Button("IS110");
+    protected static final double MENU_HEIGHT = 900.0;
     
-    /**
-     * StudentView() is called in MenuManager. 
-     * It initiates the borderpane with info from Progress and ModuleDisplay,
-     * then invoke displayModuleTextOnClick to put TextArea moduleText on the 
-     * bottom position of bPane. After this, bPane gets added to a scene.
-     */
-    public TeacherView(){
-        bPane = new BorderPane();
-        progress = new Progress();
-        module = new ModuleDisplay();
-        
-        bPane.setTop(module.makeModuleHBox());
-        bPane.setCenter(module.makeModuleText());
-        bPane.setLeft(makeTeacherHub());
-        scene = new Scene(bPane, MENU_WIDTH, MENU_HEIGHT);
+    protected VBox teacherHub;
+    protected Button moduleSettings;
+    protected Button studentList;
+    protected Button moduleList;
+    protected Button pending;
+    
+    TeacherView() {
+    	super();
+    	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
     }
     
-    public Scene getScene(){
-        return scene;
-    }  
+    @Override
+    protected Scene drawMenu() {
+        pane.setLeft(makeTeacherHub());
+        return super.drawMenu();
+    }
     
-    public VBox makeTeacherHub(){
+    protected VBox makeTeacherHub(){
         teacherHub = new VBox();
         teacherHub.setSpacing(30);
-        teacherHub.setPrefWidth(MENU_WIDTH / 6);
+        teacherHub.setPrefWidth(200);
         teacherHub.setPrefHeight(MENU_HEIGHT);
         teacherHub.setStyle(
                 "-fx-background-color:pink;");
@@ -74,4 +56,26 @@ public class TeacherView {
     }
 
     
+    @Override
+    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+        for (ModuleCircle circle : circles) {
+            if (circle instanceof Circle) {
+                circle.setOnMouseClicked(e -> {
+                    if (moduleText == null || circle.isSelected() == false) {
+                        circle.setSelected(true);
+                        moduleText = new TextArea(circle.getText());
+                        moduleText.setEditable(false);
+                        moduleText.setMaxSize(
+                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+                        pane.setCenter(moduleText);
+                        
+                    } else if (circle.isSelected() == true)  {
+                        circle.setSelected(false);
+                        pane.setCenter(null);
+                        moduleText = null;
+                    }
+                });
+            }
+        }
+    }
 }

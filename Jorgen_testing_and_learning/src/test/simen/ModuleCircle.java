@@ -1,3 +1,5 @@
+package test.simen;
+
 import javafx.scene.shape.Circle;
 
 public class ModuleCircle extends Circle {

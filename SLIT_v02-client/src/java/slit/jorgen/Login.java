@@ -26,7 +26,8 @@ public class Login {
     private VBox vBox;
     private TextField username;
     private TextField password;
-    private Button loginBtn;
+    private Button loginBtnS;
+    private Button loginBtnT;
     
     public Login() {
     }
@@ -39,17 +40,16 @@ public class Login {
         password = new TextField("password");
         password.setMaxWidth(100);
         
-        loginBtn = new Button("Login");
-        if (isStudent()){
-            clickToOpenStudent(loginBtn);
-        }
-//        if (isTeacher()){
-//            clickToOpenTeacher(loginBtn);
-//        }
+        loginBtnS = new Button("Login Student");
+        clickToOpenStudent(loginBtnS);
+        
+        loginBtnT = new Button("Login Teacher");
+        clickToOpenTeacher(loginBtnT);
+
         
         vBox = new VBox(5);
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(username, password, loginBtn);
+        vBox.getChildren().addAll(username, password, loginBtnT, loginBtnS);
         
         pane = new BorderPane();
         pane.setCenter(vBox);
@@ -60,15 +60,15 @@ public class Login {
     
     private void clickToOpenStudent(Button btn) {
         btn.setOnMousePressed(e -> {
-            MenuManager.makeMain();
+            MenuManager.makeStudent();
         });
     }
     
-//    private void clickToOpenTeacher(Button btn) {
-//        btn.setOnMousePressed(e -> {
-//            MenuManager.makeTeacher();
-//        });
-//    }
+    private void clickToOpenTeacher(Button btn) {
+        btn.setOnMousePressed(e -> {
+            MenuManager.makeTeacher();
+        });
+    }
     
     public boolean isStudent(){
         //code to check if username == role.student
@@ -79,23 +79,4 @@ public class Login {
         //code to check if username == role.teacher
         return true;
     }
-    /**
-    
-    public void loginButtonAction(){
-        //ActionEvent for what happens when btn is clicked
-        loginBtn.isDefaultButton();
-        loginBtn.setOnAction((ActionEvent e) -> {
-            if (isStudent()){ 
-                studentView = new StudentView();                       
-//                Scene studentScene = new Scene(mainView.getMainOverviewPane(), 1200, 900); //Move this to field, askSimen
-                stage.setScene(studentView.makeStudentScene());
-                stage.centerOnScreen();
-                stage.show();
-            } else if (isTeacher()){
-                //mainView = new TeacherView();
-            }    
-            
-            
-        });
-    }*/
 }

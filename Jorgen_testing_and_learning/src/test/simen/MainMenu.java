@@ -1,3 +1,4 @@
+package test.simen;
 /**
  * @author Sifu
  * This class serves as the main GUI window. Use this as a basis for creating
@@ -38,7 +39,7 @@ public class MainMenu {
     private ProgressIndicator progressIndicator;
         
     MainMenu(){
-   	    pane = new BorderPane();
+        pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         
         //Note that is is irrelevant to give line any parameteres since it
