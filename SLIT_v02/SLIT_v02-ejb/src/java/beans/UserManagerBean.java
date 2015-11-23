@@ -47,7 +47,7 @@ public class UserManagerBean implements UserManagerBeanRemote {
     
     /**
      * @author JH
-     * returns a list of users that are in the specified role
+     * returns a list of users that are in the specified role 
      * @param role
      * @return 
      */
@@ -56,7 +56,10 @@ public class UserManagerBean implements UserManagerBeanRemote {
     }
     
     
-
+/**
+ * persits an object
+ * @param object 
+ */
     public void persist(Object object) {
         em.persist(object);
     }
