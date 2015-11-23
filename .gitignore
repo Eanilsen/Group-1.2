@@ -10,3 +10,30 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/SLITv3_byProfessor/SLITv3/SLITv3-client/nbproject/private/
+/SLITv3_byProfessor/SLITv3/SLITv3-common/nbproject/private/
+/SLITv3_byProfessor/SLITv3/SLITv3-ejb/nbproject/private/
+/SLITv3_byProfessor/SLITv3/nbproject/private/
+/LES/LES/nbproject/private/
+/LES/LES/LES-ejb/nbproject/private/
+/LES/LES-common/nbproject/private/
+/LES/LES-client/nbproject/private/
+/LES/LES/LES-ejb/build/
+/LES/LES/build/
+/LES/LES-common/dist/
+/LES/LES-common/build/
+/LES/LES/LES-ejb/dist/
+/LES/LES/dist/
+/SLITv3_byProfessor/SLITv3/SLITv3-ejb/build/
+/SLITv3_byProfessor/SLITv3/SLITv3-common/dist/
+/SLITv3_byProfessor/SLITv3/SLITv3-common/build/
+/SLITv3_byProfessor/SLITv3/build/
+/SLITv3_byProfessor/SLITv3/SLITv3-ejb/dist/
+/SLIT-common/dist/
+/SLIT/SLIT-ejb/dist/
+/SLITv3_byProfessor/SLITv3/SLITv3-client/dist/
+/SLITv3_byProfessor/SLITv3/SLITv3-client/build/
+/LES/LES-client/build/
+/LES/LES-client/dist/
+/SLIT_v02/SLIT_v02-ejb/dist/
+/Jorgen_testing_and_learning/build/
