@@ -24,14 +24,14 @@ public class StudentView extends SuperView {
     
     protected ProgressIndicator progressIndicator;
     
-//    @EJB
-//    private ProgressManagerBeanRemote pbm;
+    @EJB
+    private ProgressManagerBeanRemote pbm;
         
     StudentView(){
         super();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator();
-        progressIndicator.setProgress(0.33);
+        progressIndicator.setProgress(pbm.theProgress());
         progressIndicator.setMinSize(100, 100);
     }
 

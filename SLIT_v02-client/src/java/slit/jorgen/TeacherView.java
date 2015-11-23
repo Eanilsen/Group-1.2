@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import javafx.scene.control.Button;
 
 public class TeacherView extends SuperView {
-	protected static final double MENU_WIDTH = 1400.0;
+    protected static final double MENU_WIDTH = 1400.0;
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
     private Button moduleSettings;
@@ -25,12 +25,10 @@ public class TeacherView extends SuperView {
     private Button modules;
     private Button pending;
     private ArrayList<Button> buttons;
-    private Line invissibleLine;
 
     TeacherView() {
     	super();
     	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-    	invissibleLine = new Line();
     	buttons = new ArrayList<>();
 
     	moduleSettings = new Button("Module Settings");

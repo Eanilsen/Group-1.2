@@ -22,8 +22,8 @@ public class Main {
     @EJB
     private static InitializeDatabaseBeanRemote dataCreator;
     
-//    @EJB 
-//    private static ProgressManagerBeanRemote pmbr;
+    @EJB 
+    private static ProgressManagerBeanRemote pmbr;
 
     public static void main(String[] args) {
         dataCreator.createDatabase();
