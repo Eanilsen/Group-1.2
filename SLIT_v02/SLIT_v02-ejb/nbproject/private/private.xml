@@ -7,6 +7,8 @@
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/git_master_jonsnewfils/SLIT_v02/SLIT_v02-ejb/src/conf/persistence.xml</file>
         </group>
         <group name="Group-1.2"/>
-        <group name="Innenfor git"/>
+        <group name="Innenfor git">
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/ProgressManagerBean.java</file>
+        </group>
     </open-files>
 </project-private>

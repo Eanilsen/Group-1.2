@@ -10,22 +10,28 @@ package slit.jorgen;
  * student and teacher views.
  */
 
+import beans.ProgressManagerBeanRemote;
 import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
+import javax.ejb.EJB;
 
 public class StudentView extends SuperView {
     protected static final double MENU_WIDTH = 1200.0;
     protected static final double MENU_HEIGHT = 900.0;
     
     protected ProgressIndicator progressIndicator;
+    
+//    @EJB
+//    private ProgressManagerBeanRemote pbm;
         
     StudentView(){
-   	    super();
+        super();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-        progressIndicator = new ProgressIndicator(0.1);
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setProgress(0.33);
         progressIndicator.setMinSize(100, 100);
     }
 
