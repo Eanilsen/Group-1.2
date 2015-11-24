@@ -22,29 +22,27 @@ public class Login {
     private Circle circle;
     
     Login() {
+        username = new TextField("username");
+        password = new TextField("password");
+        loginBtnS = new Button("Login Student");
+        loginBtnT = new Button("Login Teacher");
+        vBox = new VBox(5);
+        pane = new BorderPane();
+        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
     }
     
     protected Scene drawMenu() {
-        username = new TextField("username");
         username.setMaxWidth(100);
-        
-        password = new TextField("password");
         password.setMaxWidth(100);
         
-        loginBtnS = new Button("Login Student");
         clickToOpenStudent(loginBtnS);
-        
-        loginBtnT = new Button("Login Teacher");
         clickToOpenTeacher(loginBtnT);
-
-        vBox = new VBox(5);
+        
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(username, password, loginBtnS, loginBtnT);
         
-        pane = new BorderPane();
         pane.setCenter(vBox);
         
-        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         return scene;
     }
     
