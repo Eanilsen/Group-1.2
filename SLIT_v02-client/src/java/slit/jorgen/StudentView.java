@@ -4,74 +4,63 @@
  * and open the template in the editor.
  */
 package slit.jorgen;
-
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
 /**
- *
- * @author Jorgen
+ * @author Sifu
+ * This class serves as the main GUI window. Use this as a basis for creating
+ * student and teacher views.
  */
-public class StudentView {
-    protected static final double MENU_WIDTH = 1200.0;
-    protected static final double MENU_HEIGHT = 600.0;
-    private BorderPane bPane;
-    private Scene scene;
-    private Progress progress;
-    private ModuleDisplay module;
-    
-    /**
-     * StudentView() is called in MenuManager. 
-     * It initiates the borderpane with info from Progress and ModuleDisplay,
-     * then invoke displayModuleTextOnClick to put TextArea moduleText on the 
-     * bottom position of bPane. After this, bPane gets added to a scene.
-     */
-    public StudentView(){
-        bPane = new BorderPane();
-        progress = new Progress();
-        module = new ModuleDisplay();
-        
-        bPane.setTop(progress.makePI());
-        bPane.setCenter(module.makeModuleHBox());
-        bPane.setBottom(module.makeModuleText());
-        scene = new Scene(bPane, MENU_WIDTH, MENU_HEIGHT);
-    }
-    
-    
-    public Scene getScene(){
-        return scene;
-    }
-    
-//    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
-//        for (ModuleCircle circle : circles) {
-//            if (circle instanceof Circle) {
-//                circle.setOnMouseClicked(e -> {
-//                    if (moduleText == null || circle.isSelected() == false) {
-//                        circle.setSelected(true);
-//                        moduleText = new TextArea(circle.getText());
-//                        moduleText.setEditable(false);
-//                        moduleText.setMaxSize(
-//                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
-//                        bPane.setBottom(moduleText);
-//                    } else if (circle.isSelected() == true)  {
-//                        circle.setSelected(false);
-//                        bPane.setBottom(null);
-//                        moduleText = null;
-//                    }
-//                });
-//            }
-//        }
-//    }
-    
-//    public BorderPane makeBorderPane(){
-//        //Had an JavaFX application thread error for 1 hour before I noticed
-//        //I never created objects of progress and moduledisplay... 
-////        progress = new Progress();
-////        module = new ModuleDisplay();
-////        bPane.setTop(progress.makePI());
-////        bPane.setCenter(module.makeModuleHBox());
-//
-//        return bPane; 
-//    }
 
+import beans.ProgressManagerBeanRemote;
+import javafx.scene.shape.Circle;
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ProgressIndicator;
+import java.util.ArrayList;
+import javax.ejb.EJB;
+
+public class StudentView extends SuperView {
+    protected static final double MENU_WIDTH = 1200.0;
+    protected static final double MENU_HEIGHT = 900.0;
+    
+    protected ProgressIndicator progressIndicator;
+    
+    @EJB
+    private ProgressManagerBeanRemote pbm;
+        
+    StudentView(){
+        super();
+        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setProgress(pbm.theProgress());
+        progressIndicator.setMinSize(100, 100);
+    }
+
+    @Override
+    protected Scene drawMenu() {
+        pane.setTop(progressIndicator);
+        return super.drawMenu();
+    }
+
+    @Override
+    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+        for (ModuleCircle circle : circles) {
+            if (circle instanceof Circle) {
+                circle.setOnMouseClicked(e -> {
+                    if (moduleText == null || circle.isSelected() == false) {
+                        circle.setSelected(true);
+                        moduleText = new TextArea(circle.getText());
+                        moduleText.setEditable(false);
+                        moduleText.setMaxSize(
+                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+                        pane.setCenter(moduleText);
+                        
+                    } else if (circle.isSelected() == true)  {
+                        circle.setSelected(false);
+                        pane.setCenter(null);
+                        moduleText = null;
+                    }
+                });
+            }
+        }
+    }
 }

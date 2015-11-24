@@ -5,73 +5,127 @@
  */
 package slit.jorgen;
 
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.Scene;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ChangeListener;
+import javafx.scene.control.TextArea;
+import javafx.geometry.Insets;
+import java.util.ArrayList;
+import javafx.scene.control.Button;
 
-/**
- *
- * @author Jorgen
- */
-public class TeacherView {
-    
+public class TeacherView extends SuperView {
     protected static final double MENU_WIDTH = 1400.0;
     protected static final double MENU_HEIGHT = 600.0;
-    protected BorderPane bPane;
-    private Scene scene;
-    private Progress progress;
-    private ModuleDisplay module;
-    private VBox teacherHub;
+    private VBox teacherBox;
     private Button moduleSettings;
-    private Button studentList;
-    private Button moduleList;
+    private Button studentSettings;
+    private Button modules;
     private Button pending;
-    private Button is110 = new Button("IS110");
-    
-    /**
-     * StudentView() is called in MenuManager. 
-     * It initiates the borderpane with info from Progress and ModuleDisplay,
-     * then invoke displayModuleTextOnClick to put TextArea moduleText on the 
-     * bottom position of bPane. After this, bPane gets added to a scene.
-     */
-    public TeacherView(){
-        bPane = new BorderPane();
-        progress = new Progress();
-        module = new ModuleDisplay();
-        
-        bPane.setTop(module.makeModuleHBox());
-        bPane.setCenter(module.makeModuleText());
-        bPane.setLeft(makeTeacherHub());
-        scene = new Scene(bPane, MENU_WIDTH, MENU_HEIGHT);
-    }
-    
-    public Scene getScene(){
-        return scene;
-    }  
-    
-    public VBox makeTeacherHub(){
-        teacherHub = new VBox();
-        teacherHub.setSpacing(30);
-        teacherHub.setPrefWidth(MENU_WIDTH / 6);
-        teacherHub.setPrefHeight(MENU_HEIGHT);
-        teacherHub.setStyle(
-                "-fx-background-color:pink;");
-        
-        moduleSettings = new Button("Module Settings");
-        studentList = new Button("Student List");
-        moduleList = new Button("Module List");
-        pending = new Button("Pending");
+    private ArrayList<Button> buttons;
 
-        moduleSettings.setMinWidth(teacherHub.getPrefWidth());
-        studentList.setMinWidth(teacherHub.getPrefWidth());
-        moduleList.setMinWidth(teacherHub.getPrefWidth());
-        pending.setMinWidth(teacherHub.getPrefWidth());
-        
-        
-        teacherHub.getChildren().addAll(moduleSettings, studentList, moduleList, pending);
-        return teacherHub;
+    TeacherView() {
+    	super();
+    	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
+    	buttons = new ArrayList<>();
+
+    	moduleSettings = new Button("Module Settings");
+    	studentSettings = new Button("Student Settings");
+    	modules = new Button("Modules");
+    	pending = new Button("Pending");
+
+    	buttons.add(moduleSettings);
+    	buttons.add(studentSettings);
+    	buttons.add(modules);
+    	buttons.add(pending);
     }
 
-    
+    @Override
+    protected Scene drawMenu() {
+    	pane.setLeft(drawTeacherBox());
+    	bindShapes(line, circle1, circle2, circle3, circle4, circle5);
+
+        return super.drawMenu();
+    }
+
+    private VBox drawTeacherBox() {
+    	teacherBox = new VBox(20);
+    	teacherBox.setPrefWidth(200);
+    	teacherBox.setStyle("-fx-background-color:pink");
+
+    	for (Button b : buttons) {
+    		b.setPrefWidth(200);
+    	}
+
+    	teacherBox.setPadding(new Insets(30, 0, 0, 0));
+    	
+    	teacherBox.getChildren().addAll(
+    		moduleSettings, studentSettings, modules, pending);
+
+    	return teacherBox;
+    }
+
+    @Override
+    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+        for (ModuleCircle circle : circles) {
+            if (circle instanceof Circle) {
+                circle.setOnMouseClicked(e -> {
+                    if (moduleText == null || circle.isSelected() == false) {
+                        circle.setSelected(true);
+                        moduleText = new TextArea(circle.getText());
+                        moduleText.setEditable(false);
+                        moduleText.setMaxSize(
+                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+                        pane.setCenter(moduleText);
+                        
+                    } else if (circle.isSelected() == true)  {
+                        circle.setSelected(false);
+                        pane.setCenter(null);
+                        moduleText = null;
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    protected void bindShapes(
+            Line line, 
+            Circle circle1, 
+            Circle circle2, 
+            Circle circle3,
+            Circle circle4,
+            Circle circle5) {
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> obser,
+                    Number oldVal, Number newVal) {
+                double x = (double)newVal;
+                line.setStartX(200);
+                line.setEndX(x);
+                circle1.setCenterX(1.5 * (line.getEndX()) / 7 + 100);
+                circle2.setCenterX(2.5 * (line.getEndX()) / 7 + 100);
+                circle3.setCenterX(3.5 * (line.getEndX()) / 7 + 100);
+                circle4.setCenterX(4.5 * (line.getEndX()) / 7 + 100);
+                circle5.setCenterX(5.5 * (line.getEndX()) / 7 + 100);
+            }
+        });
+        
+        scene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> obser,
+                    Number oldVal, Number newVal) {
+                double y = (double)newVal;
+                line.setStartY(y / 4);
+                line.setEndY(y / 4);
+                circle1.setCenterY(y / 4);
+                circle2.setCenterY(y / 4);
+                circle3.setCenterY(y / 4);
+                circle4.setCenterY(y / 4);
+                circle5.setCenterY(y / 4);
+            }
+        });
+    }
 }

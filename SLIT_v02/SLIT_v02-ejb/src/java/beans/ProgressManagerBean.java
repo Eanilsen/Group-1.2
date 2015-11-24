@@ -5,12 +5,6 @@
  */
 package beans;
 
-import entities.AvailableRoles;
-import entities.Progress;
-import entities.Users;
-import enums.RolesEnum;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

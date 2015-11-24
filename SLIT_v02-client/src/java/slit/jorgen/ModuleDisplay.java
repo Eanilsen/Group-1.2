@@ -14,8 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import static slit.jorgen.StudentView.MENU_HEIGHT;
-import static slit.jorgen.StudentView.MENU_WIDTH;
+
 
 /**
  *
@@ -32,7 +31,6 @@ public class ModuleDisplay {
     private Line line = new Line();
     protected ArrayList<ModuleCircle> moduleCircles;
     private TextArea moduleText = new TextArea();
-    private StudentView sview;
         
     public ArrayList<ModuleCircle> createModuleCircles(){
         
@@ -66,7 +64,7 @@ public class ModuleDisplay {
     * This method adds actionevent listeners to all shapes of type circle in 
     * the ArrayList shapes. The event itself brings up a textbox or closes the
     * the textbox if it already exists.
-    */
+    
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {       
         for (ModuleCircle circle : circles) {
             if (circle instanceof Circle) {
@@ -86,16 +84,16 @@ public class ModuleDisplay {
                 });
             }
         }
-    }
+}*/
     
     public TextArea makeModuleText(){
-        displayModuleTextOnClick(moduleCircles);
+//        displayModuleTextOnClick(moduleCircles);
         return moduleText;
     }
     
     public HBox makeModuleHBox(){
         createModuleCircles(); //return ArrayList<ModuleCircles> with 5 moduleCircles 
-        bindShapes(line, m1, m2, m3, m4, m5); //
+//        bindShapes(line, m1, m2, m3, m4, m5); //
         moduleHBox.setPadding(new Insets(0, 0, 0, 50));
         moduleHBox.setSpacing(30);
         moduleHBox.setStyle("-fx-background-color:aquamarine;");
@@ -117,7 +115,7 @@ public class ModuleDisplay {
     * are listening for Number values to change, namely the scene's 
     * width(double) and (double)height. 
     * Also removes errors about unsafe compilation.
-    */
+    
     protected void bindShapes(
             Line line, 
             Circle circle1, 
@@ -125,7 +123,7 @@ public class ModuleDisplay {
             Circle circle3,
             Circle circle4,
             Circle circle5) {
-        sview.getScene().widthProperty().addListener(new ChangeListener<Number>() {
+        StudentView.getScene().widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
@@ -140,7 +138,7 @@ public class ModuleDisplay {
             }
         });
         
-        sview.getScene().heightProperty().addListener(new ChangeListener<Number>() {
+        StudentView.getScene().heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
@@ -154,5 +152,5 @@ public class ModuleDisplay {
                 circle5.setCenterY(y / 4);
             }
         });
-    }
+    }*/
 }
