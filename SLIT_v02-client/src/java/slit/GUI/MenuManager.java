@@ -1,4 +1,7 @@
-package slit.jorgen;
+package slit.GUI;
+
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 /**
 * @Author Simen Fuglestad
@@ -9,11 +12,6 @@ package slit.jorgen;
 * static so that the menu classes can use the methods without unecessarily
 * creating an instance of MenuManager.
 */
-
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-
-
 public class MenuManager {
     private static Login login;
     private static StudentView student;
@@ -21,7 +19,11 @@ public class MenuManager {
     private static Stage stage = Launcher.getStage();
     
     
-    //stage.setScene(studentView.makeStudentScene());   
+    /**
+     * Invoke StudentViews constructor and drawMenu() to add the borderpane and 
+     * other necessary items to the scene. Then add stage information that is 
+     * related only to StudentView.
+     */
     protected static void makeStudent() {
         student = new StudentView();
         Scene scene = student.drawMenu();
@@ -33,6 +35,11 @@ public class MenuManager {
         stage.show();
     }
     
+    /**
+     * Invoke TeacherViews constructor and drawMenu() to add the borderpane and 
+     * other necessary items to the scene. Then add stage information that is 
+     * related only to TeacherView.
+     */
     protected static void makeTeacher() {
         teacher = new TeacherView(); 
         Scene scene = teacher.drawMenu();
@@ -43,10 +50,14 @@ public class MenuManager {
         stage.setScene(scene);
         stage.show();
     }
- 
+    /**
+     * Invoke Logins constructor and makeMenu() to add the borderpane and 
+     * other necessary items to the scene. Then add stage information that is 
+     * related only to StudentView.
+     */
     protected static void makeLogin() {
         login = new Login();
-        Scene scene = login.getScene();
+        Scene scene = login.makeMenu();
         stage.setMinWidth(Login.MENU_WIDTH);
         stage.setMinHeight(Login.MENU_HEIGHT);
         stage.setTitle("Login");
