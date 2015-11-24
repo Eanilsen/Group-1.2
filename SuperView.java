@@ -76,7 +76,7 @@ public class SuperView {
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double x = (double)newVal;
-                line.setStartX(0);
+                line.setStartX(200);
                 line.setEndX(x);
                 circle1.setCenterX(line.getStartX() + circle1.getRadius() +20);
                 circle2.setCenterX(line.getEndX() * 0.25 + 20);

@@ -20,31 +20,28 @@ public class TeacherView extends SuperView {
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
     private Button moduleSettings;
-    private Button studentSettings;
+    private Button studentList;
     private Button modules;
     private Button pending;
     private ArrayList<Button> buttons;
-    private Line invissibleLine;
 
     TeacherView() {
     	super();
     	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-    	invissibleLine = new Line();
     	buttons = new ArrayList<>();
-
-    	moduleSettings = new Button("Module Settings");
-    	studentSettings = new Button("Student Settings");
     	modules = new Button("Modules");
     	pending = new Button("Pending");
-
-    	buttons.add(moduleSettings);
-    	buttons.add(studentSettings);
-    	buttons.add(modules);
-    	buttons.add(pending);
+        moduleSettings = new Button("Module Settings");
+        studentList = new Button("Student List");
+        displayStudentListOnClick(studentList);
     }
 
     @Override
     protected Scene drawMenu() {
+        buttons.add(modules);
+        buttons.add(pending);
+        buttons.add(moduleSettings);
+        buttons.add(studentList);
     	pane.setLeft(drawTeacherBox());
     	bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
@@ -63,7 +60,7 @@ public class TeacherView extends SuperView {
     	teacherBox.setPadding(new Insets(30, 0, 0, 0));
     	
     	teacherBox.getChildren().addAll(
-    		moduleSettings, studentSettings, modules, pending);
+    		modules, pending, studentList, moduleSettings);
 
     	return teacherBox;
     }
@@ -89,6 +86,13 @@ public class TeacherView extends SuperView {
                 });
             }
         }
+    }
+
+    private void displayStudentListOnClick(Button btn) {
+        btn.setOnMouseClicked(e -> {
+            StudentList studentList = new StudentList();
+            pane.setCenter(studentList.drawStudentList());
+        });
     }
 
     @Override
