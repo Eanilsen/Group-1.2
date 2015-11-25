@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 
 public class StudentView extends SuperView {
     protected static final double MENU_WIDTH = 800.0;
@@ -27,6 +28,7 @@ public class StudentView extends SuperView {
         
     StudentView(){
    	    super();
+        pane.setStyle("-fx-background-color: red;");
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator(0.1);
         progressIndicator.setMinSize(100, 100);

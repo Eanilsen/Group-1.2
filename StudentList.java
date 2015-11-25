@@ -1,36 +1,41 @@
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ProgressBar;
 import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
+import javafx.scene.shape.Line;
+
 public class StudentList {
-	private GridPane pane;
-	private ArrayList<Label> names;
-	private ArrayList<Label> emails;
+	private GridPane gridPane;
+	private ScrollPane scrollPane;
+	private ArrayList<Text> names;
+	private ArrayList<Text> emails;
 	private ArrayList<ProgressBar> statuses;
 
 	StudentList() {
-		pane = new GridPane();
-		pane.setHgap(20);
-		pane.setVgap(5);
-		pane.setAlignment(Pos.CENTER);
+		gridPane = new GridPane();
+		gridPane.setHgap(20);
+		gridPane.setVgap(20);
+		gridPane.setAlignment(Pos.CENTER);
 
 		names = new ArrayList<>();
-		//note that all these fields needs to come from the database.
-		Label name1 = new Label("Name name");
-		Label name2 = new Label("D-dawg MacJackson");
-		Label name3 = new Label("Surferdude");
+		//note that all the strings contained in these Texts must come from
+		//the databse somehow
+		Text name1 = new Text("Name name");
+		Text name2 = new Text("D-dawg MacJackson");
+		Text name3 = new Text("Surferdude");
 		names.add(name1);
 		names.add(name2);
 		names.add(name3);
 
 		emails = new ArrayList<>();
-		Label email1 = new Label("horselover@ranchinglyfe.com");
-		Label email2 = new Label("dropdebeet@therapbattle.com");
-		Label email3 = new Label("surfindude@californialove.com");
+		Text email1 = new Text("horselover@ranchinglyfe.com");
+		Text email2 = new Text("dropdebeet@therapbattle.com");
+		Text email3 = new Text("surfindude@californialove.com");
 		emails.add(email1);
 		emails.add(email2);
 		emails.add(email3);
@@ -47,17 +52,19 @@ public class StudentList {
 	protected GridPane drawStudentList() {
 		if ((names != null) && (names.size() > 0)) {
 			for(int i = 0; i < names.size(); i++) {
-				if (names.get(i) instanceof Label) {
-					pane.add(names.get(i), 0, i);
+				if (names.get(i) instanceof Text) {
+					gridPane.add(names.get(i), 0, i);
 					names.get(i).setFont(new Font(18));
 				}
 			}
 		}
 
+
+
 		if ((emails != null) && (emails.size() > 0)) {
 			for(int i = 0; i < emails.size(); i++) {
-				if (emails.get(i) instanceof Label) {
-					pane.add(emails.get(i), 1, i);
+				if (emails.get(i) instanceof Text) {
+					gridPane.add(emails.get(i), 1, i);
 					emails.get(i).setFont(new Font(18));
 				}
 			}
@@ -66,11 +73,11 @@ public class StudentList {
 		if ((statuses != null) && (statuses.size() > 0)) {
 			for (int i = 0; i < statuses.size(); i++) {
 				if(statuses.get(i) instanceof ProgressBar) {
-					pane.add(statuses.get(i), 2, i);
+					gridPane.add(statuses.get(i), 2, i);
 				}
 			}
 		}
 
-		return pane;
+		return gridPane;
 	}
 }

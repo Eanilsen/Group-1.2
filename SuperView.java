@@ -61,7 +61,14 @@ public class SuperView {
         
         bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
-        return scene;
+        if (scene != null) {
+            return scene;
+        }
+        else {
+            System.out.print("Scene object is null, exiting program. ");
+            System.exit(1);
+        }
+        return null;
     }
 
     protected void bindShapes(
@@ -76,7 +83,7 @@ public class SuperView {
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double x = (double)newVal;
-                line.setStartX(200);
+                line.setStartX(0);
                 line.setEndX(x);
                 circle1.setCenterX(line.getStartX() + circle1.getRadius() +20);
                 circle2.setCenterX(line.getEndX() * 0.25 + 20);

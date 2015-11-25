@@ -14,37 +14,50 @@ import javafx.scene.shape.Shape;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.geometry.Orientation;
 
 public class TeacherView extends SuperView {
 	protected static final double MENU_WIDTH = 1400.0;
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
-    private Button moduleSettings;
-    private Button studentList;
-    private Button modules;
-    private Button pending;
+    private Button moduleSettingsBtn;
+    private Button studentListBtn;
+    private Button modulesBtn;
+    private Button pendingBtn;
     private ArrayList<Button> buttons;
+    private StudentList studentList;
+    private ScrollBar scrollBar;
 
     TeacherView() {
     	super();
     	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-    	buttons = new ArrayList<>();
-    	modules = new Button("Modules");
-    	pending = new Button("Pending");
-        moduleSettings = new Button("Module Settings");
-        studentList = new Button("Student List");
-        displayStudentListOnClick(studentList);
+    	modulesBtn = new Button("Modules");
+    	pendingBtn = new Button("Pending");
+        moduleSettingsBtn = new Button("Module Settings");
+        studentListBtn = new Button("Student List");
+        scrollBar = new ScrollBar();
+        buttons = new ArrayList<>();
     }
 
     @Override
     protected Scene drawMenu() {
-        buttons.add(modules);
-        buttons.add(pending);
-        buttons.add(moduleSettings);
-        buttons.add(studentList);
+        buttons.add(modulesBtn);
+        displayModulesOnClick(modulesBtn);
+
+        buttons.add(pendingBtn);
+        buttons.add(moduleSettingsBtn);
+
+        buttons.add(studentListBtn);
+        displayStudentListOnClick(studentListBtn);
+
     	pane.setLeft(drawTeacherBox());
+
     	bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
+        pane.setRight(scrollBar);
+        scrollBar.setOrientation(Orientation.VERTICAL);
+        scrollBar.setVisible(false);
         return super.drawMenu();
     }
 
@@ -60,7 +73,7 @@ public class TeacherView extends SuperView {
     	teacherBox.setPadding(new Insets(30, 0, 0, 0));
     	
     	teacherBox.getChildren().addAll(
-    		modules, pending, studentList, moduleSettings);
+    		modulesBtn, pendingBtn, studentListBtn, moduleSettingsBtn);
 
     	return teacherBox;
     }
@@ -90,8 +103,18 @@ public class TeacherView extends SuperView {
 
     private void displayStudentListOnClick(Button btn) {
         btn.setOnMouseClicked(e -> {
-            StudentList studentList = new StudentList();
+            studentList = new StudentList();
             pane.setCenter(studentList.drawStudentList());
+            scrollBar.setVisible(true);
+            hideShapes();
+        });
+    }
+
+    private void displayModulesOnClick(Button btn) {
+        btn.setOnMouseClicked(e -> {
+            pane.setCenter(null);
+            scrollBar.setVisible(false);
+            showShapes();
         });
     }
 
@@ -133,4 +156,26 @@ public class TeacherView extends SuperView {
             }
         });
     }
+
+    private void hideShapes() {
+        for (Circle c : moduleCircles) {
+            c.setVisible(false);
+        }
+        line.setVisible(false);
+    }
+
+    private void showShapes() {
+        for (Circle c : moduleCircles) {
+            c.setVisible(true);
+        }
+        line.setVisible(true);
+    }
+    /*
+    * StudentList need to access the scrollbar in order to add listeners
+    *
+    private void enableScrollbar() {
+        scrollbar.valueProperty().addListener(o ->
+            )
+    }
+    */
 }
