@@ -5,12 +5,14 @@
  */
 package slit.GUI;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 /**
  * 
@@ -30,37 +32,38 @@ public class Login {
     /**
      * 
      */
-    public Login() {
+    Login() {
+        username = new TextField("username");
+        password = new TextField("password");
+        loginBtnS = new Button("Login Student");
+        loginBtnT = new Button("Login Teacher");
+        vBox = new VBox(5);
+        pane = new BorderPane();
+        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
+        
+        scene.getStylesheets().add("LES.css");
+        StyleManager.setStyleClass("Pane", pane);
+        StyleManager.setStyleClass("Textfields", username, password);
+        StyleManager.setStyleClass("Button", loginBtnS);
     }
     
-    
-    public Scene makeMenu() {
-        username = new TextField("username");
+    protected Scene drawMenu() {
         username.setMaxWidth(100);
-        
-        password = new TextField("password");
         password.setMaxWidth(100);
         
-        loginBtnS = new Button("Login Student");
         clickToOpenStudent(loginBtnS);
-        
-        loginBtnT = new Button("Login Teacher");
         clickToOpenTeacher(loginBtnT);
-
         
-        vBox = new VBox(5);
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(username, password, loginBtnT, loginBtnS);
+        vBox.getChildren().addAll(username, password, loginBtnS, loginBtnT);
         
-        pane = new BorderPane();
         pane.setCenter(vBox);
         
-        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         return scene;
     }
     
     private void clickToOpenStudent(Button btn) {
-        btn.setOnMousePressed(e -> {
+        btn.setOnMousePressed((MouseEvent e) -> {
             MenuManager.makeStudent();
         });
     }
@@ -69,15 +72,5 @@ public class Login {
         btn.setOnMousePressed(e -> {
             MenuManager.makeTeacher();
         });
-    }
-    
-    public boolean isStudent(){
-        //code to check if username == role.student
-        return true;
-    }
-    
-    public boolean isTeacher(){
-        //code to check if username == role.teacher
-        return true;
     }
 }

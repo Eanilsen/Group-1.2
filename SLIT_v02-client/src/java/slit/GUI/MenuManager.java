@@ -24,7 +24,7 @@ public class MenuManager {
      * other necessary items to the scene. Then add stage information that is 
      * related only to StudentView.
      */
-    protected static void makeStudent() {
+    public static void makeStudent() {
         student = new StudentView();
         Scene scene = student.drawMenu();
         stage.setMinWidth(StudentView.MENU_WIDTH);
@@ -40,7 +40,7 @@ public class MenuManager {
      * other necessary items to the scene. Then add stage information that is 
      * related only to TeacherView.
      */
-    protected static void makeTeacher() {
+    public static void makeTeacher() {
         teacher = new TeacherView(); 
         Scene scene = teacher.drawMenu();
         stage.setMinWidth(StudentView.MENU_WIDTH);
@@ -55,9 +55,9 @@ public class MenuManager {
      * other necessary items to the scene. Then add stage information that is 
      * related only to StudentView.
      */
-    protected static void makeLogin() {
+    public static void makeLogin() {
         login = new Login();
-        Scene scene = login.makeMenu();
+        Scene scene = login.drawMenu();
         stage.setMinWidth(Login.MENU_WIDTH);
         stage.setMinHeight(Login.MENU_HEIGHT);
         stage.setTitle("Login");

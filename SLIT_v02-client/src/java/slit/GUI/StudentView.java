@@ -1,6 +1,5 @@
 package slit.GUI;
 
-import beans.ProgressManagerBeanRemote;
 import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.Line;
-import javax.ejb.EJB;
 
 /**
  * 
@@ -26,18 +24,21 @@ public class StudentView extends SuperView {
     
     protected ProgressIndicator progressIndicator;
     
-    @EJB
-    private ProgressManagerBeanRemote pbm;
-        
     /**
-     * Constructor for StudetnView that initializes items and give them values.
+     * Constructor for StudentView that initializes items and give them values.
      */
     StudentView(){
         super();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator();
-        progressIndicator.setProgress(0.33);
+        System.out.println("TEST: setting progress now");
+        progressIndicator.setProgress(.66);
+//        System.out.println("TEST: progress is set! It is "+ progressIndicator.getProgress()); 
         progressIndicator.setMinSize(100, 100);
+        
+        scene.getStylesheets().add("LES.css");
+        StyleManager.setStyleClass("Pane", pane);
+        StyleManager.setStyleClass("ProgInd", progressIndicator);
     }
     
     /**
@@ -111,11 +112,11 @@ public class StudentView extends SuperView {
                 double x = (double)newVal;
                 line.setStartX(0); //200 in TeacherView
                 line.setEndX(x);
-                circle1.setCenterX(1.5 * (line.getEndX()) / 7 + 100);
-                circle2.setCenterX(2.5 * (line.getEndX()) / 7 + 100);
-                circle3.setCenterX(3.5 * (line.getEndX()) / 7 + 100);
-                circle4.setCenterX(4.5 * (line.getEndX()) / 7 + 100);
-                circle5.setCenterX(5.5 * (line.getEndX()) / 7 + 100);
+                circle1.setCenterX(1.5 * (line.getEndX()) / 7);
+                circle2.setCenterX(2.5 * (line.getEndX()) / 7);
+                circle3.setCenterX(3.5 * (line.getEndX()) / 7);
+                circle4.setCenterX(4.5 * (line.getEndX()) / 7);
+                circle5.setCenterX(5.5 * (line.getEndX()) / 7);
             }
         });
         

@@ -6,15 +6,15 @@
 package slit.GUI;
 
 import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
+import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.Scene;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ChangeListener;
-import javafx.scene.control.TextArea;
-import javafx.geometry.Insets;
-import java.util.ArrayList;
-import javafx.scene.control.Button;
 
 
 /**
@@ -31,10 +31,10 @@ public class TeacherView extends SuperView {
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
     private Button moduleSettings;
-    private Button studentSettings;
+    private Button studentList;
     private Button modules;
     private Button pending;
-    private ArrayList<Button> teacherButtons;
+    private ArrayList<Button> buttons;
 
     /**
      * Constructor for TeacherView that initializes items and give them values.
@@ -42,20 +42,16 @@ public class TeacherView extends SuperView {
     TeacherView() {
     	super();
     	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-    	teacherButtons = new ArrayList<>();
-
-    	moduleSettings = new Button("Module Settings");
-    	studentSettings = new Button("Student Settings");
+    	buttons = new ArrayList<>();
     	modules = new Button("Modules");
     	pending = new Button("Pending");
-
-    	teacherButtons.add(moduleSettings);
-    	teacherButtons.add(studentSettings);
-    	teacherButtons.add(modules);
-    	teacherButtons.add(pending);
-        
-        
+        moduleSettings = new Button("Module Settings");
+        studentList = new Button("Student List");
+        displayStudentListOnClick(studentList);
     }
+        
+        
+    
 
     /**
      * drawMenu() adds items to the scene from TeacherView and superclass SuperView.
@@ -65,7 +61,12 @@ public class TeacherView extends SuperView {
      */
     @Override
     protected Scene drawMenu() {
+        buttons.add(modules);
+        buttons.add(pending);
+        buttons.add(moduleSettings);
+        buttons.add(studentList);
     	pane.setLeft(drawTeacherBox());
+    	bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
         return super.drawMenu();
     }
@@ -81,15 +82,14 @@ public class TeacherView extends SuperView {
     	teacherBox.setPrefWidth(200);
     	teacherBox.setStyle("-fx-background-color:pink");
 
-        for (Button b : teacherButtons){
-            b.setPrefWidth(200);
-            //When a button is pressed, invoke setSelected() on it. This will       
-        }
+    	for (Button b : buttons) {
+    		b.setPrefWidth(200);
+    	}
 
     	teacherBox.setPadding(new Insets(30, 0, 0, 0));
     	
     	teacherBox.getChildren().addAll(
-    		moduleSettings, studentSettings, modules, pending);
+    		modules, pending, studentList, moduleSettings);
 
     	return teacherBox;
     }
@@ -123,6 +123,15 @@ public class TeacherView extends SuperView {
                 });
             }
         }
+    }
+    /**
+     * 
+     */
+    private void displayStudentListOnClick(Button btn) {
+        btn.setOnMouseClicked(e -> {
+            StudentList studentList = new StudentList();
+            pane.setCenter(studentList.drawStudentList());
+        });
     }
     
     /*

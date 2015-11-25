@@ -83,8 +83,9 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     }
 
     private void createModules() {
+        System.out.println("Creating modules.....");
         for (int i = 1; i <= 14; i++) {
-            if(em.find(AvailableRoles.class, i) == null)
+//            if(em.find(AvailableRoles.class, i) == null)
             createModule("Module " + i, "Description of Module " + i + " here.");
         }
     }
@@ -112,7 +113,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     }
 
     private void createRessources() {
-        System.out.println("Creating ressources.....");
+        System.out.println("Creating resources.....");
         createRessource("The Story of everything", "www.wikipedia.de".getBytes());
         createRessource("little Ressource text", "This ressource was written by Jonas H. and is probably the best ressource in the world wide web.".getBytes());
         createRessource("Grammas Apple Pie", ("Put a layer of paper towels on a large baking sheet. Quarter, core, peel and slice the apples about 5mm thick and lay evenly on the baking sheet. Put paper towels on top and set aside while you make and chill the pastry.\n"

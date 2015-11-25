@@ -5,10 +5,13 @@
  */
 package beans;
 
+import javax.ejb.Remote;
+
 /**
  *
  * @author Jons
  */
+@Remote
 public interface UserBeanRemote {
 
     public String getName();

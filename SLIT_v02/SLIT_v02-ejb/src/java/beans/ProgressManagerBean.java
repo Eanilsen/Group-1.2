@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Jorgen
  */
-@Stateless
+@Stateless(mappedName = "ProgressManagerBeanRemote")
 public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
@@ -25,13 +25,13 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
      */
     @Override
     public double theProgress(){
-        System.out.println("theProgress");
+        System.out.println("TEST: printing from ProgressManagerBean!");
         double modules = 5.0;
         double modulesCompleted = 1.0;
         double prog = modulesCompleted / modules; //replace 1 with modules completed
         //everything inside entity Progress is completed modules. Find the user 
         //and then look for how many modules he has completed. Then divide on 14.
-        System.out.println(prog);
+        System.out.println("TEST " + prog);
         return prog;
     }
 

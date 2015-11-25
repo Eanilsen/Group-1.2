@@ -11,18 +11,25 @@
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/git_master_jonsnewfils/SLIT_v02-client/src/java/slit/jorgen/TeacherView.java</file>
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/git_master_jonsnewfils/SLIT_v02-client/src/java/slit/jorgen/ModuleDisplay.java</file>
         </group>
-        <group name="Group-1.2">
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jorgen/StudentView.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jorgen/ModuleDisplay.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jorgen/Progress.java</file>
-        </group>
         <group name="Innenfor git">
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/StudentList.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/SuperView.java</file>
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/StudentView.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/Login.java</file>
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/Launcher.java</file>
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/main/Main.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/SuperView.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/ModuleCircle.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/TeacherView.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jonas/Login.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jonas/StyleManager.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jonas/StudentList.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jonas/StudentView.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jonas/SuperView.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/jonas/TeacherView.java</file>
         </group>
+        <group name="Group-1.2"/>
+        <group name="SLIT- old testing version">
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/GUI/Launcher.java</file>
+            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/SLIT_v02-client/src/java/slit/main/Main.java</file>
+        </group>
+        <group name="slit projects"/>
     </open-files>
 </project-private>
