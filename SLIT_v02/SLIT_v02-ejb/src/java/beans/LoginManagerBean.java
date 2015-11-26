@@ -40,5 +40,6 @@ public class LoginManagerBean implements LoginManagerBeanRemote {
     public void persist(Object object) {
         em.persist(object);
     }
+
     
 }

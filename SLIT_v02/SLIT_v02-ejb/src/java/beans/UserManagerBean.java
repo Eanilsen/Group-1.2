@@ -45,6 +45,13 @@ public class UserManagerBean implements UserManagerBeanRemote {
                
     }
     
+    @Override
+    public String getUserName(int i){
+        Users user = em.find(Users.class, i);
+        String name = user.getFirstname() + " " + user.getLastname();
+        return name;
+    }
+    
     /**
      * @author JH
      * returns a list of users that are in the specified role
