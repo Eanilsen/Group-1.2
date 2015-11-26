@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slit.jorgen;
+package slit.GUI;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -15,6 +14,7 @@ import javafx.stage.Stage;
  */
 public class Launcher extends Application {
     private static Stage stage;
+    
     @Override
     public void start(Stage stage) {
         this.stage = stage;

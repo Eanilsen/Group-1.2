@@ -1,83 +1,107 @@
-import javafx.scene.layout.BorderPane;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package slit.GUI;
+
 import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.Scene;
-import javafx.geometry.Pos;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TextArea;
 import javafx.geometry.Insets;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
-import javafx.geometry.Orientation;
 
+
+/**
+ * 
+ * @author
+ * @Date 24.11.2015
+ * Desc:
+ * The TeacherView is opposed to the StudentView which both extends SuperView.
+ * When a user logs into the system, the users role will be checked in the 
+ * database and if 'Teacher' is returned, TeacherView is displayed.
+ */
 public class TeacherView extends SuperView {
-	protected static final double MENU_WIDTH = 1400.0;
+    protected static final double MENU_WIDTH = 1400.0;
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
-    private Button moduleSettingsBtn;
-    private Button studentListBtn;
-    private Button modulesBtn;
-    private Button pendingBtn;
-    private ArrayList<Button> buttons;
-    private StudentList studentList;
-    private ScrollBar scrollBar;
+    private Button moduleSettings;
+    private Button studentSettings;
+    private Button modules;
+    private Button pending;
+    private ArrayList<Button> teacherButtons;
 
+    /**
+     * Constructor for TeacherView that initializes items and give them values.
+     */
     TeacherView() {
     	super();
     	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-    	modulesBtn = new Button("Modules");
-    	pendingBtn = new Button("Pending");
-        moduleSettingsBtn = new Button("Module Settings");
-        studentListBtn = new Button("Student List");
-        scrollBar = new ScrollBar();
-        buttons = new ArrayList<>();
+    	teacherButtons = new ArrayList<>();
+
+    	moduleSettings = new Button("Module Settings");
+    	studentSettings = new Button("Student Settings");
+    	modules = new Button("Modules");
+    	pending = new Button("Pending");
+
+    	teacherButtons.add(moduleSettings);
+    	teacherButtons.add(studentSettings);
+    	teacherButtons.add(modules);
+    	teacherButtons.add(pending);
+        
+        
     }
 
+    /**
+     * drawMenu() adds items to the scene from TeacherView and superclass SuperView.
+     * In MenuManager this method is called after the constructor.
+     * Set teacher box to the left in the borderpane of teacherview. 
+     * @return Scene scene that implements the teachers view.
+     */
     @Override
     protected Scene drawMenu() {
-        buttons.add(modulesBtn);
-        displayModulesOnClick(modulesBtn);
-
-        buttons.add(pendingBtn);
-        buttons.add(moduleSettingsBtn);
-
-        buttons.add(studentListBtn);
-        displayStudentListOnClick(studentListBtn);
-
     	pane.setLeft(drawTeacherBox());
 
-    	bindShapes(line, circle1, circle2, circle3, circle4, circle5);
-
-        pane.setRight(scrollBar);
-        scrollBar.setOrientation(Orientation.VERTICAL);
-        scrollBar.setVisible(false);
         return super.drawMenu();
     }
 
+    /**
+     * Draw the teachers hub as a VBox. For the GUI to show as it should,
+     * teacherBox.setPrefWidth(200) needs to be the same as 
+     * line.setStartX(200); in bindShapes(). 
+     * @return VBox teacherBox with buttons for the teacher hub
+     */
     private VBox drawTeacherBox() {
     	teacherBox = new VBox(20);
     	teacherBox.setPrefWidth(200);
     	teacherBox.setStyle("-fx-background-color:pink");
 
-    	for (Button b : buttons) {
-    		b.setPrefWidth(200);
-    	}
+        for (Button b : teacherButtons){
+            b.setPrefWidth(200);
+            //When a button is pressed, invoke setSelected() on it. This will       
+        }
 
     	teacherBox.setPadding(new Insets(30, 0, 0, 0));
     	
     	teacherBox.getChildren().addAll(
-    		modulesBtn, pendingBtn, studentListBtn, moduleSettingsBtn);
+    		moduleSettings, studentSettings, modules, pending);
 
     	return teacherBox;
     }
 
+    /*
+    * @method displayModuleTextOnClick
+    * @param ArrayList<Shape> shapes: the shapes that recevies an actionevent
+    * listener
+    * This method adds actionevent listeners to all shapes of type circle in 
+    * the ArrayList shapes. The event itself brings up a textbox or closes the
+    * the textbox if it already exists.
+    */
     @Override
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
         for (ModuleCircle circle : circles) {
@@ -100,24 +124,20 @@ public class TeacherView extends SuperView {
             }
         }
     }
-
-    private void displayStudentListOnClick(Button btn) {
-        btn.setOnMouseClicked(e -> {
-            studentList = new StudentList();
-            pane.setCenter(studentList.drawStudentList());
-            scrollBar.setVisible(true);
-            hideShapes();
-        });
-    }
-
-    private void displayModulesOnClick(Button btn) {
-        btn.setOnMouseClicked(e -> {
-            pane.setCenter(null);
-            scrollBar.setVisible(false);
-            showShapes();
-        });
-    }
-
+    
+    /*
+     * @method bindShapes()
+     * @param Line line: line to be bound
+     * @param Circle circle1: circle to be bound
+     * @param Circle circl2: same as above, etc
+     * This method uses the functional interface "ChangeListener" to listen for
+     * changes in scene's WidthProperty and HeightProperty. Whenever a change
+     * occurs in either, the position of the nodes is adjusted to fit the scene.
+     * Note that we create a ChangeListener with Number generic type since we
+     * are listening for Number values to change, namely the scene's 
+     * width(double) and (double)height. 
+     * Also removes errors about unsafe compilation.
+     */
     @Override
     protected void bindShapes(
             Line line, 
@@ -131,7 +151,7 @@ public class TeacherView extends SuperView {
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double x = (double)newVal;
-                line.setStartX(200);
+                line.setStartX(200); //0 in StudentView
                 line.setEndX(x);
                 circle1.setCenterX(1.5 * (line.getEndX()) / 7 + 100);
                 circle2.setCenterX(2.5 * (line.getEndX()) / 7 + 100);
@@ -156,26 +176,4 @@ public class TeacherView extends SuperView {
             }
         });
     }
-
-    private void hideShapes() {
-        for (Circle c : moduleCircles) {
-            c.setVisible(false);
-        }
-        line.setVisible(false);
-    }
-
-    private void showShapes() {
-        for (Circle c : moduleCircles) {
-            c.setVisible(true);
-        }
-        line.setVisible(true);
-    }
-    /*
-    * StudentList need to access the scrollbar in order to add listeners
-    *
-    private void enableScrollbar() {
-        scrollbar.valueProperty().addListener(o ->
-            )
-    }
-    */
 }

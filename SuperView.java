@@ -45,7 +45,6 @@ public class SuperView {
         moduleCircles.add(circle3);
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
-        
     }
 
     protected Scene drawMenu() {
@@ -62,7 +61,14 @@ public class SuperView {
         
         bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
-        return scene;
+        if (scene != null) {
+            return scene;
+        }
+        else {
+            System.out.print("Scene object is null, exiting program. ");
+            System.exit(1);
+        }
+        return null;
     }
 
     protected void bindShapes(
