@@ -13,5 +13,12 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface UserManagerBeanRemote {
+
+    /**
+     * if existing, returns the name of the user with given id
+     * @param i
+     * @return 
+     */
+    public String getUserName(int i);
     
 }
