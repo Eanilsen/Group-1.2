@@ -5,28 +5,24 @@
  */
 package slit.main;
 
-import beans.InitializeDatabaseBeanRemote;
+import beans.ProgressManagerBeanRemote;
 import javax.ejb.EJB;
-
+import slit.GUI.Launcher;
 
 /**
  *
- * @author Jons
+ * @author Jorgen
  */
 public class Main {
-    /**
-     * @param args the command line arguments
-     */
-    @EJB
-    private static InitializeDatabaseBeanRemote dataCreator;
     
+    @EJB
+    private static ProgressManagerBeanRemote progressBean;
+    
+    public static ProgressManagerBeanRemote getProgressBean(){
+        return progressBean;
+    }
     
     public static void main(String[] args) {
-        getInitializeDatabaseBeanRemote().createDatabase();
-        System.out.println("-------Database initialized. dataCreator: " + dataCreator);
+        Launcher.main(args);
     }
-
-    public static InitializeDatabaseBeanRemote getInitializeDatabaseBeanRemote(){
-        return dataCreator;
-    }    
 }

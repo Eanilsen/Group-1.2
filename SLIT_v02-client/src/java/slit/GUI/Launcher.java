@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  * @author Jorgen
  */
 public class Launcher extends Application {
-
     
     private static Stage stage;
     

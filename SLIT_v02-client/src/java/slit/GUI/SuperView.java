@@ -53,7 +53,7 @@ public class SuperView {
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
         
-        pane.getStylesheets().add("LES.css");
+        pane.getStylesheets().add("/resources/LES.css");
         StyleManager.setStyleClass("Circle", circle1, circle2, circle3, circle4, circle5);
         StyleManager.setStyleClass("Line", line);
     }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.shape.Line;
+import slit.main.Main;
 
 /**
  * 
@@ -32,7 +33,7 @@ public class StudentView extends SuperView {
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator();
         System.out.println("TEST: setting progress now");
-        progressIndicator.setProgress(.66);
+        progressIndicator.setProgress(Main.getProgressBean().theProgress());
 //        System.out.println("TEST: progress is set! It is "+ progressIndicator.getProgress()); 
         progressIndicator.setMinSize(100, 100);
         
