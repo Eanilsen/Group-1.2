@@ -6,7 +6,7 @@
 package beans;
 
 import entities.*;
-import enums.RolesEnum;
+import DTOs.RolesEnum;
 import java.sql.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,6 +22,12 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
 
+    /**
+     *
+     * @param name
+     * @param description
+     */
+    @Override
     public void createModule(String name, String description) {
         Module myModule = new Module();
         myModule.setDescription(description);
@@ -29,6 +35,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         em.persist(myModule);
     }
 
+    @Override
     public void createRole(int id, String name, String description) {
         AvailableRoles myRole = new AvailableRoles(id);
         myRole.setDescription(description);

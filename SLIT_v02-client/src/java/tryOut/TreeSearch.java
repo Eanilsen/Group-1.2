@@ -7,7 +7,13 @@ package tryOut;
 
 import DTOs.UserDTO;
 import beans.UserManagerBeanRemote;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,14 +29,18 @@ public class TreeSearch {
 
     public static void main(String args[]) {
         List<UserDTO> users = Main.getMyUserManager().getUserList();
-        System.out.println(users.get(1).name);
-        System.out.println(users.get(5).name);
+
+        Calendar cal = new GregorianCalendar();
+        long timeNow = cal.getTimeInMillis();
         for (UserDTO u : users) {
-            System.out.println("Trying to insert " + u.name);
+//            System.out.println("Trying to insert " + u.name);
             searchTree.insert(u.name, u);
         }
+        System.out.println("time start = " + timeNow);
+        System.out.println("time now = " + cal.getTimeInMillis());
+        System.out.println("time to create tree = " + (long) (cal.getTimeInMillis() - timeNow));
 
-        String searchFor = "a";
+        String searchFor = "Bob";
         List<UserDTO> userNames = searchTree.getUsers(searchFor);
 
         System.out.println("All users in this list with " + searchFor);
@@ -38,7 +48,10 @@ public class TreeSearch {
             System.out.println(u.name);
         }
         searchTree.printNodes();
+
     }
+    
+    
 
     private static class TreeNode {
 
@@ -50,6 +63,7 @@ public class TreeSearch {
             this.value = Character.toUpperCase(value);
             nextNodes = new ArrayList<>();
             user = new ArrayList<>();
+
         }
 
         /**
@@ -60,15 +74,41 @@ public class TreeSearch {
         public TreeNode() {
             value = '?';
             nextNodes = new ArrayList<>();
+
             user = new ArrayList<>();
         }
+
+        public void sortList() {
+            Collections.sort(nextNodes, new Comparator<TreeNode>() {
+                @Override
+                public int compare(TreeNode a, TreeNode b) {
+                    return a.getValue() - b.getValue();
+                }
+            });
+        }
+
+        Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>(){
+            @Override
+            public int compare
+            (TreeNode a, TreeNode b){                                        
+                if (a.getValue()=='Å'){
+                    return (a.getValue() +50) - b.getValue();
+                }
+                else if (b.getValue()=='Å'){
+                    return a.getValue() - (b.getValue()+50);
+                }
+                    
+            return a.getValue() - b.getValue();
+            }
+        };
 
         public char getValue() {
             return value;
         }
 
         /**
-         * gets a character c and returns the Node with that value.
+         * gets a character c and returns the Node with that value. And if that
+         * node doesnt exist returns null.
          *
          * @param c
          * @return
@@ -84,26 +124,24 @@ public class TreeSearch {
 
         public ArrayList<UserDTO> getUsers(String name) {
 
-            
             // the following is kind of tricky. It makes sure that the user return starts when the name is empty. Therefore it goes to the next character node 
-            // and searches the all users there but without the first letter. So when the name is empty, that means we are in the last node of what the user searched for.
+            // and searches all users there but without the first letter. So when the name is empty, that means we are in the last node of what the user searched for.
             // that means we have add all follwoing nodes Userlists.
             if (name != null && !name.isEmpty()) {
-                name = name.toUpperCase();                
+                name = name.toUpperCase();
                 return this.getNextNode(name.charAt(0)).getUsers(name.substring(1));
-            } else {          
+            } else {
 
                 if (nextNodes.isEmpty()) {
                     return user;
                 }
-                 
+
                 ArrayList<UserDTO> myUsers = new ArrayList<>();
                 myUsers.addAll(user);
                 for (TreeNode n : nextNodes) {
                     myUsers.addAll(n.getUsers(null));
                 }
 
-                
                 return myUsers;
             }
         }
@@ -115,18 +153,19 @@ public class TreeSearch {
          * @param user
          */
         public void insert(String name, UserDTO user) {
-            name=name.toUpperCase();
+            name = name.toUpperCase();
             if (name != null && !name.isEmpty()) {
 
                 TreeNode n = this.getNextNode(name.charAt(0));
-                
+
                 //if next node doesnt exist create it                
                 if (n == null) {
                     n = new TreeNode(name.charAt(0));
                     nextNodes.add(n);
+                    nextNodes.sort(TreeComparator);
                     System.out.println("New node " + n.getValue());
-                }                
-                
+                }
+
                 n.insert(name.substring(1), user); // deletes the first letter of the name                
 
             } else {

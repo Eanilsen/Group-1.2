@@ -9,7 +9,7 @@ import DTOs.UserDTO;
 import basicBeans.UsersFacade;
 import entities.AvailableRoles;
 import entities.Users;
-import enums.RolesEnum;
+import DTOs.RolesEnum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
