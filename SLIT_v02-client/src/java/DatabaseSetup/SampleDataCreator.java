@@ -24,5 +24,4 @@ public class SampleDataCreator {
 //        dataCreator.createDatabase();
         Main.getDataCreator().addUsers();
     }
-
 }
