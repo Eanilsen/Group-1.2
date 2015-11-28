@@ -36,6 +36,7 @@ public class TeacherView extends SuperView {
     private Button pendingBtn;
     private ArrayList<Button> buttons;
     private StudentList studentList;
+    private PendingList pendingList;
 
     /**
      * Constructor for TeacherView that initializes items and give them values.
@@ -67,6 +68,7 @@ public class TeacherView extends SuperView {
         displayModulesOnClick(modulesBtn);
 
         buttons.add(pendingBtn);
+        displayPendingOnClick(pendingBtn);
         buttons.add(moduleSettingsBtn);
 
         buttons.add(studentListBtn);
@@ -149,6 +151,17 @@ public class TeacherView extends SuperView {
             studentList.hideStudentList();
             pane.setCenter(null);
             showShapes();
+        });
+    }
+    
+    private void displayPendingOnClick(Button btn) {
+        btn.setOnMouseClicked(e -> {
+            pendingList = new PendingList();
+            showShapes();
+            pane.setCenter(pendingList.drawPendingList());
+            if (studentList != null) {
+                studentList.hideStudentList();
+            }
         });
     }
     

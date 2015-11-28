@@ -5,7 +5,6 @@
  */
 package slit.GUI;
 
-import main.Main;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
@@ -72,15 +71,5 @@ public class Login {
         btn.setOnMousePressed(e -> {
             MenuManager.makeTeacher();
         });
-    }
-    
-    public boolean isStudent(){
-        //code to check if username == role.student
-        return true;
-    }
-    
-    public boolean isTeacher(){
-        //code to check if username == role.teacher
-        return true;
     }
 }

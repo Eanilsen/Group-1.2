@@ -12,8 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
-import main.Main;
-import tryOut.TreeSearch;
+import slit.search.TreeSearch;
 /**
  * 
  * @author Jorgen

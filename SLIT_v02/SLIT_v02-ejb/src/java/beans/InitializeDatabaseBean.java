@@ -6,10 +6,8 @@
 package beans;
 
 import DTOs.RolesEnum;
-import basicBeans.AvailableRolesFacade;
 import entities.*;
 import java.sql.Date;
-import java.util.List;
 import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,7 +41,9 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         Users myUser = new Users();
         myUser.setEmail(email);
         myUser.setFirstname(firstName);
-        myUser.setLastname(lastName);
+        myUser.setLastname(lastName);       
+        em.persist(myUser);
+        em.flush();
         myUser.getAvailableRolesCollection().add(role);
         em.persist(myUser);
     }
@@ -65,16 +65,15 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     @Override
     public void createDatabase() {
 //        createUsers();   //create teachers and students alone   todo implement function to create standard users with roles
-
-        createStudents(100);
-        createTeacher(10);
+        createRoles();
+     
         createModules();
         createRessources();
         em.flush();
-        createRoles();
-        em.flush();
-        addRoleToUser();
-        addProgress();
+        createStudents(100);
+        createTeacher(10);
+//        addRoleToUser();
+//        addProgress();
         
     }
     
@@ -134,12 +133,12 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
      */
     @Override
     public void createStudents(int amount) {
-        addUsers(amount, em.find(AvailableRoles.class, RolesEnum.Student));
+        addUsers(amount, em.find(AvailableRoles.class, RolesEnum.Student.ordinal()));
     }
 
     @Override
     public void createTeacher(int amount) {
-        addUsers(amount, em.find(AvailableRoles.class, RolesEnum.Teacher));
+        addUsers(amount, em.find(AvailableRoles.class, RolesEnum.Teacher.ordinal()));
     }
 
 //    private void createUsers() {

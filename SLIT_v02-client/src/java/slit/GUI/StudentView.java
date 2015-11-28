@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import main.Main;
+import slit.main.Main;
 
 /**
  * 

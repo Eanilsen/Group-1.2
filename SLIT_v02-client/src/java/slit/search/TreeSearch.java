@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tryOut;
+package slit.search;
 
 import DTOs.UserDTO;
 import beans.UserManagerBeanRemote;
@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import main.Main;
+import slit.main.Main;
 
 /**
  *
