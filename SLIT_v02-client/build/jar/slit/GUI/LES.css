@@ -1,0 +1,34 @@
+.Pane {
+	-fx-background-color: rgba(183,222,237,1);
+	-fx-background-color: -moz-linear-gradient(top, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+	-fx-background-color: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(183,222,237,1)), color-stop(36%, rgba(33,180,226,1)), color-stop(88%, rgba(113,206,239,1)), color-stop(100%, rgba(183,222,237,1)));
+	-fx-background-color: -webkit-linear-gradient(top, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+	-fx-background-color: -o-linear-gradient(top, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+	-fx-background-color: -ms-linear-gradient(top, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+	-fx-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed', GradientType=0 );
+}
+
+.Textfields {
+	-fx-padding-bottom: 100px;
+}
+
+.Button {
+	-fx-padding-top: 20px;
+}
+
+.Circle {
+	-fx-effect: dropshadow(gaussian, #1E121E, 3, 0, 0, 3);
+	-fx-background-color: red;
+}
+
+
+
+.ProgInd {
+	-fx-progress-color: green;
+}
+
+.Line {
+	-fx-opacity: 30%;
+	-fx-border-style: dashed;
+}
