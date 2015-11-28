@@ -30,20 +30,29 @@ public class TreeSearch {
 
     protected static TreeNode searchTree = new TreeNode();
 
-    public static void main(String args[]) {
+    public static TreeNode getSearchTree() {
+        return searchTree;
+    }
+
+    public TreeSearch() {
         List<UserDTO> users = Main.getMyUserManager().getUserList();
 
         long timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
         for (UserDTO u : users) {
-            System.out.println("Trying to insert " + u.name);
+//            System.out.println("Trying to insert " + u.name);
             searchTree.insert(u.name, u);
         }
         System.out.println("time start = " + timeNow);
         System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
         System.out.println("time to create tree = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
+        timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
         String searchFor = "Jonas Hinrichs";
         List<UserDTO> userNames = searchTree.getUsers(searchFor);
+
+        System.out.println("time start = " + timeNow);
+        System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
+        System.out.println("time to search for " + searchFor +" = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
         System.out.println("All users in this list with " + searchFor);
         for (UserDTO u : userNames) {
@@ -52,10 +61,8 @@ public class TreeSearch {
         searchTree.printNodes();
 
     }
-    
-    
 
-    private static class TreeNode {
+    public static class TreeNode {
 
         protected char value;
         protected ArrayList<TreeNode> nextNodes;
@@ -89,18 +96,16 @@ public class TreeSearch {
             });
         }
 
-        Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>(){
+        Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>() {
             @Override
-            public int compare
-            (TreeNode a, TreeNode b){                                        
-                if (a.getValue()=='Å'){
-                    return (a.getValue() +50) - b.getValue();
+            public int compare(TreeNode a, TreeNode b) {
+                if (a.getValue() == 'Å') {
+                    return (a.getValue() + 50) - b.getValue();
+                } else if (b.getValue() == 'Å') {
+                    return a.getValue() - (b.getValue() + 50);
                 }
-                else if (b.getValue()=='Å'){
-                    return a.getValue() - (b.getValue()+50);
-                }
-                    
-            return a.getValue() - b.getValue();
+
+                return a.getValue() - b.getValue();
             }
         };
 

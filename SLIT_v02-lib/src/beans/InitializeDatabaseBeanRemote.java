@@ -5,6 +5,7 @@
  */
 package beans;
 
+
 import javax.ejb.Remote;
 
 /**
@@ -16,6 +17,8 @@ public interface InitializeDatabaseBeanRemote {
     
     public void createDatabase();
 
-    public void addUsers();
+    public void createStudents(int amount);
+
+    public void createTeacher(int amount);
     
 }

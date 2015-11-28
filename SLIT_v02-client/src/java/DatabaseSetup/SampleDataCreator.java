@@ -22,7 +22,7 @@ public class SampleDataCreator {
     public static void main(String args[]){
         System.out.println("Create sample Data now..... Look at server output for more details");
 //        dataCreator.createDatabase();
-        Main.getDataCreator().addUsers();
+        Main.getDataCreator().createStudents(10);
     }
 
 }

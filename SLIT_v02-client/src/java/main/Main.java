@@ -51,8 +51,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("System Start....");
 //        SampleDataCreator.main(args);
-//        TreeSearch.main(args);
-//        Launcher.main(args);
+        new TreeSearch();
+        Launcher.main(args);
     }
 
 }
