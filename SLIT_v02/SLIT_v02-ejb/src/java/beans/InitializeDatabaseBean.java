@@ -5,9 +5,11 @@
  */
 package beans;
 
-import entities.*;
 import DTOs.RolesEnum;
+import com.sun.webkit.Timer;
+import entities.*;
 import java.sql.Date;
+import java.util.Random;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,12 +24,6 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
 
-    /**
-     *
-     * @param name
-     * @param description
-     */
-    @Override
     public void createModule(String name, String description) {
         Module myModule = new Module();
         myModule.setDescription(description);
@@ -35,7 +31,6 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         em.persist(myModule);
     }
 
-    @Override
     public void createRole(int id, String name, String description) {
         AvailableRoles myRole = new AvailableRoles(id);
         myRole.setDescription(description);
@@ -95,6 +90,40 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
             createModule("Module " + i, "Description of Module " + i + " here.");
         }
     }
+    
+    @Override
+    public void addUsers(){
+        
+        String[] firstNames = {"Jonas", "Jørgen", "Simen", "Joergen", "Lars", 
+        "Jons", "John", "Robert", "Richard", "William", "Charles", "Thomas",
+        "Paul", "Barbara", "Patricia", "Champagne", "Crystal", "Cheryl", 
+        "Jane", "Shaquila", "Sensation", "Tracy", "Edward", "Brandy", "Sandra", 
+        "Jason", "Peter", "Gabi", "Helle", "Lena", "Olaf", "Tiffany", "Candy",
+        "Lena", "Brianna", "ShaniquaPapriqua", "Niels", "Ben", "Olaf", "Angela"};
+        
+        String[] lastNames = {"Smith", "Jones", "Collins","Jackson",
+        "Dearsley", "Trump", "Carr", "O'Connell", "Dyer", "Furstzwangler", 
+        "Wilson", "Davis", "Miller", "White", "Black", "Orange", "Thompson",
+        "Allen", "Martin", "Hall", "Adams", "Dam", "Hinrichs", "Nilsen", "Larsen",
+        "Hansen", "Gramstad", "Haraldseid", "Fuglestad", "Lee", "Vader", "Kenobi"};  
+        
+        String[] mails = {"hotmail", "gmail", "fakemail"};
+        
+        Random rand = new Random();
+        System.out.println("Creating users");
+
+        for(int j =0; j<30000;j++){
+           String first = firstNames[rand.nextInt(firstNames.length)];
+           String last = lastNames[rand.nextInt(lastNames.length)];
+           String mail = mails[rand.nextInt(mails.length)];
+           String mailAddress = first + "." + last + "@" + mail + ".com";
+           
+           createUser(first, last, mailAddress);
+        }
+        
+        
+    }
+            
 
     private void createUsers() {
         System.out.println("Creating users.....");
@@ -109,6 +138,8 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         createUser("Olaf", "V", "OV@mail.de");
         createUser("Niels", "S", "NS@mail.de");
         createUser("Even", "A", "EA@mail.de");
+        
+        addUsers();
     }
 
     private void createRoles() {
@@ -136,12 +167,30 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         Date uploadDate = new Date(System.currentTimeMillis());
         myFile.setUploadDate(uploadDate);
         em.persist(myFile);
+             
+        Progress myProgress1 = new Progress();
+        myProgress1.setModule(em.find(Module.class, 1));
+        myProgress1.setUser(em.find(Users.class, 7));
+        myProgress1.setApproved(true);
+        em.persist(myProgress1);
         
-        
-        Progress myProgress = new Progress();
-        myProgress.setModule(em.find(Module.class, 1));
-        myProgress.setUser(em.find(Users.class, 7));
-        em.persist(myProgress);
-    }
+        Progress myProgress2 = new Progress();
+        myProgress2.setModule(em.find(Module.class, 2));
+        myProgress2.setUser(em.find(Users.class, 7));
+        myProgress2.setApproved(true);
 
+        em.persist(myProgress2);
+        
+        Progress myProgress3 = new Progress();
+        myProgress3.setModule(em.find(Module.class, 3));
+        myProgress3.setUser(em.find(Users.class, 7));
+        myProgress3.setApproved(false);
+        em.persist(myProgress3);
+        
+        Progress myProgress4 = new Progress();
+        myProgress4.setModule(em.find(Module.class, 1));
+        myProgress4.setUser(em.find(Users.class, 1));
+        myProgress4.setApproved(true);
+        em.persist(myProgress4);
+    }
 }

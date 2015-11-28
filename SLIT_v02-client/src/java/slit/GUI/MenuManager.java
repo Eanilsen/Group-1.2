@@ -57,7 +57,7 @@ public class MenuManager {
      */
     protected static void makeLogin() {
         login = new Login();
-        Scene scene = login.makeMenu();
+        Scene scene = login.drawMenu();
         stage.setMinWidth(Login.MENU_WIDTH);
         stage.setMinHeight(Login.MENU_HEIGHT);
         stage.setTitle("Login");

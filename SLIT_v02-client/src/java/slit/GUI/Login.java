@@ -32,32 +32,33 @@ public class Login {
      * 
      */
     public Login() {
+        username = new TextField("Username");
+        password = new TextField("Password");
+        loginBtnS = new Button("Login Student");
+        loginBtnT = new Button("Login Teacher");
+        vBox = new VBox();
+        pane = new BorderPane();
+        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
+        
+        scene.getStylesheets().add("LES.css");
+        StyleManager.setStyleClass("Pane", pane);
+        StyleManager.setStyleClass("Textfields", username, password);
+        StyleManager.setStyleClass("Button", loginBtnS);
     }
     
     
-    public Scene makeMenu() {
-//        username = new TextField("username");
-        username = new TextField(Main.getMyUserManager().getUserName(1));
+    protected Scene drawMenu() {
         username.setMaxWidth(100);
-        
-        password = new TextField(Main.getProgressBean().theProgress()+"");
         password.setMaxWidth(100);
         
-        loginBtnS = new Button("Login Student");
         clickToOpenStudent(loginBtnS);
-        
-        loginBtnT = new Button("Login Teacher");
         clickToOpenTeacher(loginBtnT);
-
         
-        vBox = new VBox(5);
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(username, password, loginBtnT, loginBtnS);
+        vBox.getChildren().addAll(username, password, loginBtnS, loginBtnT);
         
-        pane = new BorderPane();
         pane.setCenter(vBox);
         
-        scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         return scene;
     }
     

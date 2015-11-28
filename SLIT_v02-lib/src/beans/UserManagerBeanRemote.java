@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,7 +22,8 @@ public interface UserManagerBeanRemote {
      * @param i
      * @return 
      */
-    public String getUserName(int i);
+    public String getUserName(int i);    
 
     public List<UserDTO> getUserList();
+    
 }

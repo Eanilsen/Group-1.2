@@ -16,8 +16,6 @@ public interface InitializeDatabaseBeanRemote {
     
     public void createDatabase();
 
-    public void createModule(String name, String description);
-
-    public void createRole(int id, String name, String description);
+    public void addUsers();
     
 }

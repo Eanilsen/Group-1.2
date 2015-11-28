@@ -15,5 +15,7 @@ import javax.ejb.Remote;
 public interface ProgressManagerBeanRemote {
     
     public double theProgress();
+    public double getCurrentUserProgress();
+    
     
 }

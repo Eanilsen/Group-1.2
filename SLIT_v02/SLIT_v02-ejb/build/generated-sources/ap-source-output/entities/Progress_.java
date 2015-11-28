@@ -10,10 +10,11 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-11-27T23:39:12")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-11-28T17:52:45")
 @StaticMetamodel(Progress.class)
 public class Progress_ { 
 
+    public static volatile SingularAttribute<Progress, Boolean> approved;
     public static volatile CollectionAttribute<Progress, File> fileCollection;
     public static volatile SingularAttribute<Progress, Date> dateApproved;
     public static volatile SingularAttribute<Progress, Integer> difficultyRating;

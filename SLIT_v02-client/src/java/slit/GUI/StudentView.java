@@ -1,15 +1,14 @@
 package slit.GUI;
 
-import beans.ProgressManagerBeanRemote;
 import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.shape.Line;
-import javax.ejb.EJB;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import main.Main;
 
 /**
  * 
@@ -26,17 +25,16 @@ public class StudentView extends SuperView {
     
     protected ProgressIndicator progressIndicator;
     
-    @EJB
-    private ProgressManagerBeanRemote pbm;
+
         
     /**
      * Constructor for StudetnView that initializes items and give them values.
      */
     StudentView(){
         super();
+//        pane.setStyle("-fx-background-color: red;");
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-        progressIndicator = new ProgressIndicator();
-        progressIndicator.setProgress(0.33);
+        progressIndicator = new ProgressIndicator(Main.getProgressBean().getCurrentUserProgress());
         progressIndicator.setMinSize(100, 100);
     }
     
@@ -48,7 +46,14 @@ public class StudentView extends SuperView {
      */
     @Override
     protected Scene drawMenu() {
-        pane.setTop(progressIndicator);
+        Button settings = new Button("settings");
+        HBox topBox = new HBox(MENU_WIDTH / 3.2);
+        topBox.getChildren().addAll(backButton, progressIndicator, settings);
+        pane.setTop(topBox);
+        topBox.setAlignment(Pos.CENTER);
+//        pane.setTop(progressIndicator);
+//        pane.setBottom(backButton);
+        super.toLogin(backButton);
         return super.drawMenu();
     }
 
@@ -81,57 +86,5 @@ public class StudentView extends SuperView {
                 });
             }
         }
-    }
-    
-    /*
-     * @method bindShapes()
-     * @param Line line: line to be bound
-     * @param Circle circle1: circle to be bound
-     * @param Circle circl2: same as above, etc
-     * This method uses the functional interface "ChangeListener" to listen for
-     * changes in scene's WidthProperty and HeightProperty. Whenever a change
-     * occurs in either, the position of the nodes is adjusted to fit the scene.
-     * Note that we create a ChangeListener with Number generic type since we
-     * are listening for Number values to change, namely the scene's 
-     * width(double) and (double)height. 
-     * Also removes errors about unsafe compilation.
-     */
-    @Override
-    protected void bindShapes(
-            Line line, 
-            Circle circle1, 
-            Circle circle2, 
-            Circle circle3,
-            Circle circle4,
-            Circle circle5) {
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> obser,
-                    Number oldVal, Number newVal) {
-                double x = (double)newVal;
-                line.setStartX(0); //200 in TeacherView
-                line.setEndX(x);
-                circle1.setCenterX(1.5 * (line.getEndX()) / 7 + 100);
-                circle2.setCenterX(2.5 * (line.getEndX()) / 7 + 100);
-                circle3.setCenterX(3.5 * (line.getEndX()) / 7 + 100);
-                circle4.setCenterX(4.5 * (line.getEndX()) / 7 + 100);
-                circle5.setCenterX(5.5 * (line.getEndX()) / 7 + 100);
-            }
-        });
-        
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> obser,
-                    Number oldVal, Number newVal) {
-                double y = (double)newVal;
-                line.setStartY(y / 4);
-                line.setEndY(y / 4);
-                circle1.setCenterY(y / 4);
-                circle2.setCenterY(y / 4);
-                circle3.setCenterY(y / 4);
-                circle4.setCenterY(y / 4);
-                circle5.setCenterY(y / 4);
-            }
-        });
     }
 }

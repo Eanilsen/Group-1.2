@@ -30,11 +30,12 @@ public class TeacherView extends SuperView {
     protected static final double MENU_WIDTH = 1400.0;
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
-    private Button moduleSettings;
-    private Button studentSettings;
-    private Button modules;
-    private Button pending;
-    private ArrayList<Button> teacherButtons;
+    private Button moduleSettingsBtn;
+    private Button studentListBtn;
+    private Button modulesBtn;
+    private Button pendingBtn;
+    private ArrayList<Button> buttons;
+    private StudentList studentList;
 
     /**
      * Constructor for TeacherView that initializes items and give them values.
@@ -42,17 +43,11 @@ public class TeacherView extends SuperView {
     TeacherView() {
     	super();
     	scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
-    	teacherButtons = new ArrayList<>();
-
-    	moduleSettings = new Button("Module Settings");
-    	studentSettings = new Button("Student Settings");
-    	modules = new Button("Modules");
-    	pending = new Button("Pending");
-
-    	teacherButtons.add(moduleSettings);
-    	teacherButtons.add(studentSettings);
-    	teacherButtons.add(modules);
-    	teacherButtons.add(pending);
+    	modulesBtn = new Button("Modules");
+    	pendingBtn = new Button("Pending");
+        moduleSettingsBtn = new Button("Module Settings");
+        studentListBtn = new Button("Student List");
+        buttons = new ArrayList<>();
         
         
     }
@@ -65,7 +60,21 @@ public class TeacherView extends SuperView {
      */
     @Override
     protected Scene drawMenu() {
+        buttons.add(backButton);
+        super.toLogin(backButton);
+        
+        buttons.add(modulesBtn);
+        displayModulesOnClick(modulesBtn);
+
+        buttons.add(pendingBtn);
+        buttons.add(moduleSettingsBtn);
+
+        buttons.add(studentListBtn);
+        displayStudentListOnClick(studentListBtn);
+
     	pane.setLeft(drawTeacherBox());
+        
+    	bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
         return super.drawMenu();
     }
@@ -81,15 +90,14 @@ public class TeacherView extends SuperView {
     	teacherBox.setPrefWidth(200);
     	teacherBox.setStyle("-fx-background-color:pink");
 
-        for (Button b : teacherButtons){
-            b.setPrefWidth(200);
-            //When a button is pressed, invoke setSelected() on it. This will       
-        }
+    	for (Button b : buttons) {
+    		b.setPrefWidth(200);
+    	}
 
     	teacherBox.setPadding(new Insets(30, 0, 0, 0));
     	
-    	teacherBox.getChildren().addAll(
-    		moduleSettings, studentSettings, modules, pending);
+    	teacherBox.getChildren().addAll(backButton,
+    		modulesBtn, pendingBtn, studentListBtn, moduleSettingsBtn);
 
     	return teacherBox;
     }
@@ -125,6 +133,25 @@ public class TeacherView extends SuperView {
         }
     }
     
+    private void displayStudentListOnClick(Button btn) {
+        btn.setOnMouseClicked(e -> {
+            //moved studentList init from constrcutor to avoid nullpointer
+            studentList = new StudentList();
+            pane.setCenter(studentList.drawStudentList());
+            pane.setTop(studentList.drawSearchBars());
+            hideShapes();
+        });
+    }
+
+    private void displayModulesOnClick(Button btn) {
+        btn.setOnMouseClicked(e -> {
+            pane.setRight(null);
+            studentList.hideStudentList();
+            pane.setCenter(null);
+            showShapes();
+        });
+    }
+    
     /*
      * @method bindShapes()
      * @param Line line: line to be bound
@@ -151,7 +178,7 @@ public class TeacherView extends SuperView {
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double x = (double)newVal;
-                line.setStartX(200); //0 in StudentView
+                line.setStartX(200);
                 line.setEndX(x);
                 circle1.setCenterX(1.5 * (line.getEndX()) / 7 + 100);
                 circle2.setCenterX(2.5 * (line.getEndX()) / 7 + 100);
@@ -175,5 +202,19 @@ public class TeacherView extends SuperView {
                 circle5.setCenterY(y / 4);
             }
         });
+    }
+    
+    private void hideShapes() {
+        for (Circle c : moduleCircles) {
+            c.setVisible(false);
+        }
+        line.setVisible(false);
+    }
+
+    private void showShapes() {
+        for (Circle c : moduleCircles) {
+            c.setVisible(true);
+        }
+        line.setVisible(true);
     }
 }

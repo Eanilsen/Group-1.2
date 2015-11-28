@@ -60,6 +60,8 @@ public class Progress implements Serializable {
     private Users user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "progressIdprogress")
     private Collection<Comment> commentCollection;
+    @Column(name = "approved")
+    private Boolean approved;
 
     public Progress() {
     }
@@ -117,6 +119,17 @@ public class Progress implements Serializable {
         this.user = user;
     }
 
+    public Boolean getApproved() {
+        if(approved == null){
+            return false;
+        }         
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+    
     @XmlTransient
     public Collection<Comment> getCommentCollection() {
         return commentCollection;

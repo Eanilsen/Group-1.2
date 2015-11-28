@@ -6,19 +6,14 @@
 package DatabaseSetup;
 
 import beans.InitializeDatabaseBeanRemote;
-import javax.ejb.EJB;
+import main.Main;
 
 /**
  *
  * @author Jons
  */
 public class SampleDataCreator {
-        @EJB
-    private static InitializeDatabaseBeanRemote dataCreator;
 
-    public static InitializeDatabaseBeanRemote getDataCreator() {
-        return dataCreator;
-    }
     
     /**
      * Creates some sample Data in the database using ejb
@@ -26,7 +21,8 @@ public class SampleDataCreator {
      */
     public static void main(String args[]){
         System.out.println("Create sample Data now..... Look at server output for more details");
-                dataCreator.createDatabase();
+//        dataCreator.createDatabase();
+        Main.getDataCreator().addUsers();
     }
 
 }

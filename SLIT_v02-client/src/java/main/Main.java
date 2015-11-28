@@ -5,6 +5,7 @@
  */
 package main;
 
+import DatabaseSetup.SampleDataCreator;
 import beans.InitializeDatabaseBeanRemote;
 import beans.ProgressManagerBeanRemote;
 import beans.UserManagerBeanRemote;
@@ -23,7 +24,16 @@ public class Main {
     /**
      * @param args the command line arguments
      */
+    @EJB
+    private static InitializeDatabaseBeanRemote dataCreator;
 
+    public static InitializeDatabaseBeanRemote getDataCreator() {
+        return dataCreator;
+    }
+
+    public static ProgressManagerBeanRemote getPmb() {
+        return pmb;
+    }
     @EJB
     private static UserManagerBeanRemote myUserManager;
     
@@ -40,10 +50,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("System Start....");
-
+//        SampleDataCreator.main(args);
+//        TreeSearch.main(args);
 //        Launcher.main(args);
-        TreeSearch.main(args);
-
     }
 
 }

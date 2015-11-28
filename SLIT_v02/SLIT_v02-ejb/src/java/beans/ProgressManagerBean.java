@@ -5,7 +5,11 @@
  */
 package beans;
 
-import javax.ejb.Stateless;
+import entities.Progress;
+import entities.Users;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,11 +17,54 @@ import javax.persistence.PersistenceContext;
  *
  * @author Jorgen
  */
-@Stateless
+@Stateful
 public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
+    
+    private Users user;
+    private Progress progress;
+    private UserManagerBean um;
+    private ModuleManagerBean mo;
+
+    /**
+     * author: Jorgen
+     * @return Stats for user 7
+     */
+    @Override
+    public double getCurrentUserProgress(){
+        Collection<Progress> userSeven = getApprovedProgressCollection(7);
+        
+        int i = userSeven.size();
+        double approvedModules = (double) i;
+        System.out.println(userSeven.size());
+        double moduleStats = approvedModules / 13.0; //replace 5 with a list of all modules
+
+        return moduleStats;     
+    }    
+    
+    /**
+     * author: Jorgen
+     * @param id Which user you want to get the list for
+     * @return 
+     */
+    public Collection<Progress> getApprovedProgressCollection(int id){
+       user = em.find(Users.class, id);
+        
+       
+       Collection<Progress> approvedList = new ArrayList<>();
+       
+       // for each data in table:progress, find all approved = true
+       for (Progress p : user.getProgressCollection()){
+           if (p.getApproved()){
+                approvedList.add(p);
+           }
+       }
+       return approvedList;     
+    }
+    
+
     
     /**
      * @author Jorgen L.
@@ -34,5 +81,5 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
         System.out.println(prog);
         return prog;
     }
-
 }
+    

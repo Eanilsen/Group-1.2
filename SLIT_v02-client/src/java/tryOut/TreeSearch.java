@@ -16,6 +16,9 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import main.Main;
 
@@ -30,17 +33,16 @@ public class TreeSearch {
     public static void main(String args[]) {
         List<UserDTO> users = Main.getMyUserManager().getUserList();
 
-        Calendar cal = new GregorianCalendar();
-        long timeNow = cal.getTimeInMillis();
+        long timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
         for (UserDTO u : users) {
-//            System.out.println("Trying to insert " + u.name);
+            System.out.println("Trying to insert " + u.name);
             searchTree.insert(u.name, u);
         }
         System.out.println("time start = " + timeNow);
-        System.out.println("time now = " + cal.getTimeInMillis());
-        System.out.println("time to create tree = " + (long) (cal.getTimeInMillis() - timeNow));
+        System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
+        System.out.println("time to create tree = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
-        String searchFor = "Bob";
+        String searchFor = "Jonas Hinrichs";
         List<UserDTO> userNames = searchTree.getUsers(searchFor);
 
         System.out.println("All users in this list with " + searchFor);
@@ -163,17 +165,17 @@ public class TreeSearch {
                     n = new TreeNode(name.charAt(0));
                     nextNodes.add(n);
                     nextNodes.sort(TreeComparator);
-                    System.out.println("New node " + n.getValue());
+//                    System.out.println("New node " + n.getValue());
                 }
 
                 n.insert(name.substring(1), user); // deletes the first letter of the name                
 
             } else {
                 this.user.add(user);
-                System.out.println("Endnode " + value + " reached. Adding new user with id " + user);
+//                System.out.println("Endnode " + value + " reached. Adding new user with id " + user);
             }
-            System.out.println("Current node: " + this.getValue());
-            this.printNodes();
+//            System.out.println("Current node: " + this.getValue());
+//            this.printNodes();
         }
 
         public void printNodes() {
