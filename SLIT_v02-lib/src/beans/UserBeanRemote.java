@@ -11,6 +11,5 @@ package beans;
  */
 public interface UserBeanRemote {
 
-    public String getName();
     
 }

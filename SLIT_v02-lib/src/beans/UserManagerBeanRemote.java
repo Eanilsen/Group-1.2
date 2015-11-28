@@ -5,6 +5,8 @@
  */
 package beans;
 
+import DTOs.UserDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -20,5 +22,6 @@ public interface UserManagerBeanRemote {
      * @return 
      */
     public String getUserName(int i);
-    
+
+    public List<UserDTO> getUserList();
 }

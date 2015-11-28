@@ -10,6 +10,7 @@ import beans.ProgressManagerBeanRemote;
 import beans.UserManagerBeanRemote;
 import javax.ejb.EJB;
 import slit.GUI.Launcher;
+import tryOut.TreeSearch;
 
 
 /**
@@ -40,7 +41,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("System Start....");
 
-        Launcher.main(args);
+//        Launcher.main(args);
+        TreeSearch.main(args);
 
     }
 

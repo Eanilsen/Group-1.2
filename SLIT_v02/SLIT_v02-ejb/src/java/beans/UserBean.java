@@ -16,31 +16,26 @@ import javax.persistence.PersistenceContext;
 /**
  *
  * @author Jons
- */
+ */ 
 @Stateful
 public class UserBean implements UserBeanRemote {
 
-    @PersistenceContext(unitName = "SLIT_v02-ejbPU")
-    private EntityManager em;
     private Users user;
 
     public UserBean() {
     }
 
+    
+    
+    public UserBean(Users user){
+        this.user = user;
+    }
     /**
      * returns the combined First and Lastname
      *
      * @return
      */
-    
-    public UserBean(int id){
-        user = em.find(Users.class, id);
-    }
-    
-    @Override
-    public String getName() {          
-        return user.getFirstname() + " " + user.getLastname();
-    }
+
 
     public String getLastname() {
         return user.getLastname();
@@ -49,13 +44,5 @@ public class UserBean implements UserBeanRemote {
     public String getFirstname() {
         return user.getFirstname();
     }
-
-
-    public void persist(Object object) {
-        em.persist(object);
-    }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
 }

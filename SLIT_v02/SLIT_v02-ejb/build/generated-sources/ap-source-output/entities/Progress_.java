@@ -10,7 +10,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-11-26T13:57:49")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-11-27T23:39:12")
 @StaticMetamodel(Progress.class)
 public class Progress_ { 
 
