@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DatabaseSetup;
+package slit.database;
 
 import beans.InitializeDatabaseBeanRemote;
-import main.Main;
+import javax.ejb.EJB;
+import slit.main.Main;
 
 /**
  *
  * @author Jons
  */
 public class SampleDataCreator {
+    
 
     
     /**
@@ -21,8 +23,7 @@ public class SampleDataCreator {
      */
     public static void main(String args[]){
         System.out.println("Create sample Data now..... Look at server output for more details");
-//        dataCreator.createDatabase();
-        Main.getDataCreator().addUsers();
+        Main.getDataCreator().createDatabase();
+//        Main.getDataCreator().createStudents(10);
     }
-
 }

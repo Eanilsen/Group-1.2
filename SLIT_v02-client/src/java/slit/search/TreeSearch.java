@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tryOut;
+package slit.search;
 
 import DTOs.UserDTO;
 import beans.UserManagerBeanRemote;
@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import main.Main;
+import slit.main.Main;
 
 /**
  *
@@ -30,32 +30,42 @@ public class TreeSearch {
 
     protected static TreeNode searchTree = new TreeNode();
 
-    public static void main(String args[]) {
+    public static TreeNode getSearchTree() {
+        return searchTree;
+    }
+
+    public TreeSearch() {
         List<UserDTO> users = Main.getMyUserManager().getUserList();
 
         long timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
         for (UserDTO u : users) {
-            System.out.println("Trying to insert " + u.name);
+//            System.out.println("Trying to insert " + u.name);
             searchTree.insert(u.name, u);
         }
         System.out.println("time start = " + timeNow);
         System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
         System.out.println("time to create tree = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
+        timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
         String searchFor = "Jonas Hinrichs";
         List<UserDTO> userNames = searchTree.getUsers(searchFor);
 
+        System.out.println("time start = " + timeNow);
+        System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
+        System.out.println("time to search for " + searchFor + " = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
+
         System.out.println("All users in this list with " + searchFor);
+        if(userNames == null || userNames.isEmpty()){
+            System.out.println("No user with " + searchFor);
+        }else{
         for (UserDTO u : userNames) {
             System.out.println(u.name);
-        }
+        }}
         searchTree.printNodes();
 
     }
-    
-    
 
-    private static class TreeNode {
+    public static class TreeNode {
 
         protected char value;
         protected ArrayList<TreeNode> nextNodes;
@@ -89,18 +99,16 @@ public class TreeSearch {
             });
         }
 
-        Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>(){
+        Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>() {
             @Override
-            public int compare
-            (TreeNode a, TreeNode b){                                        
-                if (a.getValue()=='Å'){
-                    return (a.getValue() +50) - b.getValue();
+            public int compare(TreeNode a, TreeNode b) {
+                if (a.getValue() == 'Å') {
+                    return (a.getValue() + 50) - b.getValue();
+                } else if (b.getValue() == 'Å') {
+                    return a.getValue() - (b.getValue() + 50);
                 }
-                else if (b.getValue()=='Å'){
-                    return a.getValue() - (b.getValue()+50);
-                }
-                    
-            return a.getValue() - b.getValue();
+
+                return a.getValue() - b.getValue();
             }
         };
 
@@ -131,7 +139,11 @@ public class TreeSearch {
             // that means we have add all follwoing nodes Userlists.
             if (name != null && !name.isEmpty()) {
                 name = name.toUpperCase();
-                return this.getNextNode(name.charAt(0)).getUsers(name.substring(1));
+                if (this.getNextNode(name.charAt(0)) == null) {
+                    return null;
+                } else {
+                    return this.getNextNode(name.charAt(0)).getUsers(name.substring(1));
+                }
             } else {
 
                 if (nextNodes.isEmpty()) {
