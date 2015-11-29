@@ -5,10 +5,14 @@
  */
 package beans;
 
+import DTOs.ModuleDTO;
+import basicBeans.ModuleFacade;
+import basicBeans.UsersFacade;
 import entities.Progress;
 import entities.Users;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,64 +26,94 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
-    
+    private UsersFacade userFacade = new UsersFacade();
     private Users user;
-    private Progress progress;
-    private UserManagerBean um;
-    private ModuleManagerBean mo;
+
 
     /**
      * author: Jorgen
      * @return Stats for user 7
      */
     @Override
-    public double getCurrentUserProgress(){
-        Collection<Progress> userSeven = getApprovedProgressCollection(7);
+    public double getUserProgress(int studentID){
         
-        int i = userSeven.size();
-        double approvedModules = (double) i;
-        System.out.println(userSeven.size());
-        double moduleStats = approvedModules / 13.0; //replace 5 with a list of all modules
-
-        return moduleStats;     
+        double progressPercentage =0.0;
+        
+        progressPercentage = getApprovedModules(studentID).size()/userFacade.count();
+        
+        return progressPercentage;     
     }    
     
     /**
-     * author: Jorgen
-     * @param id Which user you want to get the list for
+     * author: Jorgen, Jonas
+     * returns a list with all approved modules of given student 
+     * @param studentID Which user you want to get the list for
      * @return 
      */
-    public Collection<Progress> getApprovedProgressCollection(int id){
-       user = em.find(Users.class, id);
-        
-       
-       Collection<Progress> approvedList = new ArrayList<>();
+    @Override
+    public Collection<ModuleDTO> getApprovedModules(int studentID){
+       user = em.find(Users.class, studentID);
+       Collection<ModuleDTO> approvedList = new ArrayList<>();
        
        // for each data in table:progress, find all approved = true
        for (Progress p : user.getProgressCollection()){
-           if (p.getApproved()){
-                approvedList.add(p);
+           if (p.getApproved()!= null && p.getApproved()){
+               ModuleDTO module = createModuleDTO(p);                       
+                approvedList.add(module);
            }
        }
        return approvedList;     
     }
-    
-
-    
     /**
-     * @author Jorgen L.
+     * author: Jorgen, Jonas
+     * returns a list with all failed modules of given student 
+     * @param studentID Which user you want to get the list for
      * @return 
      */
     @Override
-    public double theProgress(){
-        System.out.println("theProgress");
-        double modules = 5.0;
-        double modulesCompleted = 1.0;
-        double prog = modulesCompleted / modules; //replace 1 with modules completed
-        //everything inside entity Progress is completed modules. Find the user 
-        //and then look for how many modules he has completed. Then divide on 14.
-        System.out.println(prog);
-        return prog;
+    public Collection<ModuleDTO> getFailedModules(int studentID){
+       user = em.find(Users.class, studentID);
+       Collection<ModuleDTO> failedProgress = new ArrayList<>();
+       
+       // for each data in table:progress, find all approved = true
+       for (Progress p : user.getProgressCollection()){
+           if (p.getApproved()!= null &&!p.getApproved()){
+               ModuleDTO module = createModuleDTO(p);                       
+                failedProgress.add(module);
+           }
+       }
+       return failedProgress;     
     }
+    /**
+     * author: Jorgen, Jonas
+     * returns a list with all unreviewed modules of given student 
+     * @param studentID Which user you want to get the list for
+     * @return 
+     */
+    @Override
+    public Collection<ModuleDTO> getUnreviewedModules(int studentID){
+       user = em.find(Users.class, studentID);
+       Collection<ModuleDTO> failedProgress = new ArrayList<>();
+       
+       // for each data in table:progress, find all approved = true
+       for (Progress p : user.getProgressCollection()){
+           if (p.getApproved()== null){
+               ModuleDTO module = createModuleDTO(p);                       
+                failedProgress.add(module);
+           }
+       }
+       return failedProgress;     
+    }
+
+    private ModuleDTO createModuleDTO(Progress p) {
+        ModuleDTO module = new ModuleDTO(p.getModule().getIdmodule(), p.getModule().getName());
+        return module;
+    }
+
+    @Override
+    public double getCurrentUserProgress() {
+        return getUserProgress(UserManagerBean.getCurrentUser().getIduser());
+    }
+
 }
     

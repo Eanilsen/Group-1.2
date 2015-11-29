@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +25,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Jons
  */
+@Singleton
 @Stateless
 public class UserManagerBean implements UserManagerBeanRemote {
     @EJB
@@ -32,22 +34,12 @@ public class UserManagerBean implements UserManagerBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
 
-    private Users currentUser;
-    
-    /**
-     * @author JH
-     * returns a list of all users that contain the given String either in their first or lastname 
-     * @param name
-     * 
-     * @return
-     */
-    public List<Users> findUsersByName(String name){
-        List<Users> foundUsers = new ArrayList<>();
-        foundUsers.addAll(em.createNamedQuery("Users.findByFirstname").setParameter("firstname", name).getResultList());
-        foundUsers.addAll(em.createNamedQuery("Users.findByLastname").setParameter("lastname", name).getResultList());
-        return foundUsers;
-               
+    private static Users currentUser;
+
+    public static Users getCurrentUser() {
+        return currentUser;
     }
+    
     
 
     /**
@@ -62,33 +54,8 @@ public class UserManagerBean implements UserManagerBeanRemote {
         String name = user.getFirstname() + " " + user.getLastname();
         return name;
     }
-
-    /**
-     *returns a userbean which represents a user of the System
-     * edit: problem with EJB. cannot hand over a reference from another EJB
-     * @param i
-     * @return
-     */
-//    @Override
-//    public UserBeanRemote getUserBean(int i){
-//      UserBean user = new UserBean(em.find(Users.class, i));
-//      return user;
-//    }
-    
-    /**
-     * @author JH
-     * returns a list of users that are in the specified role
-     * @param role
-     * @return 
-     */
-    public Collection<Users> findUserByRole(RolesEnum role){
-        return em.find(AvailableRoles.class, role.ordinal()).getUsersCollection();       
-
-        
-    }
     
     
-
     public void persist(Object object) {
         em.persist(object);
                 List<Users> myUsers = new ArrayList<>();
@@ -108,11 +75,12 @@ public class UserManagerBean implements UserManagerBeanRemote {
         for(Users u : databaseUser){
             System.out.println("Creating user " + u.getFirstname() + " " + u.getLastname());
             String name = u.getFirstname() + " " + u.getLastname();
-            UserDTO UserToAdd = new UserDTO(u.getIduser(),name, u.getEmail());
+            UserDTO UserToAdd = new UserDTO(u.getIduser(),name);
             userDTO.add(UserToAdd);
         }
         return userDTO;
         
     }
+    
     
 }
