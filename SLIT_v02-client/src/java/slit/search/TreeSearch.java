@@ -52,12 +52,15 @@ public class TreeSearch {
 
         System.out.println("time start = " + timeNow);
         System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
-        System.out.println("time to search for " + searchFor +" = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
+        System.out.println("time to search for " + searchFor + " = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
         System.out.println("All users in this list with " + searchFor);
+        if(userNames == null || userNames.isEmpty()){
+            System.out.println("No user with " + searchFor);
+        }else{
         for (UserDTO u : userNames) {
             System.out.println(u.name);
-        }
+        }}
         searchTree.printNodes();
 
     }
@@ -136,7 +139,11 @@ public class TreeSearch {
             // that means we have add all follwoing nodes Userlists.
             if (name != null && !name.isEmpty()) {
                 name = name.toUpperCase();
-                return this.getNextNode(name.charAt(0)).getUsers(name.substring(1));
+                if (this.getNextNode(name.charAt(0)) == null) {
+                    return null;
+                } else {
+                    return this.getNextNode(name.charAt(0)).getUsers(name.substring(1));
+                }
             } else {
 
                 if (nextNodes.isEmpty()) {
