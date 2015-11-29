@@ -5,23 +5,16 @@
  */
 package DTOs;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Jons
  */
-public class UserDTO implements Serializable{
+public class ModuleDTO {
+    private int id;
+    private String name;    
     
-    public int id;
-    public String name;
-    private RolesEnum role;
-    
-    public UserDTO(int id, String name){
+    public ModuleDTO(int id, String name){
         this.id=id;
         this.name=name;
-        this.role = role;
-        
     }
-    
 }
