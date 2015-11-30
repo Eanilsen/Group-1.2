@@ -45,7 +45,6 @@ public class Login {
         StyleManager.setStyleClass("Pane1", pane);
         StyleManager.setStyleClass("Textfields", username, password);
         StyleManager.setStyleClass("Button", loginBtnS, loginBtnT);
-        StyleManager.setStyleClass("Hbox", hBox);
 
 
     }

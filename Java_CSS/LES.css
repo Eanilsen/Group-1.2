@@ -30,8 +30,8 @@
 }
 
 .Circle {
-	-fx-effect: dropshadow(gaussian, #1E121E, 3, 0, 0, 3);
-	-fx-background-color: red;
+	/*-fx-effect: dropshadow(gaussian, #1E121E, 3, 0, 0, 3);*/
+	-fx-background-image:url("Icon-Green.png");
 }
 
 .ProgInd {

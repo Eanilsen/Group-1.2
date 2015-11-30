@@ -14,6 +14,8 @@ import javafx.scene.shape.Shape;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
 public class SuperView {
 	
@@ -27,6 +29,9 @@ public class SuperView {
     protected Line line;
     protected TextArea moduleText;
     protected ArrayList<ModuleCircle> moduleCircles;
+    protected Image image1;
+    protected Image image2;
+    protected Image image3;
 
     SuperView() {
     	pane = new BorderPane();
@@ -38,6 +43,9 @@ public class SuperView {
         circle3 = new ModuleCircle(35, "Module 3 text");
         circle4 = new ModuleCircle(35, "Module 4 text");
         circle5 = new ModuleCircle(35, "Module 5 text");
+        image1 = new Image("Icon-Green.png");
+        image2 = new Image("Icon-Red2.png");
+        image3 = new Image("Icon-Gray.png");
         
         moduleCircles = new ArrayList<>();
         moduleCircles.add(circle1);
@@ -52,11 +60,15 @@ public class SuperView {
     }
 
     protected Scene drawMenu() {
-        circle1.setFill(Color.GREEN);
-        circle2.setFill(Color.RED);
-        circle3.setFill(Color.GRAY);
-        circle4.setFill(Color.GREEN);
-        circle5.setFill(Color.GRAY);
+        ImagePattern imagePattern = new ImagePattern(image1);
+        ImagePattern imagePattern2 = new ImagePattern(image2);
+        ImagePattern imagePattern3 = new ImagePattern(image3);
+
+        circle1.setFill(imagePattern);
+        circle2.setFill(imagePattern2);
+        circle3.setFill(imagePattern3);
+        circle4.setFill(imagePattern);
+        circle5.setFill(imagePattern3);
         
         pane.getChildren().add(line);
         
@@ -100,15 +112,19 @@ public class SuperView {
                 double y = (double)newVal;
                 line.setStartY(y / 4);
                 line.setEndY(y / 4);
-                circle1.setCenterY(y / 4);
-                circle2.setCenterY(y / 4);
-                circle3.setCenterY(y / 4);
-                circle4.setCenterY(y / 4);
-                circle5.setCenterY(y / 4);
+                circle1.setCenterY(y / 4 + 6);
+                circle2.setCenterY(y / 4 + 6);
+                circle3.setCenterY(y / 4 + 6);
+                circle4.setCenterY(y / 4 + 6);
+                circle5.setCenterY(y / 4 + 6);
             }
         });
     }
 
-    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+        protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
     }
+
+        /*public void rotateField(){
+        }*/
+
 }
