@@ -10,6 +10,7 @@
         </group>
         <group name="Group-1.2">
             <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02-lib/src/beans/InitializeDatabaseBeanRemote.java</file>
+            <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02-lib/src/beans/FileManagerBeanRemote.java</file>
         </group>
     </open-files>
 </project-private>
