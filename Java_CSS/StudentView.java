@@ -70,8 +70,6 @@ public class StudentView extends SuperView {
                     }
                 });
             }
-        }
-     
-            //circle1.setOnMouseClicked(e -> rotation.pause());
+        }     
     }
 }
