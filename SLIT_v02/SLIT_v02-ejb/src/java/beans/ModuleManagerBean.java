@@ -11,6 +11,7 @@ import entities.Module;
 import entities.Users;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.PersistenceContext;
 
@@ -22,29 +23,35 @@ import javax.persistence.PersistenceContext;
 @Stateful
 public class ModuleManagerBean implements ModuleManagerBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
-    private final ModuleFacade mf;
+    @EJB
+    private ModuleFacade mf;
     private List<Module> modules;
     private Users currentUser;
 
-    public ModuleManagerBean() {
-        this.mf = new ModuleFacade();
-    }
-
-    ModuleManagerBean(Users user) {
-        currentUser = user;
-        this.mf = new ModuleFacade();
-    }
-
+    /**
+     * Finds a module by its primary key and returns its name.
+     * @param id primary key
+     * @return module key
+     */
     public String getName(int id) {
         Module m = mf.find(id);
         return m.getName();
     }
 
+    /**
+     * Finds a module by its primary key and returns its description.
+     * @param id primary key
+     * @return module description
+     */
     public String getDescription(int id) {
         Module m = mf.find(id);
         return m.getDescription();
     }
     
+    /**
+     * Gets all the 
+     * @return 
+     */
     public List<ModuleDTO> getAllModules(){
         ArrayList<ModuleDTO> moduleList = new ArrayList<>();
         for (Module m : mf.findAll()) {

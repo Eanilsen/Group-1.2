@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import slit.main.Main;
 
 /**
  * @author
@@ -42,7 +43,7 @@ public class SuperView {
         
         line = new Line();
         line.setStroke(Color.RED);
-        circle1 = new ModuleCircle(35, "Module 1 text");
+        circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1));
         circle2 = new ModuleCircle(35, "Moudle 2 text");
         circle3 = new ModuleCircle(35, "Module 3 text");
         circle4 = new ModuleCircle(35, "Module 4 text");
