@@ -52,8 +52,6 @@ public class TeacherView extends SuperView {
 
     }
 
-
-
     @Override
     protected Scene drawMenu() {
         buttons.add(modules);
@@ -85,6 +83,7 @@ public class TeacherView extends SuperView {
     	return teacherBox;
     }
 
+    //Enables TextArea upon click.
     @Override
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
         for (ModuleCircle circle : circles) {
@@ -117,6 +116,14 @@ public class TeacherView extends SuperView {
                         circle.setSelected(false);
                         pane.setCenter(null);
                         moduleText = null;
+
+                        FadeTransition ft = new FadeTransition(
+                            Duration.seconds(0.5), moduleText);
+                        ft.setFromValue(1);
+                        ft.setToValue(0);
+                        ft.setCycleCount(1);
+                        ft.setAutoReverse(true);
+                        ft.play();
                     }
                 });
             }
