@@ -3,32 +3,31 @@
  * This class serves as the main GUI window. Use this as a basis for creating
  * student and teacher views.
  */
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.Scene;
-import javafx.geometry.Pos;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ChangeListener;
-import javafx.scene.control.TextArea;
-import javafx.geometry.Insets;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
 import javafx.animation.*;
-import javafx.scene.transform.Rotate;
-import javafx.util.Duration;
 import javafx.animation.ParallelTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import javafx.event.Event;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 
 public class StudentView extends SuperView {
@@ -37,6 +36,7 @@ public class StudentView extends SuperView {
     private ProgressIndicator progressIndicator;
     private Stage stage;
     private Button btn;
+    private VBox vBox;
 
         
     StudentView(){
@@ -44,23 +44,32 @@ public class StudentView extends SuperView {
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator(0.13);
         progressIndicator.setMinSize(100, 100);
+        btn = new Button("Browse");
+
 
         StyleManager.setStyleClass("Pane", pane);
         StyleManager.setStyleClass("ProgInd", progressIndicator);
 
-        /*FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        fileChooser.showOpenDialog(stage);*/
+
     }
 
     @Override
     protected Scene drawMenu() {
         pane.setTop(progressIndicator);
+        pane.setBottom(btn);
+        uploadButton(btn);
         return super.drawMenu();
     }
 
 
 
+    protected void uploadButton(Button btn) {
+            btn.setOnMouseClicked(b -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Resource File");
+                fileChooser.showOpenDialog(stage);
+                            });
+    }
     //Enables TextArea upon click.
     @Override
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
@@ -71,7 +80,7 @@ public class StudentView extends SuperView {
                         rotation.setCycleCount(1);
                         rotation.setByAngle(180);
                         rotation.play();
-                    
+
                     if (moduleText == null || circle.isSelected() == false) {
                         circle.setSelected(true);
                         moduleText = new TextArea(circle.getText());
