@@ -5,44 +5,59 @@
  */
 package beans;
 
+import DTOs.ModuleDTO;
+import basicBeans.ModuleFacade;
 import entities.Module;
 import entities.Users;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
  * @author Jons
+ * @authon Even
  */
 @Stateful
 public class ModuleManagerBean implements ModuleManagerBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
-    private EntityManager em;
-    
+    private final ModuleFacade mf;
     private List<Module> modules;
     private Users currentUser;
 
     public ModuleManagerBean() {
+        this.mf = new ModuleFacade();
     }
 
     ModuleManagerBean(Users user) {
         currentUser = user;
+        this.mf = new ModuleFacade();
     }
-    
-    public List<Module> getAllModules(){
-        throw new NotImplementedException();
-    }
-    
-    
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    public String getName(int id) {
+        Module m = mf.find(id);
+        return m.getName();
+    }
 
-    public void persist(Object object) {
-        em.persist(object);
+    public String getDescription(int id) {
+        Module m = mf.find(id);
+        return m.getDescription();
     }
     
+    public List<ModuleDTO> getAllModules(){
+        ArrayList<ModuleDTO> moduleList = new ArrayList<>();
+        for (Module m : mf.findAll()) {
+            ModuleDTO mdto = new ModuleDTO(m.getIdmodule(), m.getName());
+            moduleList.add(mdto);
+        }
+        return moduleList;
+    }
+
+    public void createModule(String name, String description) {
+        Module m = new Module();
+        m.setName(name);
+        m.setDescription(description);
+        mf.create(m);
+    }
 }
