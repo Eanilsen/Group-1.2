@@ -1,4 +1,6 @@
-/* Affects Login page, with logo. */
+/* Affects Login page. 
+A different selector was required because of the logo. 
+The lines commented out have been kept, just in case. */
 .Pane1 {
 	/*-fx-background-color: rgba(183,222,237,1);
 	-fx-background-color: -moz-linear-gradient(top, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
@@ -12,6 +14,11 @@
 	-fx-background-size: 125px 125px;
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: center top;
+}
+
+/* Affects background of the remaining pages. */
+.Pane {
+	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
 }
 
 /* Affects the opacity of the placeholder text in TextFields. */
@@ -34,16 +41,6 @@
 /* Affects the aligment of the module text. */
 .txtArea *.text {
 	-fx-text-alignment: center;
-}
-
-/* Affects background of the remaining pages. */
-.Pane {
-	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
-}
-
-.Button {
-	-fx-float: center;
-	-fx-width: 300px;
 }
 
 /* Affects the module circles. May prove to be unnecessary. */

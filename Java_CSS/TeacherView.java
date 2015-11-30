@@ -116,14 +116,6 @@ public class TeacherView extends SuperView {
                         circle.setSelected(false);
                         pane.setCenter(null);
                         moduleText = null;
-
-                        FadeTransition ft = new FadeTransition(
-                            Duration.seconds(0.5), moduleText);
-                        ft.setFromValue(1);
-                        ft.setToValue(0);
-                        ft.setCycleCount(1);
-                        ft.setAutoReverse(true);
-                        ft.play();
                     }
                 });
             }

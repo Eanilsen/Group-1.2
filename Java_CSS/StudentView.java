@@ -22,12 +22,22 @@ import javafx.animation.*;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import javafx.animation.ParallelTransition;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.event.Event;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 
 
 public class StudentView extends SuperView {
     protected static final double MENU_WIDTH = 800.0;
     protected static final double MENU_HEIGHT = 600.0;
     private ProgressIndicator progressIndicator;
+    private Stage stage;
+    private Button btn;
+
         
     StudentView(){
    	    super();
@@ -35,10 +45,12 @@ public class StudentView extends SuperView {
         progressIndicator = new ProgressIndicator(0.13);
         progressIndicator.setMinSize(100, 100);
 
-        
         StyleManager.setStyleClass("Pane", pane);
         StyleManager.setStyleClass("ProgInd", progressIndicator);
 
+        /*FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.showOpenDialog(stage);*/
     }
 
     @Override
@@ -46,6 +58,8 @@ public class StudentView extends SuperView {
         pane.setTop(progressIndicator);
         return super.drawMenu();
     }
+
+
 
     //Enables TextArea upon click.
     @Override
@@ -84,4 +98,6 @@ public class StudentView extends SuperView {
             }
         }     
     }
+
+
 }
