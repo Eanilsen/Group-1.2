@@ -13,6 +13,7 @@ import entities.*;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
@@ -88,7 +89,8 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     }
 
     public void createProgress(int bool, Module module, Users user) {
-
+        
+        Progress progress = new Progress();
         if (bool == 1) {
             progress.setApproved(true);
         }
@@ -110,18 +112,19 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
      * @param progress how many progresses to add
      */
     @Override
-    public void createDatabase(int students, int teachers, int files, int progress) {
+    public void createDatabase(int students, int teachers, int files) {
 //        createUsers();   //create teachers and students alone   todo implement function to create standard users with roles
-        addRoles();
-        addModules();
-        addRessources();
-        em.flush();
-        addBasicUsers();
-        addStudents(students);
-        addTeachers(teachers);
+//        addRoles();
+//        addModules();
+//        addRessources();
+//        em.flush();
+//        addBasicUsers();
+//        addStudents(students);
+//        addTeachers(teachers);
+        em.flush();        
+        addProgress();
         em.flush();
         addFiles(files);
-        addProgress(progress);
     }
 
     private void addModules() {
@@ -198,10 +201,10 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     /**
      * @author Lybeck
      * @author Jons
+     * @param amount
      */
     public void addFiles(int amount) {
         System.out.println("Creating files.....");
-        List<Progress> progressList = progressFacade.findAll();
 
         String[] fileNames = {"modulEn.txt", "Jorgensmodule.crazydoc", "newFile.doc"
             + "resource.txt", "module.pdf", "module3.pdf", "tst.dmg"
@@ -214,7 +217,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
 
         for (int i = 0; i < amount; i++) {
             String randomFile = fileNames[rand.nextInt(fileNames.length)];
-            createFiles(randomFile, currentDate, progressList.get(rand.nextInt(progressList.size())));
+            createFiles(randomFile, currentDate, progressFacade.find(rand.nextInt(progressFacade.count())));
 
         }
     }
@@ -223,26 +226,29 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
      * @author Lybeck
      * @author Jons
      */
-    private void addProgress(int amount) {
+    private void addProgress() {
         System.out.println("Creating progress.....");
 
-        for (int i = 0; i < amount; i++) {
-            user = usersFacade.find(rand.nextInt(usersFacade.count()));
+            Collection<Users> userCollection = usersFacade.findAll();
+            System.out.println(userCollection.size());
+            for (Users u : userCollection) {
+                
             int passedModules = rand.nextInt(moduleFacade.count());
 
             for (int j = 0; j < passedModules; j++) {
                 module = moduleFacade.find(j);
-                createProgress(1, module, user);
 
-                for (int k = 0; k < rand.nextInt(3); j++) {
+                for (int k = 0; k < rand.nextInt(2); j++) {
                     createProgress(0, module, user);
-                }
+                }                module = moduleFacade.find(j);
+                
+                createProgress(1, module, user);
             }
 
             if (passedModules != moduleFacade.count()) {
                 createProgress(2, moduleFacade.find(passedModules), user);
             }
-        }
+            }
 
     }
 }

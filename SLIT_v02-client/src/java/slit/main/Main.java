@@ -20,16 +20,15 @@ import slit.search.TreeSearch;
  * @author Jons
  */
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-//    @EJB
-//    private static InitializeDatabaseBeanRemote dataCreator;
-//
-//    public static InitializeDatabaseBeanRemote getDataCreator() {
-//        return dataCreator;
-//    }
+    
+    
+    public static void main(String[] args) {
+        System.out.println("System Start....");
+//        SampleDataCreator.main(args);
+        new TreeSearch();
+        Launcher.main(args);
+    }
+    
     @EJB
     private static InitializeDatabaseBeanRemote dataCreator;
     
@@ -51,11 +50,6 @@ public class Main {
         return myUserManager;
     }
 
-    public static void main(String[] args) {
-        System.out.println("System Start....");
-        SampleDataCreator.main(args);
-        new TreeSearch();
-        Launcher.main(args);
-    }
+
 
 }
