@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -22,7 +21,6 @@ import javax.persistence.PersistenceContext;
  */
 @Stateful
 public class ModuleManagerBean implements ModuleManagerBeanRemote {
-    @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     @EJB
     private ModuleFacade mf;
     private List<Module> modules;
@@ -49,8 +47,9 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
     }
     
     /**
-     * Gets all the 
-     * @return 
+     * Gets all the modules stored in the database and creates DTOs for the
+     * client to access.
+     * @return List of moduleDTOs
      */
     public List<ModuleDTO> getAllModules(){
         ArrayList<ModuleDTO> moduleList = new ArrayList<>();
@@ -61,6 +60,11 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
         return moduleList;
     }
 
+    /**
+     * Creates a new module and persists it.
+     * @param name module name
+     * @param description module description
+     */
     public void createModule(String name, String description) {
         Module m = new Module();
         m.setName(name);
