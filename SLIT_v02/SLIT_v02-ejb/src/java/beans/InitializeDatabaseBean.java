@@ -145,10 +145,10 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
 
         String[] firstNames = {"Jonas", "Jørgen", "Simen", "Joergen", "Lars",
             "Jons", "John", "Robert", "Richard", "William", "Charles", "Thomas",
-            "Paul", "Barbara", "Patricia", "Champagne", "Crystal", "Cheryl",
+            "Paul", "Barbara", "Patricia", "Champagne", "Crystal", "Cheryl","TÆmmi","TÅrsten","TØlkien",
             "Jane", "Shaquila", "Sensation", "Tracy", "Edward", "Brandy", "Sandra",
             "Jason", "Peter", "Gabi", "Helle", "Lena", "Olaf", "Tiffany", "Candy",
-            "Lena", "Brianna", "ShaniquaPapriqua", "Niels", "Ben", "Olaf", "Angela"};
+            "Lena", "Brianna", "ShaniquaPapriqua", "Niels", "Ben", "Olaf", "Angela", "Åspen", "Årne", "Ølav", "Øbi", "Ærster", "Ællen"};
 
         String[] lastNames = {"Dover", "Smith", "Jones", "Collins", "Jackson",
             "Dearsley", "Trump", "Carr", "O'Connell", "Dyer", "Furstzwangler",

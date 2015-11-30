@@ -47,7 +47,7 @@ public class TreeSearch {
         System.out.println("time to create tree = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
         timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
-        String searchFor = "Admin";
+        String searchFor = "";
         List<UserDTO> userNames = searchTree.getUsers(searchFor);
 
         System.out.println("time start = " + timeNow);
