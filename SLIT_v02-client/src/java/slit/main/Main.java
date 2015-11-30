@@ -11,6 +11,7 @@ import beans.ProgressManagerBeanRemote;
 import beans.UserManagerBeanRemote;
 import javax.ejb.EJB;
 import slit.GUI.Launcher;
+import slit.database.SampleDataCreator;
 import slit.search.TreeSearch;
 
 
@@ -24,7 +25,7 @@ public class Main {
     
     public static void main(String[] args) {
         System.out.println("System Start....");
-//        SampleDataCreator.main(args);
+        SampleDataCreator.main(args);
         new TreeSearch();
         
         Launcher.main(args);

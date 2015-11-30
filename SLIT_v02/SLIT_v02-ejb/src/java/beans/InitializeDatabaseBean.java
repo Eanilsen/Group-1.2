@@ -40,19 +40,19 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
     private Random rand = new Random();
-    Users user = new Users();
-    Module module = new Module();
-    Progress progress = new Progress();
+
+
     
     public void persist(Object object) {
         em.persist(object);
     }
 
-    public void createModule(String name, String description) {
-        Module myModule = new Module();
+    public void createModule(int id, String name, String description) {
+        Module myModule = new Module(id);
         myModule.setDescription(description);
         myModule.setName(name);
         em.persist(myModule);
+        em.flush();
     }
 
     public void createRole(int id, String name, String description) {
@@ -60,6 +60,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         myRole.setDescription(description);
         myRole.setName(name);
         em.persist(myRole);
+        em.flush();
     }
 
     public void createUser(String firstName, String lastName, String email, AvailableRoles role) {
@@ -71,6 +72,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         em.flush();
         myUser.getAvailableRolesCollection().add(role);
         em.persist(myUser);
+        em.flush();
     }
 
     public void createRessource(String name, byte[] blob) {
@@ -78,6 +80,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         myRessource.setFile(blob);
         myRessource.setName(name);
         em.persist(myRessource);
+        em.flush();
     }
 
     public void createFiles(String name, Date uploadDate, Progress progress) {
@@ -86,6 +89,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         file.setUploadDate(uploadDate);
         file.setProgress(progress);
         em.persist(file);
+        em.flush();
     }
 
     public void createProgress(int bool, Module module, Users user) {
@@ -102,6 +106,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         progress.setModule(module);
         progress.setUser(user);
         em.persist(progress);
+        em.flush();
     }
 
     /**
@@ -114,24 +119,25 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     @Override
     public void createDatabase(int students, int teachers, int files) {
 //        createUsers();   //create teachers and students alone   todo implement function to create standard users with roles
-//        addRoles();
-//        addModules();
-//        addRessources();
-//        em.flush();
-//        addBasicUsers();
-//        addStudents(students);
-//        addTeachers(teachers);
+        addRoles();
+        addModules();
+        addRessources();
+        em.flush();
+        addBasicUsers();
+        addStudents(students);
+        addTeachers(teachers);
         em.flush();        
         addProgress();
         em.flush();
         addFiles(files);
+
+        System.out.println("We have Students = " + usersFacade.findUserByRole(RolesEnum.Student));
     }
 
     private void addModules() {
         for (int i = 1; i <= 14; i++) {
-            if (em.find(AvailableRoles.class, i) == null) {
-                createModule("Module " + i, "Description of Module " + i + " here.");
-            }
+                createModule(i,"Module " + i, "Description of Module " + i + " here.");
+            em.flush();
         }
     }
 
@@ -214,10 +220,10 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //29/11/2015 23:27:59
         Date currentDate = new Date(System.currentTimeMillis());
 //        System.out.println(dateFormat.format(currentDate)); 
-
+        int pgrogressCount = progressFacade.findAll().size();
         for (int i = 0; i < amount; i++) {
             String randomFile = fileNames[rand.nextInt(fileNames.length)];
-            createFiles(randomFile, currentDate, progressFacade.find(rand.nextInt(progressFacade.count())));
+            createFiles(randomFile, currentDate, progressFacade.find(rand.nextInt(pgrogressCount)));
 
         }
     }
@@ -231,22 +237,23 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
 
             Collection<Users> userCollection = usersFacade.findAll();
             System.out.println(userCollection.size());
+            int moduleCount = moduleFacade.count();
             for (Users u : userCollection) {
                 
-            int passedModules = rand.nextInt(moduleFacade.count());
+            int passedModules = rand.nextInt(moduleCount);
 
-            for (int j = 0; j < passedModules; j++) {
-                module = moduleFacade.find(j);
+            for (int j = 1; j < passedModules; j++) {
+                Module module = moduleFacade.find(j);
 
                 for (int k = 0; k < rand.nextInt(2); j++) {
-                    createProgress(0, module, user);
+                    createProgress(0, module, u); 
                 }                module = moduleFacade.find(j);
                 
-                createProgress(1, module, user);
+                createProgress(1, module, u);
             }
 
-            if (passedModules != moduleFacade.count()) {
-                createProgress(2, moduleFacade.find(passedModules), user);
+            if (passedModules < moduleFacade.count()-1) {
+                createProgress(2, moduleFacade.find(passedModules), u);
             }
             }
 
