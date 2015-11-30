@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class Login {
     protected static final double MENU_WIDTH = 300.0;
@@ -34,8 +35,8 @@ public class Login {
     Login() {
         username = new TextField("Username");
         password = new TextField("Password");
-        loginBtnS = new Button("Login Student");
-        loginBtnT = new Button("Login Teacher");
+        loginBtnS = new Button("Log in as Student");
+        loginBtnT = new Button("Log in as Teacher");
         vBox = new VBox(5);
         pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);

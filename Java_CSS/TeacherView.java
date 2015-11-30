@@ -46,10 +46,6 @@ public class TeacherView extends SuperView {
         bottomLine.setStroke(Color.BLACK);
         bottomLine.setStrokeWidth(3);
         bindShapes(line, circle1, circle2, circle3, circle4, circle5);
-        
-
-
-
 
         StyleManager.setStyleClass("Pane", pane);
         StyleManager.setStyleClass("Line", verticalLine, bottomLine);
@@ -94,18 +90,29 @@ public class TeacherView extends SuperView {
         for (ModuleCircle circle : circles) {
             if (circle instanceof Circle) {
                 circle.setOnMouseClicked(e -> {
-                    RotateTransition rotation = new RotateTransition(Duration.seconds(0.5), circle);
+                    RotateTransition rotation = new RotateTransition(
+                            Duration.seconds(0.5), circle);
                         rotation.setCycleCount(1);
                         rotation.setByAngle(180);
                         rotation.play();
                     if (moduleText == null || circle.isSelected() == false) {
                         circle.setSelected(true);
                         moduleText = new TextArea(circle.getText());
+                        moduleText.setWrapText(true);
+                        moduleText.getStyleClass().add("txtArea");
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
-                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+                                MENU_WIDTH * 0.7, MENU_HEIGHT / 2.3);
                         pane.setCenter(moduleText);
-                        
+
+                        FadeTransition ft = new FadeTransition(
+                            Duration.seconds(0.5), moduleText);
+                        ft.setFromValue(0);
+                        ft.setToValue(1);
+                        ft.setCycleCount(1);
+                        ft.setAutoReverse(true);
+                        ft.play();
+
                     } else if (circle.isSelected() == true)  {
                         circle.setSelected(false);
                         pane.setCenter(null);

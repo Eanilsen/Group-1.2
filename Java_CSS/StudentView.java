@@ -3,7 +3,6 @@
  * This class serves as the main GUI window. Use this as a basis for creating
  * student and teacher views.
  */
-
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
@@ -48,7 +47,7 @@ public class StudentView extends SuperView {
         return super.drawMenu();
     }
 
-    //Enables TextField upon click.
+    //Enables TextArea upon click.
     @Override
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
         for (ModuleCircle circle : circles) {
@@ -58,9 +57,11 @@ public class StudentView extends SuperView {
                         rotation.setCycleCount(1);
                         rotation.setByAngle(180);
                         rotation.play();
+                    
                     if (moduleText == null || circle.isSelected() == false) {
                         circle.setSelected(true);
                         moduleText = new TextArea(circle.getText());
+                        moduleText.setWrapText(true);
                         moduleText.getStyleClass().add("txtArea");
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
@@ -73,7 +74,7 @@ public class StudentView extends SuperView {
                         ft.setCycleCount(1);
                         ft.setAutoReverse(true);
                         ft.play();
-                        
+
                     } else if (circle.isSelected() == true)  {
                         circle.setSelected(false);
                         pane.setCenter(null);

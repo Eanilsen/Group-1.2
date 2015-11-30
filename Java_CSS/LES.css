@@ -14,8 +14,26 @@
 	-fx-background-position: center top;
 }
 
+/* Affects the opacity of the placeholder text in TextFields. */
+.Textfields *.text {
+	-fx-opacity: 50%;
+}
+
+/* Affects the border around the TextArea. */
 .txtArea {
+	-fx-border-radius: 1px;
+	-fx-border-color: black;
+}
+
+/* Affects the color of the TextArea for modules. */
+.txtArea .content {
 	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+
+}
+
+/* Affects the aligment of the module text. */
+.txtArea *.text {
+	-fx-text-alignment: center;
 }
 
 /* Affects background of the remaining pages. */
@@ -23,21 +41,22 @@
 	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
 }
 
-/* Affects the module circles. May prove redundant*/
+.Button {
+	-fx-float: center;
+	-fx-width: 300px;
+}
+
+/* Affects the module circles. May prove to be unnecessary. */
 .Circle {
 
 }
 
-/*Affects the color of the progress indicator.*/
+/*Affects the color of the progress indicator. */
 .ProgInd {
 	-fx-progress-color: green;
 }
 
-/*Affects the line in Student- and TeacherView.java*/
+/*Affects the line in Student- and TeacherView.java. */
 .Line {
 	-fx-opacity: 30%;
-}
-
-.ModuleText{
-	-fx-font-size: 50px;
 }

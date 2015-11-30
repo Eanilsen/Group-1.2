@@ -38,7 +38,16 @@ public class SuperView {
         line = new Line();
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(3);
-        circle1 = new ModuleCircle(35, "Module 1 text");
+        circle1 = new ModuleCircle(35,"Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n" +
+                                        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. \n" +
+                                        "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \n" +
+
+                                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. \n" +
+
+                                        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. \n" +
+                                        "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. \n" +
+                                        "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.\n" +
+                                        "Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\n");
         circle2 = new ModuleCircle(35, "Module 2 text");
         circle3 = new ModuleCircle(35, "Module 3 text");
         circle4 = new ModuleCircle(35, "Module 4 text");
