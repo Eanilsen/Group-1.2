@@ -15,10 +15,10 @@ import javax.ejb.Remote;
 @Remote
 public interface InitializeDatabaseBeanRemote {
     
-    public void createDatabase();
+    public void createDatabase(int students, int teachers, int progress, int files);
 
-    public void createStudents(int amount);
+    public void addStudents(int amount);
 
-    public void createTeacher(int amount);
+    public void addTeachers(int amount);
     
 }
