@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package slit.main;
 
-import DatabaseSetup.SampleDataCreator;
+import slit.database.SampleDataCreator;
 import beans.InitializeDatabaseBeanRemote;
 import beans.ProgressManagerBeanRemote;
 import beans.UserManagerBeanRemote;
 import javax.ejb.EJB;
 import slit.GUI.Launcher;
-import tryOut.TreeSearch;
+import slit.search.TreeSearch;
 
 
 /**
@@ -24,24 +24,27 @@ public class Main {
     /**
      * @param args the command line arguments
      */
+//    @EJB
+//    private static InitializeDatabaseBeanRemote dataCreator;
+//
+//    public static InitializeDatabaseBeanRemote getDataCreator() {
+//        return dataCreator;
+//    }
     @EJB
     private static InitializeDatabaseBeanRemote dataCreator;
-
-    public static InitializeDatabaseBeanRemote getDataCreator() {
-        return dataCreator;
-    }
-
-    public static ProgressManagerBeanRemote getPmb() {
-        return pmb;
-    }
+    
     @EJB
     private static UserManagerBeanRemote myUserManager;
     
     @EJB
-    private static ProgressManagerBeanRemote pmb;
+    private static ProgressManagerBeanRemote progressManager;    
+    
+    public static InitializeDatabaseBeanRemote getDataCreator() {
+        return dataCreator;
+    }
     
     public static ProgressManagerBeanRemote getProgressBean(){
-        return pmb;
+        return progressManager;
     }
 
     public static UserManagerBeanRemote getMyUserManager() {
@@ -50,9 +53,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("System Start....");
-//        SampleDataCreator.main(args);
-//        TreeSearch.main(args);
-//        Launcher.main(args);
+        SampleDataCreator.main(args);
+        new TreeSearch();
+        Launcher.main(args);
     }
 
 }

@@ -41,4 +41,12 @@ public class ModuleCircle extends Circle {
     protected String getText() {
         return text;
     }
+
+    protected void setText(String text) {
+        this.text = text;
+    }
+
+    protected String addText(String text) {
+        return this.text = this.text + text;
+    }
 }

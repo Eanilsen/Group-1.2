@@ -15,13 +15,12 @@ public class UserDTO implements Serializable{
     
     public int id;
     public String name;
-    private RolesEnum role;
+    public String mail;
     
-    public UserDTO(int id, String name){
+    public UserDTO(int id, String name, String mail){
         this.id=id;
         this.name=name;
-        this.role = role;
-        
+        this.mail = mail;
     }
     
 }

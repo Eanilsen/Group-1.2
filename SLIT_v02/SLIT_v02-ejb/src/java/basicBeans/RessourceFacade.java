@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class RessourceFacade extends AbstractFacade<Ressource> {
+
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
 
@@ -27,5 +28,5 @@ public class RessourceFacade extends AbstractFacade<Ressource> {
     public RessourceFacade() {
         super(Ressource.class);
     }
-    
+
 }

@@ -1,23 +1,18 @@
 package slit.GUI;
 
+import DTOs.UserDTO;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.ProgressBar;
 import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
-import javafx.scene.shape.Line;
-import javafx.scene.control.ScrollBar;
-import javafx.geometry.Orientation;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.layout.Priority;
 import javafx.scene.control.TextField;
+import slit.search.TreeSearch;
 /**
  * 
  * @author Jorgen
@@ -107,9 +102,16 @@ public class StudentList {
 	*/
 	private void retrieveStudentInfo() {
             //note that this is just dummy code to test scrollbar functionality.
-            for(int i = 0; i < 100; i++) {
-                    names.add(new Text("name"));
-                    emails.add(new Text("emails"));
+//            List<UserDTO> userList = Main.getMyUserManager().getUserList();
+            
+                    
+            for(int i =0 ; i < 12 ; i++) {            
+                   List<UserDTO> userList=TreeSearch.getSearchTree().getUsers("");
+                    UserDTO u= userList.get(i);
+                    names.add(new Text(u.name));
+                    emails.add(new Text(u.mail));
+//                    names.add(new Text("name"));
+//                    emails.add(new Text("mail"));
                     statuses.add(new ProgressBar(Math.random()));
             }
 	}

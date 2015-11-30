@@ -75,7 +75,8 @@ public class UserManagerBean implements UserManagerBeanRemote {
         for(Users u : databaseUser){
             System.out.println("Creating user " + u.getFirstname() + " " + u.getLastname());
             String name = u.getFirstname() + " " + u.getLastname();
-            UserDTO UserToAdd = new UserDTO(u.getIduser(),name);
+            double progress = 0.22; //u.getProgressCollection();
+            UserDTO UserToAdd = new UserDTO(u.getIduser(),name, u.getEmail());
             userDTO.add(UserToAdd);
         }
         return userDTO;
