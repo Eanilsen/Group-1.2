@@ -54,6 +54,7 @@ public class SuperView {
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
 
+        //Adds the CSS-document and adds different variables as selectors in the stylesheet.
         pane.getStylesheets().add("LES.css");
         StyleManager.setStyleClass("Circle", circle1, circle2, circle3, circle4, circle5);
         StyleManager.setStyleClass("Line", line);

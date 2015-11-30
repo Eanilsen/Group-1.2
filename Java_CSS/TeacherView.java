@@ -14,6 +14,9 @@ import javafx.scene.shape.Shape;
 import javafx.scene.control.ProgressIndicator;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
+import javafx.animation.*;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 public class TeacherView extends SuperView {
 	protected static final double MENU_WIDTH = 1000.0;
@@ -91,6 +94,10 @@ public class TeacherView extends SuperView {
         for (ModuleCircle circle : circles) {
             if (circle instanceof Circle) {
                 circle.setOnMouseClicked(e -> {
+                    RotateTransition rotation = new RotateTransition(Duration.seconds(0.5), circle);
+                        rotation.setCycleCount(1);
+                        rotation.setByAngle(180);
+                        rotation.play();
                     if (moduleText == null || circle.isSelected() == false) {
                         circle.setSelected(true);
                         moduleText = new TextArea(circle.getText());

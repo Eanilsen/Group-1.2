@@ -14,35 +14,30 @@
 	-fx-background-position: center top;
 }
 
+.txtArea {
+	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
+}
+
 /* Affects background of the remaining pages. */
 .Pane {
 	-fx-background-color: linear-gradient(to bottom, rgba(183,222,237,1) 0%, rgba(33,180,226,1) 36%, rgba(113,206,239,1) 88%, rgba(183,222,237,1) 100%);
 }
 
-.Textfields {
-}
-
-.Vbox {
-
-}
-
-.Button {
-}
-
+/* Affects the module circles. May prove redundant*/
 .Circle {
-	/*-fx-effect: dropshadow(gaussian, #1E121E, 3, 0, 0, 3);*/
-	-fx-background-image:url("Icon-Green.png");
+
 }
 
+/*Affects the color of the progress indicator.*/
 .ProgInd {
 	-fx-progress-color: green;
 }
 
+/*Affects the line in Student- and TeacherView.java*/
 .Line {
 	-fx-opacity: 30%;
 }
 
-//*.Gridpane {
-	-fx-border-size: 3px;
-	-fx-border-style: solid;
+.ModuleText{
+	-fx-font-size: 50px;
 }

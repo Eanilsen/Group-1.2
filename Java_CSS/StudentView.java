@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import javafx.animation.*;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+import javafx.animation.ParallelTransition;
+
 
 public class StudentView extends SuperView {
     protected static final double MENU_WIDTH = 800.0;
@@ -46,6 +48,7 @@ public class StudentView extends SuperView {
         return super.drawMenu();
     }
 
+    //Enables TextField upon click.
     @Override
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
         for (ModuleCircle circle : circles) {
@@ -58,10 +61,18 @@ public class StudentView extends SuperView {
                     if (moduleText == null || circle.isSelected() == false) {
                         circle.setSelected(true);
                         moduleText = new TextArea(circle.getText());
+                        moduleText.getStyleClass().add("txtArea");
                         moduleText.setEditable(false);
                         moduleText.setMaxSize(
-                                MENU_WIDTH * 0.75, MENU_HEIGHT / 4);
+                                MENU_WIDTH * 0.9, MENU_HEIGHT / 2.3);
                         pane.setCenter(moduleText);
+
+                        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), moduleText);
+                        ft.setFromValue(0);
+                        ft.setToValue(1);
+                        ft.setCycleCount(1);
+                        ft.setAutoReverse(true);
+                        ft.play();
                         
                     } else if (circle.isSelected() == true)  {
                         circle.setSelected(false);
