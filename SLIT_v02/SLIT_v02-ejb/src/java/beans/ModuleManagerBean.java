@@ -5,44 +5,71 @@
  */
 package beans;
 
+import DTOs.ModuleDTO;
+import basicBeans.ModuleFacade;
 import entities.Module;
-import entities.Users;
+import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
  * @author Jons
+ * @authon Even
  */
 @Stateful
 public class ModuleManagerBean implements ModuleManagerBeanRemote {
-    @PersistenceContext(unitName = "SLIT_v02-ejbPU")
-    private EntityManager em;
-    
-    private List<Module> modules;
-    private Users currentUser;
+    @EJB
+    private ModuleFacade mf;
 
-    public ModuleManagerBean() {
+    /**
+     * Finds a module by its primary key and returns its name.
+     * @param id primary key
+     * @return module key
+     */
+    @Override
+    public String getName(int id) {
+        Module m = mf.find(id);
+        return m.getName();
     }
 
-    ModuleManagerBean(Users user) {
-        currentUser = user;
+    /**
+     * Finds a module by its primary key and returns its description.
+     * @param id primary key
+     * @return module description
+     */
+    @Override
+    public String getDescription(int id) {
+        Module m = mf.find(id);
+        return m.getDescription();
     }
     
-    public List<Module> getAllModules(){
-        throw new NotImplementedException();
+    /**
+     * Gets all the modules stored in the database and creates DTOs for the
+     * client to access.
+     * @return List of moduleDTOs
+     */
+    @Override
+    public List<ModuleDTO> getAllModules(){
+        ArrayList<ModuleDTO> moduleList = new ArrayList<>();
+        for (Module m : mf.findAll()) {
+            ModuleDTO mdto = new ModuleDTO(m.getIdmodule(), m.getName());
+            moduleList.add(mdto);
+        }
+        return moduleList;
     }
-    
-    
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
-    public void persist(Object object) {
-        em.persist(object);
+    /**
+     * Creates a new module and persists it.
+     * @param name module name
+     * @param description module description
+     */
+    @Override
+    public void createModule(String name, String description) {
+        Module m = new Module();
+        m.setName(name);
+        m.setDescription(description);
+        mf.create(m);
     }
-    
 }

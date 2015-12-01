@@ -39,6 +39,13 @@ public class Main {
     @EJB
     private static ProgressManagerBeanRemote progressManager;    
     
+    @EJB
+    private static UserManagerBeanRemote moduleManager;
+    
+    public static UserManagerBeanRemote getModuleManager() {
+        return moduleManager;
+    }
+    
     public static InitializeDatabaseBeanRemote getDataCreator() {
         return dataCreator;
     }

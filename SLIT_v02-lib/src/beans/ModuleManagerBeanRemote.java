@@ -5,13 +5,23 @@
  */
 package beans;
 
+import DTOs.ModuleDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
  *
  * @author Jons
+ * @author Even
  */
 @Remote
 public interface ModuleManagerBeanRemote {
     
+    public String getName(int id);
+
+    public String getDescription(int id);
+
+    public List<ModuleDTO> getAllModules();
+
+    public void createModule(String name, String description);
 }
