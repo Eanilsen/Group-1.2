@@ -10,7 +10,6 @@ import basicBeans.ModuleFacade;
 import basicBeans.ProgressFacade;
 import basicBeans.UsersFacade;
 import entities.*;
-import static entities.File_.progress;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
