@@ -6,6 +6,7 @@
 package beans;
 
 import DTOs.ModuleDTO;
+import DTOs.ProgressDTO;
 import java.util.Collection;
 import javax.ejb.Remote;
 
@@ -20,11 +21,13 @@ public interface ProgressManagerBeanRemote {
     
     public double getUserProgress(int studentID);
 
-    public Collection<ModuleDTO> getUnreviewedModules(int studentID);
+    public Collection<ModuleDTO> getPendingModules(int studentID);
+
+    public Collection<ModuleDTO> getApprovedModules(int studentID);
 
     public Collection<ModuleDTO> getFailedModules(int studentID);
 
-    public Collection<ModuleDTO> getApprovedModules(int studentID);
+    public Collection<ProgressDTO> getAllPendingProgress();
 
     
     

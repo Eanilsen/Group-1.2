@@ -10,11 +10,13 @@ import java.io.Serializable;
 /**
  *
  * @author Jons
- * @author Even
  */
-public class ModuleDTO extends DTO{
+public abstract class DTO implements Serializable{
+    public String name;
+    public int id;
     
-    public ModuleDTO(int id, String name){
-        super(id,name);
+    public DTO(int id, String name){
+        this.id=id;
+        this.name=name;
     }
 }

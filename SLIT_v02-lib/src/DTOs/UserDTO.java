@@ -13,20 +13,22 @@ import javax.ejb.EJB;
  *
  * @author Jons
  */
-public class UserDTO implements Serializable{
+public class UserDTO extends DTO{
     
     @EJB
     ProgressManagerBeanRemote progressBean;
     
-    public int id;
-    public String name;
     public String mail;
+
+    public UserDTO(int id, String name) {
+        super(id, name);
+    }
     
     public UserDTO(int id, String name, String mail){
-        this.id=id;
-        this.name=name;
+        super(id,name);
         this.mail = mail;
     }
+
     public double getProgress(){
         return progressBean.getUserProgress(id);
     }

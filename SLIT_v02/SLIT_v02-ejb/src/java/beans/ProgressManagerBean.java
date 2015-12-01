@@ -6,7 +6,10 @@
 package beans;
 
 import DTOs.ModuleDTO;
+import DTOs.ProgressDTO;
+import DTOs.UserDTO;
 import basicBeans.ModuleFacade;
+import basicBeans.ProgressFacade;
 import basicBeans.UsersFacade;
 import entities.Progress;
 import entities.Users;
@@ -32,6 +35,9 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @EJB
     private ModuleFacade moduleFacade;
+    
+    @EJB
+    private ProgressFacade progressFacade;
 
     private Users user;
 
@@ -107,6 +113,33 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     }
 
     /**
+     * author: Jorgen, Jonas returns a list with all failed modules of given
+     * student
+     *
+     * @param studentID Which user you want to get the list for
+     * @return
+     */
+    @Override
+    public Collection<ProgressDTO> getAllPendingProgress() {
+
+        Collection<ProgressDTO> pendingProgress = new ArrayList<>();
+
+        Collection<Progress> progress = progressFacade.findAll();
+        // for each data in table:progress, find all approved = null
+        if (progress == null) {
+            return null;
+        } else {
+            for (Progress p : progress) {
+                if (p.getApproved() == null) {
+                    
+                    pendingProgress.add(createProgressDTO(p));
+                }
+            }
+            return pendingProgress;
+        }
+    }
+    
+    /**
      * author: Jorgen, Jonas returns a list with all unreviewed modules of given
      * student
      *
@@ -114,7 +147,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
      * @return
      */
     @Override
-    public Collection<ModuleDTO> getUnreviewedModules(int studentID) {
+    public Collection<ModuleDTO> getPendingModules(int studentID) {
         user = em.find(Users.class, studentID);
         Collection<ModuleDTO> unreviewedProgress = new ArrayList<>();
 
@@ -136,6 +169,13 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     private ModuleDTO createModuleDTO(Progress p) {
         ModuleDTO module = new ModuleDTO(p.getModule().getIdmodule(), p.getModule().getName());
         return module;
+    }
+    
+    private ProgressDTO createProgressDTO(Progress p) {
+        Users u =p.getUser();
+        ModuleDTO module = createModuleDTO(p);
+        UserDTO user = new UserDTO(u.getIduser(), u.getFirstname() + " " + u.getLastname(), u.getEmail());      
+        return new ProgressDTO(p.getIdprogress(), "" , user, module);
     }
 
     @Override
