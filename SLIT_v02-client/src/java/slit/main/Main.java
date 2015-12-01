@@ -7,6 +7,7 @@ package slit.main;
 
 import slit.database.SampleDataCreator;
 import beans.InitializeDatabaseBeanRemote;
+import beans.ModuleManagerBeanRemote;
 import beans.ProgressManagerBeanRemote;
 import beans.UserManagerBeanRemote;
 import javax.ejb.EJB;
@@ -39,9 +40,9 @@ public class Main {
     private static ProgressManagerBeanRemote progressManager;    
     
     @EJB
-    private static UserManagerBeanRemote moduleManager;
+    private static ModuleManagerBeanRemote moduleManager;
     
-    public static UserManagerBeanRemote getModuleManager() {
+    public static ModuleManagerBeanRemote getModuleManager() {
         return moduleManager;
     }
     
