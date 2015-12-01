@@ -41,3 +41,10 @@ hs_err_pid*
 /SLIT_v02-client/nbproject/private/
 /SLIT_v02/SLIT_v02-ejb/nbproject/private/
 /SLIT_v02-client/dist/
+/SLIT_v02/nbproject/private/
+/SLIT_v02-lib/nbproject/private/
+/SLIT_v02/SLIT_v02-ejb/build/
+/SLIT_v02/dist/
+/SLIT_v02-client/build/
+/SLIT_v02-lib/dist/
+/SLIT_v02/build/
