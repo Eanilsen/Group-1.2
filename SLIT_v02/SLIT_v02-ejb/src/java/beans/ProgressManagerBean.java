@@ -35,7 +35,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @EJB
     private ModuleFacade moduleFacade;
-    
+
     @EJB
     private ProgressFacade progressFacade;
 
@@ -50,14 +50,13 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     @Override
     public double getUserProgress(int studentID) {
 
-        double progressPercentage = (double)getApprovedModules(studentID).size() / (double)moduleFacade.count();
+        double progressPercentage = (double) getApprovedModules(studentID).size() / (double) moduleFacade.count();
 
         return progressPercentage;
     }
 
     /**
-     * author: Jorgen, Jonas 
-     * returns a list with all approved modules of given
+     * author: Jorgen, Jonas returns a list with all approved modules of given
      * student
      *
      * @param studentID Which user you want to get the list for
@@ -65,16 +64,16 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
      */
     @Override
     public Collection<ModuleDTO> getApprovedModules(int studentID) {
-        user = em.find(Users.class, studentID);
+        Users users = em.find(Users.class, studentID);
         Collection<ModuleDTO> approvedList = new ArrayList<>();
 
-        Collection<Progress> progress = user.getProgressCollection();
+        Collection<Progress> progress = users.getProgressCollection();
         // for each data in table:progress, find all approved = true
         if (progress == null) {
             System.out.println("No progress found");
             return null;
         } else {
-                System.out.println("Found " + progress.size() + " modules for user " + user.getFirstname() + " " + user.getLastname());
+            System.out.println("Found " + progress.size() + " modules for user " + users.getFirstname() + " " + users.getLastname());
             for (Progress p : progress) {
                 if (p.getApproved() != null && p.getApproved()) {
                     ModuleDTO module = createModuleDTO(p);
@@ -94,15 +93,15 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
      */
     @Override
     public Collection<ModuleDTO> getFailedModules(int studentID) {
-        user = em.find(Users.class, studentID);
+        Users users = em.find(Users.class, studentID);
         Collection<ModuleDTO> failedProgress = new ArrayList<>();
 
-        Collection<Progress> progress = user.getProgressCollection();
+        Collection<Progress> progress = users.getProgressCollection();
         // for each data in table:progress, find all approved = true
         if (progress == null) {
             return null;
         } else {
-            for (Progress p : user.getProgressCollection()) {
+            for (Progress p : users.getProgressCollection()) {
                 if (p.getApproved() != null && !p.getApproved()) {
                     ModuleDTO module = createModuleDTO(p);
                     failedProgress.add(module);
@@ -113,10 +112,8 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     }
 
     /**
-     * author: Jorgen, Jonas returns a list with all failed modules of given
-     * student
+     * author: Jonas
      *
-     * @param studentID Which user you want to get the list for
      * @return
      */
     @Override
@@ -125,20 +122,27 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
         Collection<ProgressDTO> pendingProgress = new ArrayList<>();
 
         Collection<Progress> progress = progressFacade.findAll();
+        System.out.println("Recieved progress. count = " + progress.size());
         // for each data in table:progress, find all approved = null
         if (progress == null) {
             return null;
         } else {
             for (Progress p : progress) {
-                if (p.getApproved() == null) {
-                    
+
+                if (p.getApproved() != null && p.getApproved()) {
+                    System.out.println("progress is approved: " + p.getIdprogress());
+                } else if (p.getApproved() != null && !p.getApproved()) {
+                    System.out.println("progress is not approved: " + p.getIdprogress());
+
+                } else {
+                    System.out.println("progress is not reviewed: " + p.getIdprogress());
                     pendingProgress.add(createProgressDTO(p));
                 }
             }
             return pendingProgress;
         }
     }
-    
+
     /**
      * author: Jorgen, Jonas returns a list with all unreviewed modules of given
      * student
@@ -148,15 +152,15 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
      */
     @Override
     public Collection<ModuleDTO> getPendingModules(int studentID) {
-        user = em.find(Users.class, studentID);
+        Users users = em.find(Users.class, studentID);
         Collection<ModuleDTO> unreviewedProgress = new ArrayList<>();
 
-        Collection<Progress> progress = user.getProgressCollection();
+        Collection<Progress> progress = users.getProgressCollection();
         // for each data in table:progress, find all approved = true
         if (progress == null) {
             return null;
         } else {
-            for (Progress p : user.getProgressCollection()) {
+            for (Progress p : users.getProgressCollection()) {
                 if (p.getApproved() == null) {
                     ModuleDTO module = createModuleDTO(p);
                     unreviewedProgress.add(module);
@@ -170,12 +174,12 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
         ModuleDTO module = new ModuleDTO(p.getModule().getIdmodule(), p.getModule().getName());
         return module;
     }
-    
+
     private ProgressDTO createProgressDTO(Progress p) {
-        Users u =p.getUser();
+        Users u = p.getUser();
         ModuleDTO module = createModuleDTO(p);
-        UserDTO user = new UserDTO(u.getIduser(), u.getFirstname() + " " + u.getLastname(), u.getEmail());      
-        return new ProgressDTO(p.getIdprogress(), "" , user, module);
+        UserDTO userDTO = new UserDTO(u.getIduser(), u.getFirstname() + " " + u.getLastname(), u.getEmail());
+        return new ProgressDTO(p.getIdprogress(), "", userDTO, module);
     }
 
     @Override

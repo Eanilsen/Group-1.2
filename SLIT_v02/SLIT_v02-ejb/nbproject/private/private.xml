@@ -25,11 +25,14 @@
         </group>
         <group name="les">
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/ProgressManagerBean.java</file>
+            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/AbstractFacade.java</file>
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/FileManagerBean.java</file>
+            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/entities/Progress.java</file>
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/nbproject/project.xml</file>
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/InitializeDatabaseBean.java</file>
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/UserManagerBean.java</file>
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/ModuleManagerBean.java</file>
+            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/ProgressFacade.java</file>
         </group>
     </open-files>
 </project-private>

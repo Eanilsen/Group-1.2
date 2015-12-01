@@ -5,6 +5,7 @@
  */
 package slit.GUI;
 
+import DTOs.ProgressDTO;
 import DTOs.UserDTO;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import slit.main.Main;
 import slit.search.TreeSearch;
 
 /**
@@ -107,12 +109,14 @@ public class PendingList {
     private void retrieveData() {
         ToggleGroup group = new ToggleGroup();
         // replace i < 100 with amount of users in database
-        List<UserDTO> userList = TreeSearch.getSearchTree().getUsers("");
-        for (int i = 0; i < userList.size(); i++) {
-
-            UserDTO u = userList.get(i);
-            names.add(new Text(u.name));
-
+        
+        System.out.println("Trying to get pending progress....");
+        Collection<ProgressDTO> progressDTO = Main.getProgressBean().getAllPendingProgress();
+        System.out.println("retrieved all pending progress. count = " + progressDTO.size() );
+        for (ProgressDTO p : progressDTO) {
+            
+            names.add(new Text("Student : " + p.user.name + " / Module: " + p.module.name));
+            
             Button b = new Button("Download");
             buttons.add(b);
 

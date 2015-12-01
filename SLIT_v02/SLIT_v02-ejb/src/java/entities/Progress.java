@@ -121,9 +121,6 @@ public class Progress implements Serializable {
     }
 
     public Boolean getApproved() {
-        if (approved == null) {
-            return false;
-        }
         return approved;
     }
 
