@@ -115,7 +115,7 @@ public class PendingList {
         System.out.println("retrieved all pending progress. count = " + progressDTO.size() );
         for (ProgressDTO p : progressDTO) {
             
-            names.add(new Text("Student : " + p.user.name + " / Module: " + p.module.name));
+            names.add(new Text(p.user.name + " / " + p.module.name));
             
             Button b = new Button("Download");
             buttons.add(b);
