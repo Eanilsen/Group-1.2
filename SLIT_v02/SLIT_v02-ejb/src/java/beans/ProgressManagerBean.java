@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Jorgen
+ * @author Jorgen, Jons
  */
 @Stateful
 public class ProgressManagerBean implements ProgressManagerBeanRemote {
@@ -38,18 +38,20 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     /**
      * author: Jorgen
      *
+     * @param studentID
      * @return Stats for user 7
      */
     @Override
     public double getUserProgress(int studentID) {
 
-        double progressPercentage = getApprovedModules(studentID).size() / moduleFacade.count();
+        double progressPercentage = (double)getApprovedModules(studentID).size() / (double)moduleFacade.count();
 
         return progressPercentage;
     }
 
     /**
-     * author: Jorgen, Jonas returns a list with all approved modules of given
+     * author: Jorgen, Jonas 
+     * returns a list with all approved modules of given
      * student
      *
      * @param studentID Which user you want to get the list for
@@ -63,9 +65,10 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
         Collection<Progress> progress = user.getProgressCollection();
         // for each data in table:progress, find all approved = true
         if (progress == null) {
+            System.out.println("No progress found");
             return null;
         } else {
-
+                System.out.println("Found " + progress.size() + " modules for user " + user.getFirstname() + " " + user.getLastname());
             for (Progress p : progress) {
                 if (p.getApproved() != null && p.getApproved()) {
                     ModuleDTO module = createModuleDTO(p);
@@ -113,7 +116,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     @Override
     public Collection<ModuleDTO> getUnreviewedModules(int studentID) {
         user = em.find(Users.class, studentID);
-        Collection<ModuleDTO> failedProgress = new ArrayList<>();
+        Collection<ModuleDTO> unreviewedProgress = new ArrayList<>();
 
         Collection<Progress> progress = user.getProgressCollection();
         // for each data in table:progress, find all approved = true
@@ -123,10 +126,10 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
             for (Progress p : user.getProgressCollection()) {
                 if (p.getApproved() == null) {
                     ModuleDTO module = createModuleDTO(p);
-                    failedProgress.add(module);
+                    unreviewedProgress.add(module);
                 }
             }
-            return failedProgress;
+            return unreviewedProgress;
         }
     }
 

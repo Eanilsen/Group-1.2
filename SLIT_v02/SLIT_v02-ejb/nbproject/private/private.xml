@@ -18,7 +18,10 @@
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/entities/Users.java</file>
         </group>
         <group name="Group-1.2">
-            <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/InitializeDatabaseBean.java</file>
+            <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/UsersFacade.java</file>
+        </group>
+        <group>
+            <file>file:/X:/Workspace/group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/ModuleManagerBean.java</file>
         </group>
         <group name="Group-1.2-Lybeck">
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/InitializeDatabaseBean.java</file>

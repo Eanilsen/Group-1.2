@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
  
 /**
  *
- * @author Jørgen
+ * @author JÃ¸rgen HG.
  */
 public class TimeAndName extends Pane {
  

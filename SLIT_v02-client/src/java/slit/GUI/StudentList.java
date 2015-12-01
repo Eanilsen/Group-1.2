@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
+import slit.main.Main;
 import slit.search.TreeSearch;
 
 /**
@@ -113,7 +114,7 @@ public class StudentList {
             emails.add(new Text(u.mail));
 //                    names.add(new Text("name"));
 //                    emails.add(new Text("mail"));
-            statuses.add(new ProgressBar(Math.random()));
+            statuses.add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id))); //ProgressManagerBean.getStudentsProgress(u.id); 
         }
     }
 

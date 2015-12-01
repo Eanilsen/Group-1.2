@@ -265,4 +265,9 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         }
 
     }
+
+    @Override
+    public boolean databaseEmpty() {
+        return usersFacade.count()==0;
+    }
 }
