@@ -14,7 +14,6 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -143,12 +142,13 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
 
     public void generateUsers(int amount, AvailableRoles role) {
 
-        String[] firstNames = {"Jonas", "Jørgen", "Simen", "Joergen", "Lars",
+        String[] firstNames = {"Åge", "Åse", "Jonas", "Jørgen", "Simen", "Joergen", "Lars",
             "Jons", "John", "Robert", "Richard", "William", "Charles", "Thomas",
             "Paul", "Barbara", "Patricia", "Champagne", "Crystal", "Cheryl",
             "Jane", "Shaquila", "Sensation", "Tracy", "Edward", "Brandy", "Sandra",
             "Jason", "Peter", "Gabi", "Helle", "Lena", "Olaf", "Tiffany", "Candy",
-            "Lena", "Brianna", "ShaniquaPapriqua", "Niels", "Ben", "Olaf", "Angela"};
+            "Lena", "Brianna", "ShaniquaPapriqua", "Niels", "Ben", "Olaf", "Angela",
+            "Østein", "Ægir", "Ørjan", "Æspen"};
 
         String[] lastNames = {"Dover", "Smith", "Jones", "Collins", "Jackson",
             "Dearsley", "Trump", "Carr", "O'Connell", "Dyer", "Furstzwangler",

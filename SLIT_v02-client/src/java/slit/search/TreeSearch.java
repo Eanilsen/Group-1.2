@@ -47,7 +47,7 @@ public class TreeSearch {
         System.out.println("time to create tree = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
 
         timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
-        String searchFor = "Jonas Hinrichs";
+        String searchFor = "";
         List<UserDTO> userNames = searchTree.getUsers(searchFor);
 
         System.out.println("time start = " + timeNow);
@@ -102,9 +102,9 @@ public class TreeSearch {
         Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>() {
             @Override
             public int compare(TreeNode a, TreeNode b) {
-                if (a.getValue() == 'Å') {
+                if (a.getValue() == '?') {
                     return (a.getValue() + 50) - b.getValue();
-                } else if (b.getValue() == 'Å') {
+                } else if (b.getValue() == '?') {
                     return a.getValue() - (b.getValue() + 50);
                 }
 
