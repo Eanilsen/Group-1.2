@@ -39,7 +39,7 @@ public class StudentList {
 	}
 
 	protected ScrollPane drawStudentList() {
-		retrieveStudentInfo();
+		retrieveStudentInfo("");
 		
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -100,13 +100,12 @@ public class StudentList {
 	* string passed in to their constructor parameter while ProgressBar needs 
 	* a double value.
 	*/
-	private void retrieveStudentInfo() {
+	private void retrieveStudentInfo(String name) {
             //note that this is just dummy code to test scrollbar functionality.
 //            List<UserDTO> userList = Main.getMyUserManager().getUserList();
             
-                    
+            List<UserDTO> userList=TreeSearch.getSearchTree().getUsers(name);        
             for(int i =0 ; i < 12 ; i++) {            
-                   List<UserDTO> userList=TreeSearch.getSearchTree().getUsers("");
                     UserDTO u= userList.get(i);
                     names.add(new Text(u.name));
                     emails.add(new Text(u.mail));

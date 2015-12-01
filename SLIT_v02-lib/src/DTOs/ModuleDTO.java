@@ -5,14 +5,11 @@
  */
 package DTOs;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Jons
- * @author Even
  */
-public class ModuleDTO implements Serializable {
+public class ModuleDTO {
     private int id;
     private String name;    
     

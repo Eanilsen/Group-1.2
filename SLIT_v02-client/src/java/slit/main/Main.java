@@ -5,13 +5,12 @@
  */
 package slit.main;
 
+import slit.database.SampleDataCreator;
 import beans.InitializeDatabaseBeanRemote;
-import beans.ModuleManagerBeanRemote;
 import beans.ProgressManagerBeanRemote;
 import beans.UserManagerBeanRemote;
 import javax.ejb.EJB;
 import slit.GUI.Launcher;
-import slit.database.SampleDataCreator;
 import slit.search.TreeSearch;
 
 
@@ -25,9 +24,8 @@ public class Main {
     
     public static void main(String[] args) {
         System.out.println("System Start....");
-        SampleDataCreator.main(args);
+//        SampleDataCreator.main(args);
         new TreeSearch();
-        
         Launcher.main(args);
     }
     
@@ -40,13 +38,6 @@ public class Main {
     @EJB
     private static ProgressManagerBeanRemote progressManager;    
     
-    @EJB
-    private static ModuleManagerBeanRemote moduleManager;
-    
-    public static ModuleManagerBeanRemote getModuleManager() {
-        return moduleManager;
-    }
-    
     public static InitializeDatabaseBeanRemote getDataCreator() {
         return dataCreator;
     }
@@ -58,6 +49,7 @@ public class Main {
     public static UserManagerBeanRemote getMyUserManager() {
         return myUserManager;
     }
+
 
 
 }

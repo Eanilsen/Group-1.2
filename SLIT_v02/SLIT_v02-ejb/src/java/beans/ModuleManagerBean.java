@@ -8,7 +8,6 @@ package beans;
 import DTOs.ModuleDTO;
 import basicBeans.ModuleFacade;
 import entities.Module;
-import entities.Users;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,14 +22,13 @@ import javax.ejb.Stateful;
 public class ModuleManagerBean implements ModuleManagerBeanRemote {
     @EJB
     private ModuleFacade mf;
-    private List<Module> modules;
-    private Users currentUser;
 
     /**
      * Finds a module by its primary key and returns its name.
      * @param id primary key
      * @return module key
      */
+    @Override
     public String getName(int id) {
         Module m = mf.find(id);
         return m.getName();
@@ -41,6 +39,7 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
      * @param id primary key
      * @return module description
      */
+    @Override
     public String getDescription(int id) {
         Module m = mf.find(id);
         return m.getDescription();
@@ -51,6 +50,7 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
      * client to access.
      * @return List of moduleDTOs
      */
+    @Override
     public List<ModuleDTO> getAllModules(){
         ArrayList<ModuleDTO> moduleList = new ArrayList<>();
         for (Module m : mf.findAll()) {
@@ -65,6 +65,7 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
      * @param name module name
      * @param description module description
      */
+    @Override
     public void createModule(String name, String description) {
         Module m = new Module();
         m.setName(name);
