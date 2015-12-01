@@ -10,9 +10,11 @@ import basicBeans.ModuleFacade;
 import basicBeans.ProgressFacade;
 import basicBeans.UsersFacade;
 import entities.*;
+import static entities.File_.progress;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
@@ -39,19 +41,19 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
     private Random rand = new Random();
-    Users user = new Users();
-    Module module = new Module();
-    Progress progress = new Progress();
+
+
     
     public void persist(Object object) {
         em.persist(object);
     }
 
-    public void createModule(String name, String description) {
-        Module myModule = new Module();
+    public void createModule(int id, String name, String description) {
+        Module myModule = new Module(id);
         myModule.setDescription(description);
         myModule.setName(name);
         em.persist(myModule);
+        em.flush();
     }
 
     public void createRole(int id, String name, String description) {
@@ -59,6 +61,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         myRole.setDescription(description);
         myRole.setName(name);
         em.persist(myRole);
+        em.flush();
     }
 
     public void createUser(String firstName, String lastName, String email, AvailableRoles role) {
@@ -70,6 +73,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         em.flush();
         myUser.getAvailableRolesCollection().add(role);
         em.persist(myUser);
+        em.flush();
     }
 
     public void createRessource(String name, byte[] blob) {
@@ -77,6 +81,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         myRessource.setFile(blob);
         myRessource.setName(name);
         em.persist(myRessource);
+        em.flush();
     }
 
     public void createFiles(String name, Date uploadDate, Progress progress) {
@@ -85,14 +90,21 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         file.setUploadDate(uploadDate);
         file.setProgress(progress);
         em.persist(file);
+        em.flush();
     }
 
+    /**
+     * Bool true for approved module. False for dispproved. Null for not reviewed
+     * @param bool
+     * @param module
+     * @param user 
+     */
     public void createProgress(int bool, Module module, Users user) {
-
-        if (bool == 1) {
+        Progress progress = new Progress();
+        if (bool == 1) {    // approved
             progress.setApproved(true);
         }
-        if (bool == 0) {
+        if (bool == 0) { // disapproved
             progress.setApproved(false);
         }
 //        progress.setDifficultyRating(Integer.MIN_VALUE);
@@ -100,6 +112,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         progress.setModule(module);
         progress.setUser(user);
         em.persist(progress);
+        em.flush();
     }
 
     /**
@@ -119,16 +132,18 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         addBasicUsers();
         addStudents(students);
         addTeachers(teachers);
+        em.flush();        
+        addProgress();
         em.flush();
         addFiles(files);
-        addProgress(progress);
+
+        System.out.println("We have Students = " + usersFacade.findUserByRole(RolesEnum.Student));
     }
 
     private void addModules() {
         for (int i = 1; i <= 14; i++) {
-            if (em.find(AvailableRoles.class, i) == null) {
-                createModule("Module " + i, "Description of Module " + i + " here.");
-            }
+                createModule(i,"Module " + i, "Description of Module " + i + " here.");
+            em.flush();
         }
     }
 
@@ -211,10 +226,10 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //29/11/2015 23:27:59
         Date currentDate = new Date(System.currentTimeMillis());
 //        System.out.println(dateFormat.format(currentDate)); 
-
+        int pgrogressCount = progressFacade.findAll().size();
         for (int i = 0; i < amount; i++) {
             String randomFile = fileNames[rand.nextInt(fileNames.length)];
-            createFiles(randomFile, currentDate, progressList.get(rand.nextInt(progressList.size())));
+            createFiles(randomFile, currentDate, progressFacade.find(rand.nextInt(pgrogressCount)));
 
         }
     }
@@ -223,25 +238,30 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
      * @author Lybeck
      * @author Jons
      */
-    private void addProgress(int amount) {
+    private void addProgress() {
         System.out.println("Creating progress.....");
 
-        for (int i = 0; i < amount; i++) {
-            user = usersFacade.find(rand.nextInt(usersFacade.count()));
-            int passedModules = rand.nextInt(moduleFacade.count());
+            Collection<Users> userCollection = usersFacade.findAll();
+            System.out.println(userCollection.size());
+            int moduleCount = moduleFacade.count();
+            for (Users u : userCollection) {
+                
+            int passedModules = rand.nextInt(moduleCount);
 
-            for (int j = 0; j < passedModules; j++) {
+            for (int j = 1; j < passedModules; j++) {
+                Module module = moduleFacade.find(j);
+                
+                int notPassedModules = rand.nextInt(2);
+                for (int k = 0; k < notPassedModules ; k++) {
+                    createProgress(0, module, u); 
+                }                
                 module = moduleFacade.find(j);
-                createProgress(1, module, user);
-
-                for (int k = 0; k < rand.nextInt(3); j++) {
-                    createProgress(0, module, user);
-                }
+                createProgress(1, module, u);
             }
-
-            if (passedModules != moduleFacade.count()) {
-                createProgress(2, moduleFacade.find(passedModules), user);
+            if (passedModules < moduleFacade.count()-1) {
+                createProgress(2, moduleFacade.find(passedModules), u);
             }
+            
         }
 
     }
