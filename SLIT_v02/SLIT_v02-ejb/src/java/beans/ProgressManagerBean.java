@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Jorgen
+ * @author Jorgen, Jons
  */
 @Stateful
 public class ProgressManagerBean implements ProgressManagerBeanRemote {
@@ -49,7 +49,8 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     }
 
     /**
-     * author: Jorgen, Jonas returns a list with all approved modules of given
+     * author: Jorgen, Jonas 
+     * returns a list with all approved modules of given
      * student
      *
      * @param studentID Which user you want to get the list for
