@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Progress.findByDateApproved", query = "SELECT p FROM Progress p WHERE p.dateApproved = :dateApproved"),
     @NamedQuery(name = "Progress.findByDifficultyRating", query = "SELECT p FROM Progress p WHERE p.difficultyRating = :difficultyRating")})
 public class Progress implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -120,16 +121,16 @@ public class Progress implements Serializable {
     }
 
     public Boolean getApproved() {
-        if(approved == null){
+        if (approved == null) {
             return false;
-        }         
+        }
         return approved;
     }
 
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
-    
+
     @XmlTransient
     public Collection<Comment> getCommentCollection() {
         return commentCollection;
@@ -163,5 +164,5 @@ public class Progress implements Serializable {
     public String toString() {
         return "entities.Progress[ idprogress=" + idprogress + " ]";
     }
-    
+
 }

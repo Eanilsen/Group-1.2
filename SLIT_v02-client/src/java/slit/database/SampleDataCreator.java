@@ -5,8 +5,6 @@
  */
 package slit.database;
 
-import beans.InitializeDatabaseBeanRemote;
-import javax.ejb.EJB;
 import slit.main.Main;
 
 /**
@@ -14,16 +12,22 @@ import slit.main.Main;
  * @author Jons
  */
 public class SampleDataCreator {
-    
+//    @EJB
+//    private static InitializeDatabaseBeanRemote dataCreator;
+//
+//    public static InitializeDatabaseBeanRemote getDataCreator() {
+//        return dataCreator;
+//    }
 
-    
     /**
      * Creates some sample Data in the database using ejb
-     * @param args 
+     *
+     * @param args
      */
-    public static void main(String args[]){
+    public static void main(String args[]) {
         System.out.println("Create sample Data now..... Look at server output for more details");
-        Main.getDataCreator().createDatabase();
+        Main.getDataCreator().createDatabase(100, 10, 30); //students, teachers, progress, files
 //        Main.getDataCreator().createStudents(10);
+//        Main.getDataCreator().createTeachers(100);
     }
 }
