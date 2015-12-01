@@ -21,6 +21,4 @@ public interface InitializeDatabaseBeanRemote {
 
     public void addTeachers(int amount);
     
-    public boolean databaseEmpty();
-    
 }

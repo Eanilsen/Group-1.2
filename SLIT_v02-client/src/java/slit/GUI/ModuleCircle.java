@@ -6,46 +6,46 @@
 package slit.GUI;
 
 import javafx.scene.shape.Circle;
- 
+
 /**
- *
+ * 
  * @author Simen
  */
 public class ModuleCircle extends Circle {
     private boolean selected;
     private String text;
-   
+    
     ModuleCircle() {
         super();
     }
-   
+    
     ModuleCircle(double radius) {
         super(radius);
         this.selected = false;
     }
-   
+    
     ModuleCircle(double radius, String text) {
         super(radius);
         this.text = text;
         this.selected = false;
     }
-   
+    
     protected void setSelected(Boolean value) {
         this.selected = value;
     }
-   
+    
     protected boolean isSelected() {
         return selected;
     }
-   
+    
     protected String getText() {
         return text;
     }
- 
+
     protected void setText(String text) {
         this.text = text;
     }
- 
+
     protected String addText(String text) {
         return this.text = this.text + text;
     }

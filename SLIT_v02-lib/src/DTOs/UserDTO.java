@@ -5,18 +5,13 @@
  */
 package DTOs;
 
-import beans.ProgressManagerBeanRemote;
 import java.io.Serializable;
-import javax.ejb.EJB;
 
 /**
  *
  * @author Jons
  */
 public class UserDTO implements Serializable{
-    
-    @EJB
-    ProgressManagerBeanRemote progressBean;
     
     public int id;
     public String name;
@@ -26,9 +21,6 @@ public class UserDTO implements Serializable{
         this.id=id;
         this.name=name;
         this.mail = mail;
-    }
-    public double getProgress(){
-        return progressBean.getUserProgress(id);
     }
     
 }

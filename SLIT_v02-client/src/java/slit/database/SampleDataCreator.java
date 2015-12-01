@@ -25,13 +25,8 @@ public class SampleDataCreator {
      * @param args
      */
     public static void main(String args[]) {
-
-        if (Main.getDataCreator().databaseEmpty()) {
-
-            System.out.println("Create sample Data now..... Look at server output for more details");
-
-            Main.getDataCreator().createDatabase(100, 10, 30); //students, teachers, progress, files
-        }
+        System.out.println("Create sample Data now..... Look at server output for more details");
+        Main.getDataCreator().createDatabase(100, 10, 30); //students, teachers, progress, files
 //        Main.getDataCreator().createStudents(10);
 //        Main.getDataCreator().createTeachers(100);
     }
