@@ -10,6 +10,7 @@ import java.io.Serializable;
 /**
  *
  * @author Jons
+ * @author Even
  */
 public class ModuleDTO implements Serializable {
     private int id;

@@ -102,9 +102,9 @@ public class TreeSearch {
         Comparator<TreeNode> TreeComparator = new Comparator<TreeNode>() {
             @Override
             public int compare(TreeNode a, TreeNode b) {
-                if (a.getValue() == 'Å') {
+                if (a.getValue() == 'Ã…') {
                     return (a.getValue() + 50) - b.getValue();
-                } else if (b.getValue() == 'Å') {
+                } else if (b.getValue() == 'Ã…') {
                     return a.getValue() - (b.getValue() + 50);
                 }
 
