@@ -62,10 +62,10 @@ public class PendingList {
         //scrollPane.setPrefWidth(1600);
 
         // decides how far appart the boxes should be
-        gridPane.setHgap(200);
+        gridPane.setHgap(120);
         gridPane.setVgap(20);
         //gridPane.setGridLinesVisible(true);
-        //gridPane.setMinWidth(800);
+        gridPane.setMinWidth(90000);
 
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
@@ -93,7 +93,7 @@ public class PendingList {
 
             for (int i = 0; i < confirmButtons.size(); i++) {
                 if (confirmButtons.get(i) instanceof Button) {
-                    gridPane.add(confirmButtons.get(i), 3, i);
+//                    gridPane.add(confirmButtons.get(i), 3, i);
                 }
             }
         }
@@ -123,7 +123,7 @@ public class PendingList {
             Button confB = new Button("Confirm");
             confirmButtons.add(confB);
 
-            HBox h = new HBox(10);
+            HBox h = new HBox(5);
             //Text rbtn1Text = new Text("approve");
             //Text rbtn2Text = new Text("disapprove");
 
@@ -146,7 +146,7 @@ public class PendingList {
             disapprovedImageView.setImage(disapprovedImage);
 
             h.getChildren().addAll(
-                    rbtn1, approvedImageView, rbtn2, disapprovedImageView);
+                    rbtn1, approvedImageView, rbtn2, disapprovedImageView, confB);
             radioButtonPairs.add(h);
         }
     }

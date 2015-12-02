@@ -5,6 +5,10 @@
  */
 package beans;
 
+import basicBeans.FileFacade;
+import entities.File;
+import java.util.Date;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -14,8 +18,39 @@ import javax.ejb.Stateless;
 @Stateless
 public class FileManagerBean implements FileManagerBeanRemote {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @EJB
+    private FileFacade ff;
     
+    /**
+     * Finds the name of the file
+     * @param id
+     * @return 
+     */
+    @Override
+    public String getName(int id){
+        File file = ff.find(id);
+        return file.getName();
+    }
+    @Override    
+    public byte[] getContent(int id){
+        File file = ff.find(id);
+        return file.getContent();
+    }
+    @Override   
+    public Date getUploadDate(int id){
+        File file = ff.find(id);
+        return file.getUploadDate();
+    }
+    @Override   
+    public void createFile(){
+        File file = new File();
+        ff.create(file);
+    }
     
+    public void getContent(){
+        File file = new File();
+        file.getContent();
+    }
+    
+//    public List<FileDTO> getAllFiles
 }

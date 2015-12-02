@@ -1,5 +1,6 @@
 package slit.GUI;
 
+import java.io.File;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.geometry.Pos;
@@ -22,7 +23,7 @@ public class StudentView extends SuperView {
     protected static final double MENU_HEIGHT = 900.0;
     protected Stage stage;
     protected ProgressIndicator progressIndicator;
- 
+    
     /**
      * Constructor for StudetnView that initializes items and give them values.
      */
@@ -33,7 +34,7 @@ public class StudentView extends SuperView {
         progressIndicator = new ProgressIndicator(Main.getProgressBean().getCurrentUserProgress());
         progressIndicator.setMinSize(100, 100);
         scene.getStylesheets().addAll(
-                TeacherView.class.getResource("LES.css").toExternalForm());
+        TeacherView.class.getResource("LES.css").toExternalForm());
         StyleManager.setStyleClass("Pane", pane);
         StyleManager.setStyleClass("ProgInd", progressIndicator);
     }
@@ -56,18 +57,9 @@ public class StudentView extends SuperView {
 //        pane.setTop(progressIndicator);
 //        pane.setBottom(backButton);
         super.toLogin(backButton);
-        uploadAction(uploadBtn);
+        FileHandler.uploadAction(uploadBtn);
         return super.drawMenu();
     }
-    
-    /**
-     * Lybecks upload button
-     */
-    public void uploadAction(Button btn){
-        btn.setOnAction(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Browse Module File");
-            fileChooser.showOpenDialog(stage);
-        });
-    }
+
+
 }

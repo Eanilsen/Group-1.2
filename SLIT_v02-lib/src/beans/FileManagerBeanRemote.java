@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.util.Date;
 import javax.ejb.Remote;
 
 /**
@@ -13,5 +14,20 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface FileManagerBeanRemote {
+
+    public String getName(int id);
+    public void createFile();
     
+//    public void create(File file);
+//    public void edit(File file);
+//    public void remove(File file);
+//    
+//    public File find (object id);
+//    public List<File> findAll();
+//    public List<File> findRange(int[] range);
+//    public int count();
+
+    public byte[] getContent(int id);
+
+    public Date getUploadDate(int id);
 }
