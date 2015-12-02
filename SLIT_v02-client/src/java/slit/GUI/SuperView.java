@@ -89,7 +89,7 @@ public class SuperView {
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
         
-        backButton = new Button("to Login");
+        backButton = new Button("Logout");
         addImageResources();
         
         userLabel = new Label();

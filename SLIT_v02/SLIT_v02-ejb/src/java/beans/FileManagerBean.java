@@ -46,7 +46,9 @@ public class FileManagerBean implements FileManagerBeanRemote {
         File f = new File();
 //        f.setContent(file);
 //        ff.create(file);
-    }
+        byte[] content = f.getContent();
+        
+    }   
     
     public void getContent(){
         File file = new File();

@@ -31,7 +31,6 @@ public class TeacherView extends SuperView {
     protected static final double MENU_WIDTH = 1000.0;
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
-    private Button moduleSettingsBtn;
     private Button studentListBtn;
     private Button modulesBtn;
     private Button pendingBtn;
@@ -51,7 +50,6 @@ public class TeacherView extends SuperView {
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         modulesBtn = new Button("Modules");
         pendingBtn = new Button("Pending");
-        moduleSettingsBtn = new Button("Module Settings");
         studentListBtn = new Button("Student List");
         buttons = new ArrayList<>();
         verticalLine = new Line();
@@ -91,7 +89,6 @@ public class TeacherView extends SuperView {
  
         buttons.add(pendingBtn);
         displayPendingOnClick(pendingBtn);
-        buttons.add(moduleSettingsBtn);
  
         buttons.add(studentListBtn);
         displayStudentListOnClick(studentListBtn);
@@ -124,7 +121,7 @@ public class TeacherView extends SuperView {
         teacherBox.setPadding(new Insets(30, 0, 0, 0));
  
         teacherBox.getChildren().addAll(backButton,
-                modulesBtn, pendingBtn, studentListBtn, moduleSettingsBtn);
+                modulesBtn, pendingBtn, studentListBtn);
  
         return teacherBox;
     }

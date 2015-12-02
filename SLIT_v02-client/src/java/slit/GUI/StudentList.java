@@ -50,9 +50,7 @@ public class StudentList {
         scrollPane.setFitToWidth(true);
 
         // decides how far appart the boxes should be
-        System.out.println(gridPane.getWidth() +" " + scrollPane.getWidth());
         gridPane.setHgap(gridPane.getWidth()/3);
-        System.out.println(gridPane.getWidth() +" " + scrollPane.getWidth());
         
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
