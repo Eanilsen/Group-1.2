@@ -34,9 +34,9 @@ public class StudentView extends SuperView {
     protected static final double MENU_WIDTH = 800.0;
     protected static final double MENU_HEIGHT = 600.0;
     private ProgressIndicator progressIndicator;
-    private Stage stage;
-    private Button btn;
+    private Button btnUp;
     private VBox vBox;
+    private Stage stage;
 
         
     StudentView(){
@@ -44,7 +44,7 @@ public class StudentView extends SuperView {
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator(0.13);
         progressIndicator.setMinSize(100, 100);
-        btn = new Button("Browse");
+        btnUp = new Button("Browse");
 
 
         StyleManager.setStyleClass("Pane", pane);
@@ -56,15 +56,15 @@ public class StudentView extends SuperView {
     @Override
     protected Scene drawMenu() {
         pane.setTop(progressIndicator);
-        pane.setBottom(btn);
-        uploadButton(btn);
+        pane.setBottom(btnUp);
+        uploadButton(btnUp);
         return super.drawMenu();
     }
 
 
 
-    protected void uploadButton(Button btn) {
-            btn.setOnMouseClicked(b -> {
+    protected void uploadButton(Button btnUp) {
+            btnUp.setOnMouseClicked(b -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Open Resource File");
                 fileChooser.showOpenDialog(stage);
