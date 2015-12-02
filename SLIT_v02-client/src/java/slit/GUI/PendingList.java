@@ -62,10 +62,12 @@ public class PendingList {
         //scrollPane.setPrefWidth(1600);
 
         // decides how far appart the boxes should be
-        gridPane.setHgap(120);
+        System.out.println(gridPane +" " + scrollPane);
+        gridPane.setHgap(120);//scrollPane.getWidth()/3);
+        System.out.println(gridPane.getWidth() +" " + scrollPane.getWidth());
         gridPane.setVgap(20);
         //gridPane.setGridLinesVisible(true);
-        gridPane.setMinWidth(90000);
+        //gridPane.setMinWidth(90000);
 
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
@@ -104,7 +106,7 @@ public class PendingList {
         scrollPane.setFitToWidth(true);
 
         return scrollPane;
-    }
+    } 
 
     private void retrieveData() {
         ToggleGroup group = new ToggleGroup();

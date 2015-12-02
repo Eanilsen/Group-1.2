@@ -5,6 +5,7 @@
  */
 package slit.main;
 
+import beans.FileManagerBeanRemote;
 import slit.database.SampleDataCreator;
 import beans.InitializeDatabaseBeanRemote;
 import beans.ModuleManagerBeanRemote;
@@ -42,6 +43,9 @@ public class Main {
     @EJB
     private static ModuleManagerBeanRemote moduleManager;
     
+    @EJB
+    private static FileManagerBeanRemote fileManager;
+    
     public static ModuleManagerBeanRemote getModuleManager() {
         return moduleManager;
     }
@@ -56,6 +60,10 @@ public class Main {
 
     public static UserManagerBeanRemote getMyUserManager() {
         return myUserManager;
+    }
+    
+    public static FileManagerBeanRemote getFileManager() {
+        return fileManager;
     }
 
 

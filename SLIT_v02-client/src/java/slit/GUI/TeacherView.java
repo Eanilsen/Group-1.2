@@ -16,6 +16,7 @@ import javafx.geometry.Insets;
 import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
  
 /**
@@ -39,6 +40,8 @@ public class TeacherView extends SuperView {
     private PendingList pendingList;
     private Line verticalLine;
     private Line bottomLine;
+    protected Button editBtn;
+    protected Button confirmBtn;
  
     /**
      * Constructor for TeacherView that initializes items and give them values.
@@ -62,6 +65,13 @@ public class TeacherView extends SuperView {
                 TeacherView.class.getResource("LES.css").toExternalForm());
         StyleManager.setStyleClass("Pane", pane);
         StyleManager.setStyleClass("Line", verticalLine, bottomLine);
+        
+        editBtn = new Button("Edit Module");
+        //TODO add method to edit text in textArea
+        confirmBtn = new Button("Confirm");
+        //TODO add method to apply changes and send them to database
+        buttonsBox = new HBox();
+        buttonsBox.getChildren().addAll(editBtn, confirmBtn);
     }
  
     /**

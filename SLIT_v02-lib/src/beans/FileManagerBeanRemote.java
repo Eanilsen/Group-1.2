@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.io.File;
 import java.util.Date;
 import javax.ejb.Remote;
 
@@ -16,7 +17,7 @@ import javax.ejb.Remote;
 public interface FileManagerBeanRemote {
 
     public String getName(int id);
-    public void createFile();
+    public void createFile(File file);
     
 //    public void create(File file);
 //    public void edit(File file);

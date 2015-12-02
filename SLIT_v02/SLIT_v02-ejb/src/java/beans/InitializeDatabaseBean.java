@@ -226,10 +226,11 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //29/11/2015 23:27:59
         Date currentDate = new Date(System.currentTimeMillis());
 //        System.out.println(dateFormat.format(currentDate)); 
-        int pgrogressCount = progressFacade.findAll().size();
+        int progressCount = progressList.size();
         for (int i = 0; i < amount; i++) {
             String randomFile = fileNames[rand.nextInt(fileNames.length)];
-            createFiles(randomFile, currentDate, progressFacade.find(rand.nextInt(pgrogressCount)));
+            createFiles(randomFile, currentDate, 
+                    progressFacade.find(rand.nextInt(progressCount)));
 
         }
     }

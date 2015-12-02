@@ -50,8 +50,10 @@ public class StudentList {
         scrollPane.setFitToWidth(true);
 
         // decides how far appart the boxes should be
-        gridPane.setHgap(200);
-
+        System.out.println(gridPane.getWidth() +" " + scrollPane.getWidth());
+        gridPane.setHgap(gridPane.getWidth()/3);
+        System.out.println(gridPane.getWidth() +" " + scrollPane.getWidth());
+        
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
         VBox nameBox = new VBox(5);
@@ -80,9 +82,7 @@ public class StudentList {
             }
         }
 
-        gridPane.add(nameBox, 0, 0);
-        gridPane.add(emailBox, 1, 0);
-        gridPane.add(statusBox, 2, 0);
+        
 
         topBox.getChildren().add(gridPane);
         scrollPane.setContent(topBox);
