@@ -5,12 +5,15 @@
  */
 package slit.GUI;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import javafx.scene.layout.Pane;
  
 /**
- *
+ *A Class to handle time and dates 
+ * Are displayed from Superview. In the GUI.
  * @author Jørgen HG.
  */
 public class TimeAndName extends Pane {
@@ -22,6 +25,35 @@ public class TimeAndName extends Pane {
     private int month;
     private int day_Of_Month;
     private String currentUser;
+    private String timestamp;
+
+    
+ 
+    /**
+     * Constructor for Time and Name.
+     * Makes a new GregorianCalendar and a new SimpleDateFormat
+     */
+    public TimeAndName() {
+        Calendar cal = new GregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+        
+        this.hour = cal.get(Calendar.HOUR_OF_DAY);
+        this.min = cal.get(Calendar.MINUTE);
+        this.sec = cal.get(Calendar.SECOND);
+        this.year = cal.get(Calendar.YEAR);
+        this.month = cal.get(Calendar.MONTH)+1;
+        this.day_Of_Month = cal.get(Calendar.DAY_OF_MONTH);
+        timestamp = sdf.format(cal.getTime());
+        this.currentUser = "Student Studentson";
+    }
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
  
     public String getCurrentUser() {
         return currentUser;
@@ -82,35 +114,28 @@ public class TimeAndName extends Pane {
     }
  
     /**
-     *
+     * This metod returns. A HH:mm:ss time format. 
+     * As a string.
+     * @return timestamp 
      */
-    public TimeAndName() {
-        Calendar cal = new GregorianCalendar();
- 
-        this.hour = cal.get(Calendar.HOUR_OF_DAY);
-        this.min = cal.get(Calendar.MINUTE);
-        this.sec = cal.get(Calendar.SECOND);
-        this.year = cal.get(Calendar.YEAR);
-        this.month = cal.get(Calendar.MONTH);
-        this.day_Of_Month = cal.get(Calendar.DAY_OF_MONTH);
- 
-    }
- 
-    protected void drawClock() {
- 
-        TimeAndName time = new TimeAndName();
-        this.currentUser = "Simen";
- 
-    }
- 
     protected String getTimeString() {
-        return hour + ":" + min + ":" + sec;
+        return timestamp;
     }
- 
+    /**
+     * This metods returns and formats
+     * @return day.month.year
+     */
     protected String getDateString() {
-        return year + " " + month + "/" + day_Of_Month;
+        return day_Of_Month + "." + month + "." + year;
     }
  
+    /**
+     * This metod return
+     * 2 Desember 2015 Note; 
+     * This is hardcoded as and do
+     * not correctly display the current user. 
+     * @return String + currentUser 
+     */
     protected String getUserString() {
         return "Welcome " + currentUser;
     }

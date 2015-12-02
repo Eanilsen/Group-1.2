@@ -27,8 +27,8 @@ import javafx.scene.paint.Color;
  */
 public class TeacherView extends SuperView {
  
-    protected static final double MENU_WIDTH = 1200.0;
-    protected static final double MENU_HEIGHT = 800.0;
+    protected static final double MENU_WIDTH = 1000.0;
+    protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
     private Button moduleSettingsBtn;
     private Button studentListBtn;
@@ -198,12 +198,12 @@ public class TeacherView extends SuperView {
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
                 double y = (double) newVal;
-                line.setStartY(y / 4);
-                line.setEndY(y / 4);
+                line.setStartY(y * 0.25);
+                line.setEndY(y * 0.25);
                 verticalLine.setStartY(y / 4);
                 verticalLine.setEndY(y);
-                bottomLine.setStartY(y / 1.25);
-                bottomLine.setEndY(y / 1.25);
+                bottomLine.setStartY(y * 0.75);
+                bottomLine.setEndY(y * 0.75);
                 circle1.setCenterY(y / 4);
                 circle2.setCenterY(y / 4);
                 circle3.setCenterY(y / 4);
@@ -217,7 +217,7 @@ public class TeacherView extends SuperView {
         for (Circle c : moduleCircles) {
             c.setVisible(false);
         }
-        line.setVisible(false);
+//        line.setVisible(false);
     }
  
     private void showShapes() {

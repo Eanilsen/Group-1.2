@@ -8,8 +8,26 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TextArea;
 import java.util.ArrayList;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.RotateTransition;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import static slit.GUI.TeacherView.MENU_HEIGHT;
+import static slit.GUI.TeacherView.MENU_WIDTH;
 import slit.main.Main;
 
 /**
@@ -22,6 +40,8 @@ import slit.main.Main;
  */
 public class SuperView {
 	
+    protected static final double MENU_WIDTH = 1000.0;
+    protected static final double MENU_HEIGHT = 600.0;
     protected Scene scene;
     protected BorderPane pane;
     protected ModuleCircle circle1;
@@ -33,6 +53,17 @@ public class SuperView {
     protected TextArea moduleText;
     protected ArrayList<ModuleCircle> moduleCircles;
     protected Button backButton;
+    protected Text clockText;
+    protected ImagePattern imagePattern;
+    protected ImagePattern imagePattern2;
+    protected ImagePattern imagePattern3;
+    protected Image image1;
+    protected Image image2;
+    protected Image image3;
+    protected VBox timeBox;
+    protected Label userLabel;
+    protected Label timeLabel;
+    protected Label dateLabel;
 
     /**
      * Constructor for SuperView that initializes items and give them values.
@@ -40,9 +71,10 @@ public class SuperView {
      */
     SuperView() {
     	pane = new BorderPane();
-        
+        scene = new Scene(new BorderPane(), 0, 0);
         line = new Line();
-        line.setStroke(Color.RED);
+        line.setStroke(Color.BLACK);
+        line.setStrokeWidth(3);
         circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1));
         circle2 = new ModuleCircle(35, Main.getModuleManager().getDescription(2));
         circle3 = new ModuleCircle(35, Main.getModuleManager().getDescription(3));
@@ -57,6 +89,37 @@ public class SuperView {
         moduleCircles.add(circle5);
         
         backButton = new Button("to Login");
+        image1 = new Image(
+                SuperView.class.getResource(
+                        "Icon-Green.png").toExternalForm(), false);
+        image2 = new Image(
+                SuperView.class.getResource(
+                        "Icon-Red2.png").toExternalForm(), false);
+        image3 = new Image(
+                SuperView.class.getResource(
+                        "Icon-Gray.png").toExternalForm(), false);
+        imagePattern = new ImagePattern(image1);
+        imagePattern2 = new ImagePattern(image2);
+        imagePattern3 = new ImagePattern(image3);
+        scene.getStylesheets().addAll(SuperView.class.getResource("LES.css").toExternalForm());
+        StyleManager.setStyleClass("Circle", circle1, circle2, circle3, circle4, circle5);
+        StyleManager.setStyleClass("Line", line);
+        
+        userLabel = new Label();
+        userLabel.setFont(Font.font("Courier", FontPosture.ITALIC, 20));
+        timeLabel = new Label();
+        timeLabel.setFont(new Font(18));
+        dateLabel = new Label();
+        dateLabel.setFont(new Font(16));
+
+        timeBox = new VBox(5);
+        timeBox.setAlignment(Pos.TOP_CENTER);
+
+        startTimeAnimator();
+        timeBox.getChildren().addAll(userLabel, timeLabel, dateLabel);
+        
+        timeBox.setPadding(new Insets(0, 0, 20, 0));
+        pane.setBottom(timeBox);
     }
     
     /**
@@ -64,8 +127,11 @@ public class SuperView {
      * @return 
      */
     protected Scene drawMenu() {
-        circle2.setFill(Color.RED);
-        circle4.setFill(Color.BLUE);
+        circle1.setFill(imagePattern);
+        circle2.setFill(imagePattern2);
+        circle3.setFill(imagePattern3);
+        circle4.setFill(imagePattern);
+        circle5.setFill(imagePattern3);
         
         pane.getChildren().add(line);
         
@@ -80,6 +146,23 @@ public class SuperView {
         return scene;
     }
     
+    public void startTimeAnimator() {
+
+        EventHandler<ActionEvent> eventHandler = e -> {
+            TimeAndName timeAndName = new TimeAndName();
+
+            userLabel.setText(timeAndName.getUserString());
+            timeLabel.setText(timeAndName.getTimeString());
+            dateLabel.setText(timeAndName.getDateString());
+
+        };
+
+        Timeline animation = new Timeline(
+        new KeyFrame(Duration.millis(1000), eventHandler));
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.play();
+    }
+
     /*
      * @method bindShapes()
      * @param Line line: line to be bound
@@ -137,8 +220,49 @@ public class SuperView {
      * @param circles 
      */
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
+        for (ModuleCircle circle : circles) {
+            if (circle instanceof Circle) {
+                circle.setOnMouseClicked(e -> {
+                    RotateTransition rotation = new RotateTransition(Duration.seconds(0.5), circle);
+                    rotation.setCycleCount(1);
+                    rotation.setByAngle(180);
+                    rotation.play();
+                    if (circle.isSelected() == false) {
+                        for (ModuleCircle c : circles) {
+                            if (c != circle) {
+                                c.setSelected(false);
     }
+                        }
+                        circle.setSelected(true);
+                        moduleText = new TextArea(circle.getText());
+                        moduleText.setEditable(false);
+                        moduleText.setMaxSize(
+                                MENU_WIDTH * 0.75, MENU_HEIGHT / 3);
+                        pane.setCenter(moduleText);
     
+                        FadeTransition ft = new FadeTransition(
+                                Duration.seconds(0.5), moduleText);
+                        ft.setFromValue(0);
+                        ft.setToValue(1);
+                        ft.setCycleCount(1);
+                        ft.setAutoReverse(true);
+                        ft.play();
+                        
+                    } else if (circle.isSelected() == true) {
+                        FadeTransition ft = new FadeTransition(
+                                Duration.seconds(0.5), moduleText);
+                        ft.setFromValue(1);
+                        ft.setToValue(0);
+                        ft.setCycleCount(1);
+                        ft.setAutoReverse(true);
+                        ft.play();
+                        circle.setSelected(false);
+                    }
+                });
+            }
+        }
+    }
+
     /**
      * takes you back to the login screen
      * @param backButton 

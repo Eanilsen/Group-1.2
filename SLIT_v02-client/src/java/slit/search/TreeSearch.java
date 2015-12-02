@@ -6,20 +6,13 @@
 package slit.search;
 
 import DTOs.UserDTO;
-import beans.UserManagerBeanRemote;
-import java.sql.Time;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
 import slit.main.Main;
 
 /**

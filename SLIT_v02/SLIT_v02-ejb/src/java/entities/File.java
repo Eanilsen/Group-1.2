@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -45,6 +46,9 @@ public class File implements Serializable {
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+    @Lob
+    @Column(name = "content")
+    private byte[] content;
     @Column(name = "uploadDate")
     @Temporal(TemporalType.DATE)
     private Date uploadDate;
@@ -73,6 +77,14 @@ public class File implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
     }
 
     public Date getUploadDate() {

@@ -7,11 +7,8 @@ package beans;
 
 import DTOs.UserDTO;
 import basicBeans.UsersFacade;
-import entities.AvailableRoles;
 import entities.Users;
-import DTOs.RolesEnum;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
