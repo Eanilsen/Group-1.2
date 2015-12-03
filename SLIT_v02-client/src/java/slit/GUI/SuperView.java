@@ -76,11 +76,11 @@ public class SuperView {
         line = new Line();
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(3);
-        circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1));
-        circle2 = new ModuleCircle(35, Main.getModuleManager().getDescription(2));
-        circle3 = new ModuleCircle(35, Main.getModuleManager().getDescription(3));
-        circle4 = new ModuleCircle(35, Main.getModuleManager().getDescription(4));
-        circle5 = new ModuleCircle(35, Main.getModuleManager().getDescription(5));
+        circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1), 1);
+        circle2 = new ModuleCircle(35, Main.getModuleManager().getDescription(2), 2);
+        circle3 = new ModuleCircle(35, Main.getModuleManager().getDescription(3), 3);
+        circle4 = new ModuleCircle(35, Main.getModuleManager().getDescription(4), 4);
+        circle5 = new ModuleCircle(35, Main.getModuleManager().getDescription(5), 5);
         
         moduleCircles = new ArrayList<>();
         moduleCircles.add(circle1);
@@ -238,6 +238,7 @@ public class SuperView {
                     rotation.play();
                     if (circle.isSelected() == false) {
                         for (ModuleCircle c : circles) {
+//                            FileHandler.setActive(c);
                             if (c != circle) {
                                 c.setSelected(false);
                             }
@@ -247,6 +248,7 @@ public class SuperView {
                                 new TextArea(circle.getText()), buttonsBox,
                                 MENU_WIDTH, MENU_HEIGHT /2.25);
                         pane.setCenter(modulePane);
+                        
                         
                         FadeTransition ft = new FadeTransition(
                                 Duration.seconds(0.5), modulePane);

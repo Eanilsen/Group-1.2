@@ -8,11 +8,13 @@ package slit.GUI;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class ModulePane extends BorderPane {
 
     private TextArea textArea;
-    private HBox buttons;
+    private static HBox buttons;
+    private FileHandler fileHandler;
 
     ModulePane() {
         super();
@@ -31,4 +33,8 @@ public class ModulePane extends BorderPane {
     public TextArea getTextArea() {
         return textArea;
     }
+    
+//    public static HBox getButtonBox(){
+//        return buttons();
+//    }
 }

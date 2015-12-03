@@ -5,12 +5,7 @@
  */
 package slit.GUI;
 
-import DTOs.FileDTO;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
@@ -18,102 +13,117 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import slit.main.Main;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
+import java.sql.Date;
+import javafx.scene.text.Text;
 
 /**
  *
- * @author Jorgen
+ * @author Jorgen Lybeck
  */
 public class FileHandler {
 
     private static Stage stage;
-    private static FileChooser fileChooser = new FileChooser();
-//    private static Desktop desktop = Desktop.getDesktop();
+    private static FileChooser fileChooser;
     private static File file;
+    private static String name;
+    private static byte[] content;
+    private static Date date;
+    private static int moduleID;
+    private static int userID;
+    private static String testContent = "Test content";
+    
+    private ModuleCircle mc = new ModuleCircle();
+    private static ModulePane mp = new ModulePane();
+    private int selectedModule;
 
     /**
      * Code for button action, call uploadFile() here
      */
-    public static void uploadAction(Button btn) throws IOException {
+    public static void uploadAction(Button btn, int selectedModule) throws IOException {
         btn.setOnAction(e -> {
-
+            fileChooser = new FileChooser();
             fileChooser.setTitle("Browse Module File");
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             file = fileChooser.showOpenDialog(stage);
-
-            //find a way to getContent() from the file aswell
-            //
-            String fileName = file.getName(); //file is now the filename that is chosen.
-            uploadFile(file);
-            System.out.println("Path " + file + " " + "Filename " + fileName);
-
-
-
-            if (file != null) {
-                FileDTO fdto = new FileDTO(file, 1, "testName", "test".getBytes(),
-                        new java.util.Date());
-                try {
-                    ObjectOutputStream output
-                            = new ObjectOutputStream(
-                                    new BufferedOutputStream(
-                                            new FileOutputStream(file)));
-
-                    output.writeObject(fdto);
-                    output.close();
-//                openFile(file);
-                } catch (IOException ex) {
-                    Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
+            
+//            mp.getButtonBox().getChildren().add(new Text(""+file.getName()));
+            
+            uploadFile(file, selectedModule);
         });
+        
     }
+    
 
     /**
+     * @author Jorgen Lybeck
      * Code to upload in here
      * @param file 
      */
-    public static void uploadFile(File file){
-        try {
-            file.toPath();
-//        Path path = Paths.get("path/to/file");
-            byte[] content = Files.readAllBytes(file.toPath());
-            System.out.println(content);
-        } catch (IOException ex) {
-            System.out.println("Could not find file");
-        }
+    public static void uploadFile(File file, int selectedModule) {
 
+//       
+//            FileDTO fdto = new FileDTO(file, 1, "testName", "test".getBytes(),
+//                    new java.util.Date());
+            try {
+                try (ObjectInputStream input
+                        = new ObjectInputStream(
+                                new BufferedInputStream(
+                                        new FileInputStream(file)))) {
+
+                    //Manage file input
+                    
+                    System.out.println("Inside input " + input);
+                    System.out.println("invoking input.read() " + input.read());
+                    System.out.println("files path: " + file + " " + "files name: "
+                            + file.getName());
+                    
+                    file.createNewFile();
+                    name = file.getName();
+                    content = testContent.getBytes();
+                    date = new Date(System.currentTimeMillis());
+                    moduleID = selectedModule;
+                    userID = 3;
+                    
+                }
+                try (
+                        ObjectOutputStream output
+                        = new ObjectOutputStream(
+                                new BufferedOutputStream(
+                                        new FileOutputStream(file)))) {
+                    //Manage file output
+                    System.out.println("Inside output " + output);
+//                    output.writeObject(fdto);
+                    output.close();
+
+                }
+            } catch (EOFException ex) {
+                //Closes the file
+                System.out.println("All data were read!");
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        
     }
 
-    public static void confirmAction(Button btn) {
+    public static void confirmAction(Button btn) throws IOException {
         btn.setOnAction(e -> {
-            confirmFile(null); //replace with file from uploadAction()
+            confirmFile(file);
 
         });
     }
 
     public static void confirmFile(File file) {
-        Main.getFileManager().createFile(file);
+        System.out.println("----Confirming file. Module ID is " + moduleID);
+        if (file != null) {
+            Main.getFileManager().addFilesDatabase(
+                    name, content,
+                    date, moduleID, userID);
+            //user 3 is student studentson, replace with currentUser()
+            //find a way to getContent() from the file aswell 
+        } else {
+            System.out.println("Please choose a valid file!");
+        }
+        System.out.println("File confirmed");
     }
-
-    public String getCurrentUser() {
-        return Main.getMyUserManager().getUserName(3);
-        //change to currentUser
-    }
-    
-//                
-//    public static void openFile(File file) {
-//        try {
-////            System.out.println(desktop.isDesktopSupported());
-////            desktop.open(file);
-////            desktop.print(file);
-//        } catch (IOException ex) {
-//            Logger.getLogger(
-//                FileHandler.class.getName()).log(
-//                    Level.SEVERE, null, ex
-//                );
-//        }
-//    }
 }

@@ -41,12 +41,30 @@ public class StudentView extends SuperView {
 
         uploadBtn = new Button("Upload File");
         try {
-            FileHandler.uploadAction(uploadBtn);
+            FileHandler.uploadAction(uploadBtn, getCurrentActiveModule());
         } catch (IOException e) {
         }
+
         confirmBtn = new Button("Confirm");
+        try {
+            FileHandler.confirmAction(confirmBtn);
+        } catch (IOException e) {
+        }
+        
         buttonsBox = new HBox();
         buttonsBox.getChildren().addAll(uploadBtn, confirmBtn);
+    }
+    
+        
+    public int getCurrentActiveModule(){
+        int currentModule = 2;
+        for (ModuleCircle module : moduleCircles){
+            if (module.isSelected()){
+                currentModule = module.getModuleID();
+            }
+        } 
+        System.out.println("Current module " + currentModule);
+        return currentModule;
     }
 
     /**
