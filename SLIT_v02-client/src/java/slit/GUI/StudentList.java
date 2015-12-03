@@ -48,7 +48,6 @@ public class StudentList {
         System.out.println("Add listener to namesearch");
         nameSearchBar.setOnKeyReleased((event) -> {
             System.out.println("Searchbar key pressed. search for " + nameSearchBar.getText());
-
             drawStudentList(nameSearchBar.getText());
         });
     }
@@ -70,13 +69,12 @@ public class StudentList {
 
         // decides how far appart the boxes should be
         gridPane.setHgap(200);
-        
+
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
         VBox nameBox = new VBox(5);
         VBox emailBox = new VBox(5);
         VBox statusBox = new VBox(10);
-        
 
 //        if (names.size() > 0 && emails.size() > 0 && statuses.size() > 0) {
 //            for (int i = 0; i < names.size(); i++) {
@@ -101,18 +99,19 @@ public class StudentList {
 //        }
         List<UserDTO> users = TreeSearch.getSearchTree().getUsers(name);
 
-
         if (users == null || users.isEmpty()) {
             nameBox.getChildren().add(new Text("No user starting with " + name));
-       
+
         } else {
             for (UserDTO u : users) {
 
-                nameBox.getChildren().add(new Text(u.name));
-//            names.get(i).setFont(new Font(18));
+                Text userName = new Text(u.name);
+                nameBox.getChildren().add(userName);
+                userName.setFont(new Font(17));
 
-                emailBox.getChildren().add(new Text(u.mail));
-//            emails.get(i).setFont(new Font(18));
+                Text usermail = new Text(u.mail);
+                emailBox.getChildren().add(usermail);
+                usermail.setFont(new Font(17));
 
                 statusBox.getChildren().add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id)));
             }
