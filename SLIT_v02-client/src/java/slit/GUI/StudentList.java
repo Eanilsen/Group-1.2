@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import slit.main.Main;
 import slit.search.TreeSearch;
 
@@ -69,12 +70,14 @@ public class StudentList {
 
         // decides how far appart the boxes should be
         gridPane.setHgap(200);
+        gridPane.setVgap(5);
+
 
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
-        VBox nameBox = new VBox(5);
-        VBox emailBox = new VBox(5);
-        VBox statusBox = new VBox(10);
+//        VBox nameBox = new VBox(5);
+//        VBox emailBox = new VBox(5);
+//        VBox statusBox = new VBox(10);
 
 //        if (names.size() > 0 && emails.size() > 0 && statuses.size() > 0) {
 //            for (int i = 0; i < names.size(); i++) {
@@ -100,26 +103,30 @@ public class StudentList {
         List<UserDTO> users = TreeSearch.getSearchTree().getUsers(name);
 
         if (users == null || users.isEmpty()) {
-            nameBox.getChildren().add(new Text("No user starting with " + name));
+            gridPane.add(new Text("No user starting with " + name),0,0);
 
         } else {
+            int rowPosition = 0;
             for (UserDTO u : users) {
 
+
                 Text userName = new Text(u.name);
-                nameBox.getChildren().add(userName);
+//                nameBox.getChildren().add(userName);
                 userName.setFont(new Font(17));
 
-                Text usermail = new Text(u.mail);
-                emailBox.getChildren().add(usermail);
-                usermail.setFont(new Font(17));
+                gridPane.add(userName, 0, rowPosition);
 
-                statusBox.getChildren().add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id)));
+                Text userMail = new Text(u.mail);
+//                emailBox.getChildren().add(usermail);
+                userMail.setFont(new Font(17));
+                gridPane.add(userMail, 1, rowPosition);
+
+//                statusBox.getChildren().add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id)));
+                gridPane.add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id)), 2, rowPosition);
+
+                rowPosition++;
             }
         }
-
-        gridPane.add(nameBox, 0, 0);
-        gridPane.add(emailBox, 1, 0);
-        gridPane.add(statusBox, 2, 0);
 
         topBox.getChildren().add(gridPane);
         scrollPane.setContent(topBox);
@@ -139,6 +146,9 @@ public class StudentList {
         * "names", "emails", and "statuses". Note that names and emails needs to get
         * string passed in to their constructor parameter while ProgressBar needs
         * a double value.
+     */
+    /**
+     * @deprecated @param name
      */
     private void retrieveStudentInfo(String name) {
         //note that this is just dummy code to test scrollbar functionality.
