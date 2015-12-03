@@ -29,6 +29,8 @@ public interface ProgressManagerBeanRemote {
 
     public Collection<ProgressDTO> getAllPendingProgress();
 
+    public void setProgress(int ID, boolean approved);
+
     
     
     

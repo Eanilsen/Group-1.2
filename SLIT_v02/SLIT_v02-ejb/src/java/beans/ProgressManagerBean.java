@@ -59,6 +59,17 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
         System.out.println("return = " + progressPercentage);
         return progressPercentage;
     }
+    
+    /**
+     *
+     * @param ID
+     * @param approved
+     */
+    @Override
+    public void setProgress(int ID, boolean approved){
+        progressFacade.find(ID).setApproved(approved);
+        
+    }
 
     /**
      * author: Jorgen, Jonas returns a list with all approved modules of given
