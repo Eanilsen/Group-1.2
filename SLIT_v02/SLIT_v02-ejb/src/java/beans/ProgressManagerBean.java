@@ -53,7 +53,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
         double approved = (double) getApprovedModules(studentID).size();
         System.out.println("approved modules = " + approved);
-        double moduleCount = moduleFacade.count();
+        double moduleCount = (double) moduleFacade.count();
         System.out.println("all modules = " + moduleCount);
         
         double progressPercentage =  approved/moduleCount;

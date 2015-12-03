@@ -257,7 +257,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
                 
             int passedModules = rand.nextInt(moduleCount);
 
-            for (int j = 1; j <= passedModules+1; j++) {
+            for (int j = 1; j <= passedModules; j++) {
                 Module module = moduleFacade.find(j);
                 
                 int notPassedModules = rand.nextInt(2);
@@ -268,7 +268,7 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
                 createProgress(1, module, u);
             }
             if (0 < passedModules && passedModules < moduleFacade.count()) {
-                createProgress(2, moduleFacade.find(passedModules), u);
+                createProgress(2, moduleFacade.find(passedModules+1), u);
             }
             
         }
