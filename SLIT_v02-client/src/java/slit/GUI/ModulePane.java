@@ -25,6 +25,7 @@ public class ModulePane extends BorderPane {
         setCenter(textArea);
         setBottom(buttons);
         textArea.setEditable(false);
+        textArea.setWrapText(true);
         setMaxSize(width, height);
     }
 
