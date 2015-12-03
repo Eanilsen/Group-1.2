@@ -20,6 +20,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.ModuleText;
 
 /**
  *
@@ -140,10 +141,17 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
     }
 
     private void addModules() {
-        for (int i = 1; i <= 14; i++) {
-                createModule(i,"Module " + i, "Description of Module " + i + " here.");
+        for (int i = 0; i <= 4; i++) {
+                createModule(i,"Module " + (i+1), ModuleText.list[i]);
             em.flush();
+            if (i == 4) {
+                for (int j = 5; j <= 13; j++) {
+                    createModule(j,"Module " + (j+1), "Description of module" + (j+1));
+                    em.flush();
+                }
+            }
         }
+        
     }
 
     public void generateUsers(int amount, AvailableRoles role) {
