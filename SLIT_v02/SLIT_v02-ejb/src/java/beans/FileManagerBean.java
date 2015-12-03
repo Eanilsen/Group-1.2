@@ -41,10 +41,11 @@ public class FileManagerBean implements FileManagerBeanRemote {
         File file = ff.find(id);
         return file.getUploadDate();
     }
-    @Override   
-    public void createFile(){
-        File file = new File();
-        ff.create(file);
+    @Override
+    public void createFile(java.io.File file){
+        File f = new File();
+//        f.setContent(file);
+//        ff.create(file);
     }
     
     public void getContent(){

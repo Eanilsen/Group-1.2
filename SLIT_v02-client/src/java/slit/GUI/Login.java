@@ -10,8 +10,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
+import javafx.scene.control.PasswordField;
 import javafx.scene.shape.Circle;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class Login {
@@ -24,22 +27,28 @@ public class Login {
     private Circle circleTop;
     private Circle circleBottom;
     private TextField username;
-    private TextField password;
+    private PasswordField password;
     private Button loginBtnS;
     private Button loginBtnT;
     private Circle circle;
     private HBox hBox;
+    private Image logo;
+    private ImageView logoView;
 
     Login() {
         username = new TextField("Username");
-        password = new TextField("Password");
+        password = new PasswordField();
         loginBtnS = new Button("Login Student");
         loginBtnT = new Button("Login Teacher");
         vBox = new VBox(5);
         pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         hBox = new HBox();
-
+        logo = new Image(Login.class.getResource(
+                "LogoZag.png").toExternalForm(), false);
+        logoView = new ImageView(logo);
+        logoView.setFitHeight(200);
+        logoView.setFitWidth(200);
         scene.getStylesheets().clear();
         scene.getStylesheets().addAll(Login.class.getResource("LES.css").toExternalForm());
 
@@ -52,12 +61,14 @@ public class Login {
     protected Scene drawMenu() {
         username.setMaxWidth(150);
         password.setMaxWidth(150);
-
+        
+        loginBtnS.setPrefWidth(150);
+        loginBtnT.setPrefWidth(150);
         clickToOpenStudent(loginBtnS);
         clickToOpenTeacher(loginBtnT);
 
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(username, password, loginBtnS, loginBtnT);
+        vBox.getChildren().addAll(logoView, username, password, loginBtnS, loginBtnT);
 
         pane.setCenter(vBox);
 

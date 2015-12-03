@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import slit.main.Main;
 
 /**
  *
@@ -23,6 +24,7 @@ public class FileHandler {
     private static FileChooser fileChooser = new FileChooser();
     private static Desktop desktop = Desktop.getDesktop();
     
+    
         /**
      * Lybecks upload button
      */
@@ -30,10 +32,11 @@ public class FileHandler {
         btn.setOnAction(e -> {
             
             fileChooser.setTitle("Browse Module File");
-            
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
                 openFile(file);
+                Main.getFileManager().createFile(file);
             }
         });
     }
@@ -49,4 +52,10 @@ public class FileHandler {
                 );
         }
     }
+        
+    public String getCurrentUser(){
+        return Main.getMyUserManager().getUserName(3);
+        //change to currentUser
+    }
 }
+
