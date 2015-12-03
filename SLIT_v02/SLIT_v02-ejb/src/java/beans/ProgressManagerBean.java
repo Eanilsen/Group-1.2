@@ -15,6 +15,7 @@ import entities.Progress;
 import entities.Users;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -68,6 +69,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     @Override
     public void setProgress(int ID, boolean approved){
         progressFacade.find(ID).setApproved(approved);
+        progressFacade.find(ID).setDateApproved(new Date(System.currentTimeMillis()));
         
     }
 
