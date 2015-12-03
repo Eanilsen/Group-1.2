@@ -17,17 +17,11 @@ import javax.ejb.Remote;
 public interface FileManagerBeanRemote {
 
     public String getName(int id);
-    public void createFile(File file);
     
-//    public void create(File file);
-//    public void edit(File file);
-//    public void remove(File file);
-//    
-//    public File find (object id);
-//    public List<File> findAll();
-//    public List<File> findRange(int[] range);
-//    public int count();
+    public void addFilesDatabase(String name, byte[] content, Date uploadDate, 
+                            int moduleID, int userID);
 
+    
     public byte[] getContent(int id);
 
     public Date getUploadDate(int id);

@@ -35,10 +35,6 @@
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/ProgressFacade.java</file>
         </group>
         <group name="Group-1.2-Lybeck">
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/FileFacade.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/AbstractFacade.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/entities/File.java</file>
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/basicBeans/ModuleFacade.java</file>
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/InitializeDatabaseBean.java</file>
             <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02/SLIT_v02-ejb/src/java/beans/FileManagerBean.java</file>
         </group>
