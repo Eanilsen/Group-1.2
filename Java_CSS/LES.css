@@ -48,6 +48,8 @@ The lines commented out have been kept, just in case. */
 
 }
 
+
+
 /*Affects the color of the progress indicator. */
 .ProgInd {
 	-fx-progress-color: green;
@@ -55,5 +57,5 @@ The lines commented out have been kept, just in case. */
 
 /*Affects the line in Student- and TeacherView.java. */
 .Line {
-	-fx-opacity: 30%;
+	-fx-opacity: 40%;
 }

@@ -1,20 +1,20 @@
+import java.util.ArrayList;
+import javafx.animation.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
+import javafx.scene.Scene;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.Scene;
-import javafx.geometry.Pos;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ChangeListener;
-import javafx.scene.control.TextArea;
-import javafx.geometry.Insets;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.scene.control.ProgressIndicator;
-import java.util.ArrayList;
-import javafx.scene.control.Button;
-import javafx.animation.*;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -24,6 +24,7 @@ public class TeacherView extends SuperView {
     private VBox teacherBox;
     private Button moduleSettings;
     private Button studentList;
+    //private PendingList pendingList;
     private Button modules;
     private Button pending;
     private ArrayList<Button> buttons;
@@ -129,6 +130,17 @@ public class TeacherView extends SuperView {
         });
     }
 
+   /*private void displayPendingOnClick(Button btn) {
+    btn.setOnMouseClicked(e -> {
+        pendingList = new PendingList();
+        showShapes();
+        pane.setCenter(pendingList.drawPendingList());
+        if (studentList != null) {
+            studentList.hideStudentList();
+            }
+        });
+    }*/
+
     @Override
     protected void bindShapes(
             Line line, 
@@ -176,4 +188,11 @@ public class TeacherView extends SuperView {
             }
         });
     }
+
+    /*private void showShapes() {
+        for (Circle c : moduleCircles) {
+            c.setVisible(true);
+        }
+        line.setVisible(true);
+    }*/
 }

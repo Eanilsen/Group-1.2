@@ -6,12 +6,14 @@ import javafx.scene.control.ProgressBar;
 import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
+import javafx.scene.control.ScrollPane;
 
 public class StudentList {
 	private GridPane pane;
 	private ArrayList<Label> names;
 	private ArrayList<Label> emails;
 	private ArrayList<ProgressBar> statuses;
+	private ScrollPane scrollPane;
 
 	StudentList() {
 		pane = new GridPane();
@@ -20,7 +22,7 @@ public class StudentList {
 		pane.setAlignment(Pos.CENTER);
 
 		names = new ArrayList<>();
-		//note that all these fields needs to come from the database.
+		//note that all these fields need to come from the database.
 		Label name1 = new Label("Name name");
 		Label name2 = new Label("D-dawg MacJackson");
 		Label name3 = new Label("Surferdude");
@@ -44,7 +46,7 @@ public class StudentList {
 		statuses.add(pb2);
 		statuses.add(pb3);
 
-		StyleManager.setStyleClass("Gridpane", pane);
+		StyleManager.setStyleClass("GridPane", pane);
 	}
 
 	protected GridPane drawStudentList() {
@@ -76,4 +78,22 @@ public class StudentList {
 
 		return pane;
 	}
+
+	protected void hideStudentList() {
+        if (scrollPane != null) {
+            scrollPane = null;
+        }
+
+        if (names.size() > 0) {
+            names.clear();
+        }
+
+        if (emails.size() > 0) {
+            emails.clear();
+        }
+
+        if (statuses.size() > 0) {
+            statuses.clear();
+        }
+    }
 }
