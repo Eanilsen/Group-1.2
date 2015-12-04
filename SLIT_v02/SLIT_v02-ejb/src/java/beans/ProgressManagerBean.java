@@ -202,7 +202,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @Override
     public double getCurrentUserProgress() {
-        return getUserProgress(3);
+        return getUserProgress(UserManagerBean.getCurrentUser().getIduser());
     }
 
 }

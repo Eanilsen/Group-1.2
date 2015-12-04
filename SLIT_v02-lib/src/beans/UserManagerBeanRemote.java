@@ -6,6 +6,7 @@
  */
 package beans;
 
+import DTOs.RolesEnum;
 import DTOs.UserDTO;
 import java.util.List;
 import javax.ejb.Remote;
@@ -25,5 +26,11 @@ public interface UserManagerBeanRemote {
     public String getUserName(int i);    
 
     public List<UserDTO> getUserList();
+
+    public void Login(int ID);
+
+    public RolesEnum getCurrentUserRole();
+
+    public UserDTO getCurrentUserDTO();
     
 }

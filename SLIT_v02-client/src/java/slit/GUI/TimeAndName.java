@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import javafx.scene.layout.Pane;
+import slit.main.Main;
  
 /**
  *A Class to handle time and dates 
@@ -45,7 +46,6 @@ public class TimeAndName extends Pane {
         this.month = cal.get(Calendar.MONTH)+1;
         this.day_Of_Month = cal.get(Calendar.DAY_OF_MONTH);
         timestamp = sdf.format(cal.getTime());
-        this.currentUser = "Student Studentson";
     }
     public String getTimestamp() {
         return timestamp;
@@ -137,7 +137,7 @@ public class TimeAndName extends Pane {
      * @return String + currentUser 
      */
     protected String getUserString() {
-        return "Welcome " + currentUser;
+        return "Welcome " + Main.getMyUserManager().getCurrentUserDTO().name;
     }
  
 }
