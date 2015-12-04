@@ -7,6 +7,8 @@ package slit.GUI;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
@@ -31,7 +33,7 @@ public class FileHandler {
     private static int moduleID;
     private static int userID;
     private static String testContent = "Test content";
-    
+
     private ModuleCircle mc = new ModuleCircle();
     private static ModulePane mp = new ModulePane();
     private int selectedModule;
@@ -45,30 +47,37 @@ public class FileHandler {
             fileChooser.setTitle("Browse Module File");
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             file = fileChooser.showOpenDialog(stage);
+            if (file.exists()) {
+                System.out.println(file.getPath());
+                System.out.println(file.canRead());
+            }
             System.out.println("-----Before try Objectinputstream");
 
-                    System.out.println("files path: " + file + " " + "files name: "
-                            + file.getName());
 
-                    name = file.getName();
-                    content = testContent.getBytes();//createStringFromFile(file).getBytes(StandardCharsets.UTF_8);//
-                    System.out.println("selected: "+SuperView.getSelected());
-                    date = new Date(System.currentTimeMillis());
-                    moduleID = SuperView.getSelected();//3
-                    userID = Main.getMyUserManager().getCurrentUserDTO().id;
+            System.out.println("files path: " + file + " " + "files name: "
+                    + file.getName());
+
+            name = file.getName();
+            try {
+                content = createStringFromFile(file).getBytes(StandardCharsets.UTF_8);//
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("selected: " + SuperView.getSelected());
+            date = new Date(System.currentTimeMillis());
+            moduleID = SuperView.getSelected();//3
+            userID = Main.getMyUserManager().getCurrentUserDTO().id;
 
         });
-        
+
     }
-    
 
     /**
-     * @author Jorgen Lybeck
-     * Code to upload in here
-     * @param file 
+     * @author Jorgen Lybeck Code to upload in here
+     * @param file
      */
-    public static void uploadFile(File file){
-            
+    public static void uploadFile(File file) {
+
     }
 
     public static void confirmAction(Button btn) throws IOException {
@@ -94,19 +103,11 @@ public class FileHandler {
      * @param file
      * @return
      */
-    private static String createStringFromFile(java.io.File file) {
+    private static String createStringFromFile(java.io.File file)
+            throws IOException {
         String total = "";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getName()));
-
-            String count = "";
-            while ((count = bufferedReader.readLine()) != null) {
-                total = total + count;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return total;
+        byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+        return new String(encoded, StandardCharsets.UTF_8);
     }
 
     public static void confirmFile(File file) {
