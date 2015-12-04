@@ -33,6 +33,7 @@ public class StudentView extends SuperView {
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator(Main.getProgressBean().getCurrentUserProgress());
         progressIndicator.setMinSize(100, 100);
+        scene.getStylesheets().clear();
         scene.getStylesheets().addAll(
         TeacherView.class.getResource("LES.css").toExternalForm());
         StyleManager.setStyleClass("Pane", pane);
