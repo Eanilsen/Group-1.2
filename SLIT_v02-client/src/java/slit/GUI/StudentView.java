@@ -81,61 +81,11 @@ public class StudentView extends SuperView {
         HBox topBox = new HBox(MENU_WIDTH / 3.2);
         topBox.getChildren().addAll(progressIndicator);
         pane.setTop(topBox);
-        pane.setBottom(backButton);
+        timeBox.getChildren().add(backButton);
         topBox.setAlignment(Pos.CENTER);
-//        pane.setTop(progressIndicator);
-//        pane.setBottom(backButton);
         super.toLogin(backButton);
-//        FileHandler.uploadAction(uploadBtn);
         return super.drawMenu();
     }
 
-//    /**
-//     * Adds function to the circles. When they're clicked, something should
-//     * happend. This is further implemented in both subclasses.
-//     * @param circles
-//     */
-//    @Override
-//    protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
-//        for (ModuleCircle circle : circles) {
-//            if (circle instanceof Circle) {
-//                circle.setOnMouseClicked(e -> {
-//                    RotateTransition rotation = new RotateTransition(Duration.seconds(0.5), circle);
-//                    rotation.setCycleCount(1);
-//                    rotation.setByAngle(180);
-//                    rotation.play();
-//                    if (circle.isSelected() == false) {
-//                        for (ModuleCircle c : circles) {
-//                            if (c != circle) {
-//                                c.setSelected(false);
-//                            }
-//                        }
-//                        circle.setSelected(true);
-//                        modulePane = new ModulePane(
-//                                new TextArea(circle.getText()), buttonsBox);
-//                        modulePane.setMaxSize(MENU_WIDTH * 0.75, MENU_HEIGHT/1.5);
-//                        modulePane.setPadding(new Insets(150, 0, 0, 0));
-//                        pane.setCenter(modulePane);
-//                        FadeTransition ft = new FadeTransition(
-//                                Duration.seconds(0.5), modulePane);
-//                        ft.setFromValue(0);
-//                        ft.setToValue(1);
-//                        ft.setCycleCount(1);
-//                        ft.setAutoReverse(true);
-//                        ft.play();
-//
-//                    } else if (circle.isSelected() == true) {
-//                        FadeTransition ft = new FadeTransition(
-//                                Duration.seconds(0.5), modulePane);
-//                        ft.setFromValue(1);
-//                        ft.setToValue(0);
-//                        ft.setCycleCount(1);
-//                        ft.setAutoReverse(true);
-//                        ft.play();
-//                        circle.setSelected(false);
-//                    }
-//                });
-//            }
-//        }
-//    }
+
 }
