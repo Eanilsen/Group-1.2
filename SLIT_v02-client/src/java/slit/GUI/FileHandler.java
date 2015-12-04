@@ -46,51 +46,17 @@ public class FileHandler {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             file = fileChooser.showOpenDialog(stage);
             System.out.println("-----Before try Objectinputstream");
-//            mp.getButtonBox().getChildren().add(new Text(""+file.getName()));
-            
-//            try {
-//                try (ObjectInputStream input
-//                        = new ObjectInputStream(
-//                                new BufferedInputStream(
-//                                        new FileInputStream(file)))) {
 
-                    //Manage file input
-                    
-//                    System.out.println("Inside input " + input);
-//                    System.out.println("invoking input.read() " + input.read());
-//                    System.out.println("files path: " + file + " " + "files name: "
-//                            + file.getName());
                     System.out.println("files path: " + file + " " + "files name: "
                             + file.getName());
-                    //TODO someting wrong with user, and maybe module
-//                    file.createNewFile();
+
                     name = file.getName();
                     content = testContent.getBytes();//createStringFromFile(file).getBytes(StandardCharsets.UTF_8);//
                     System.out.println("selected: "+SuperView.getSelected());
                     date = new Date(System.currentTimeMillis());
                     moduleID = SuperView.getSelected();//3
                     userID = Main.getMyUserManager().getCurrentUserDTO().id;
-//                    input.close();
-                    
-//                }
-//                try (
-//                        ObjectOutputStream output
-//                        = new ObjectOutputStream(
-//                                new BufferedOutputStream(
-//                                        new FileOutputStream(file)))) {
-//                    //Manage file output
-//                    System.out.println("Inside output " + output);
-////                    output.writeObject(fdto);
-//                    output.close();
-//
-//                }
-//            } catch (EOFException ex) {
-//                //Closes the file
-//                System.out.println("All data were read!");
-//                ex.printStackTrace();
-//            } catch (IOException ex) {
-//                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+
         });
         
     }

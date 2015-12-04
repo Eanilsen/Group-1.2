@@ -24,4 +24,6 @@ public interface ModuleManagerBeanRemote {
     public List<ModuleDTO> getAllModules();
 
     public void createModule(String name, String description);
+
+    public Boolean getApproved(int i);
 }

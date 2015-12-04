@@ -7,8 +7,11 @@ package beans;
 
 import DTOs.ModuleDTO;
 import basicBeans.ModuleFacade;
+import basicBeans.UsersFacade;
 import entities.Module;
+import entities.Progress;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -22,6 +25,9 @@ import javax.ejb.Stateful;
 public class ModuleManagerBean implements ModuleManagerBeanRemote {
     @EJB
     private ModuleFacade mf;
+    
+    @EJB
+    private UsersFacade uf;
 
     /**
      * Finds a module by its primary key and returns its name.
@@ -71,5 +77,20 @@ public class ModuleManagerBean implements ModuleManagerBeanRemote {
         m.setName(name);
         m.setDescription(description);
         mf.create(m);
+    }
+    
+    @Override
+    public Boolean getApproved(int i){
+        Collection<Progress> progress = uf.find(3).getProgressCollection();
+        if(UserManagerBean.getCurrentUser() != null){
+            progress=UserManagerBean.getCurrentUser().getProgressCollection();
+        }
+        Boolean approved = null;
+        for (Progress p : progress) {
+            if(p.getModule().getIdmodule()==i){
+                approved = p.getApproved();
+            }
+        }
+        return approved;
     }
 }

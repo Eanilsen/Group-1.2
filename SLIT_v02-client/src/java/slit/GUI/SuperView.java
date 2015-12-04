@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -133,11 +134,11 @@ public class SuperView {
      * @return
      */
     protected Scene drawMenu() {
-        circle1.setFill(imagePattern);
-        circle2.setFill(imagePattern2);
-        circle3.setFill(imagePattern3);
-        circle4.setFill(imagePattern);
-        circle5.setFill(imagePattern3);
+        circle1.setFill(getPattern(1));
+        circle2.setFill(getPattern(2));
+        circle3.setFill(getPattern(3));
+        circle4.setFill(getPattern(4));
+        circle5.setFill(getPattern(5));
 
         pane.getChildren().add(line);
 
@@ -294,5 +295,18 @@ public class SuperView {
         } else{
             return selected;
         }
+    }
+
+    private Paint getPattern(int i) {
+        if(Main.getModuleManager().getApproved(i)==null){
+            return imagePattern3;
+        }
+        else if(Main.getModuleManager().getApproved(i)== true){
+            return imagePattern;
+        }
+        else if(Main.getModuleManager().getApproved(i)== false){
+            return imagePattern2;
+        }
+        return null;
     }
 }

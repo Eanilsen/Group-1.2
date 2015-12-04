@@ -44,7 +44,7 @@ public class Login {
 
         loginBtnS = new Button("Login Student");
         loginBtnT = new Button("Login Teacher");
-        loginBtnWithId = new Button("Login with ID");
+        loginBtnWithId = new Button("Login");
         vBox = new VBox(5);
         pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
@@ -80,7 +80,7 @@ public class Login {
 
         vBox.setAlignment(Pos.CENTER);
 
-        vBox.getChildren().addAll(logoView, username, password, loginBtnS, loginBtnT, loginBtnWithId);
+        vBox.getChildren().addAll(logoView, username, password, loginBtnWithId);
 
 
         pane.setCenter(vBox);
