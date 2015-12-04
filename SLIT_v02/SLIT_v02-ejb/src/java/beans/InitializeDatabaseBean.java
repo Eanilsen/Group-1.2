@@ -10,6 +10,7 @@ import basicBeans.ModuleFacade;
 import basicBeans.ProgressFacade;
 import basicBeans.UsersFacade;
 import entities.*;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -83,9 +84,10 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
         em.flush();
     }
 
-    public void createFiles(String name, Date uploadDate, Progress progress) {
+    public void createFiles(String name, byte[] content, Date uploadDate, Progress progress) {
         File file = new File();
         file.setName(name);
+        file.setContent(content);
         file.setUploadDate(uploadDate);
         file.setProgress(progress);
         em.persist(file);
@@ -223,13 +225,17 @@ public class InitializeDatabaseBean implements InitializeDatabaseBeanRemote {
             + "new-file.gdoc", "module.doc", "arraylists.pdf"
             + "java-interfaces.doc", "testing.txt", "readme.txt"};
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //29/11/2015 23:27:59
+        String fileContent = "I am the content of all your files. You shall " + 
+                "like me. You shall even learn to love me! I am the one byte " + 
+                "to rule them all.";     
+                
         Date currentDate = new Date(System.currentTimeMillis());
-//        System.out.println(dateFormat.format(currentDate)); 
-        int pgrogressCount = progressFacade.findAll().size();
+
+        int progressCount = progressList.size();
         for (int i = 0; i < amount; i++) {
             String randomFile = fileNames[rand.nextInt(fileNames.length)];
-            createFiles(randomFile, currentDate, progressFacade.find(rand.nextInt(pgrogressCount)));
+            createFiles(randomFile, fileContent.getBytes(), currentDate, 
+                    progressFacade.find(rand.nextInt(progressCount)));
 
         }
     }

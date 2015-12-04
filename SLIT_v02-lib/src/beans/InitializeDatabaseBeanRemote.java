@@ -6,6 +6,7 @@
 package beans;
 
 
+import java.sql.Date;
 import javax.ejb.Remote;
 
 /**
@@ -22,5 +23,7 @@ public interface InitializeDatabaseBeanRemote {
     public void addTeachers(int amount);
     
     public boolean databaseEmpty();
+    
+    
     
 }

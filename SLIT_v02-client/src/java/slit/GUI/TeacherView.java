@@ -16,6 +16,7 @@ import javafx.geometry.Insets;
 import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
  
 /**
@@ -39,6 +40,8 @@ public class TeacherView extends SuperView {
     private PendingList pendingList;
     private Line verticalLine;
     private Line bottomLine;
+    protected Button editBtn;
+    protected Button confirmBtn;
  
     /**
      * Constructor for TeacherView that initializes items and give them values.
@@ -48,7 +51,6 @@ public class TeacherView extends SuperView {
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         modulesBtn = new Button("Modules");
         pendingBtn = new Button("Pending");
-        moduleSettingsBtn = new Button("Module Settings");
         studentListBtn = new Button("Student List");
         buttons = new ArrayList<>();
         verticalLine = new Line();
@@ -62,6 +64,13 @@ public class TeacherView extends SuperView {
                 TeacherView.class.getResource("LES.css").toExternalForm());
         StyleManager.setStyleClass("Pane", pane);
         StyleManager.setStyleClass("Line", verticalLine, bottomLine);
+        
+        editBtn = new Button("Edit Module");
+        //TODO add method to edit text in textArea
+        confirmBtn = new Button("Confirm");
+        //TODO add method to apply changes and send them to database
+        buttonsBox = new HBox();
+        buttonsBox.getChildren().addAll(editBtn, confirmBtn);
     }
  
     /**
@@ -81,7 +90,6 @@ public class TeacherView extends SuperView {
  
         buttons.add(pendingBtn);
         displayPendingOnClick(pendingBtn);
-        buttons.add(moduleSettingsBtn);
  
         buttons.add(studentListBtn);
         displayStudentListOnClick(studentListBtn);
@@ -114,7 +122,7 @@ public class TeacherView extends SuperView {
         teacherBox.setPadding(new Insets(30, 0, 0, 0));
  
         teacherBox.getChildren().addAll(backButton,
-                modulesBtn, pendingBtn, studentListBtn, moduleSettingsBtn);
+                modulesBtn, pendingBtn, studentListBtn);
  
         return teacherBox;
     }

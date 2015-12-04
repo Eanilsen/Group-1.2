@@ -19,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -26,8 +27,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import static slit.GUI.TeacherView.MENU_HEIGHT;
-import static slit.GUI.TeacherView.MENU_WIDTH;
 import slit.main.Main;
 
 /**
@@ -64,6 +63,8 @@ public class SuperView {
     protected Label userLabel;
     protected Label timeLabel;
     protected Label dateLabel;
+    protected ModulePane modulePane;
+    protected HBox buttonsBox;
 
     /**
      * Constructor for SuperView that initializes items and give them values.
@@ -75,11 +76,11 @@ public class SuperView {
         line = new Line();
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(3);
-        circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1));
-        circle2 = new ModuleCircle(35, Main.getModuleManager().getDescription(2));
-        circle3 = new ModuleCircle(35, Main.getModuleManager().getDescription(3));
-        circle4 = new ModuleCircle(35, Main.getModuleManager().getDescription(4));
-        circle5 = new ModuleCircle(35, Main.getModuleManager().getDescription(5));
+        circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1), 1);
+        circle2 = new ModuleCircle(35, Main.getModuleManager().getDescription(2), 2);
+        circle3 = new ModuleCircle(35, Main.getModuleManager().getDescription(3), 3);
+        circle4 = new ModuleCircle(35, Main.getModuleManager().getDescription(4), 4);
+        circle5 = new ModuleCircle(35, Main.getModuleManager().getDescription(5), 5);
         
         moduleCircles = new ArrayList<>();
         moduleCircles.add(circle1);
@@ -88,22 +89,8 @@ public class SuperView {
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
         
-        backButton = new Button("to Login");
-        image1 = new Image(
-                SuperView.class.getResource(
-                        "Icon-Green.png").toExternalForm(), false);
-        image2 = new Image(
-                SuperView.class.getResource(
-                        "Icon-Red2.png").toExternalForm(), false);
-        image3 = new Image(
-                SuperView.class.getResource(
-                        "Icon-Gray.png").toExternalForm(), false);
-        imagePattern = new ImagePattern(image1);
-        imagePattern2 = new ImagePattern(image2);
-        imagePattern3 = new ImagePattern(image3);
-        scene.getStylesheets().addAll(SuperView.class.getResource("LES.css").toExternalForm());
-        StyleManager.setStyleClass("Circle", circle1, circle2, circle3, circle4, circle5);
-        StyleManager.setStyleClass("Line", line);
+        backButton = new Button("Logout");
+        addImageResources();
         
         userLabel = new Label();
         userLabel.setFont(Font.font("Courier", FontPosture.ITALIC, 20));
@@ -120,6 +107,28 @@ public class SuperView {
         
         timeBox.setPadding(new Insets(0, 0, 20, 0));
         pane.setBottom(timeBox);
+        
+        pane.setTop(new Text("LA OSS TESTE!"));
+        
+
+    }
+
+    public void addImageResources() {
+        image1 = new Image(
+                SuperView.class.getResource(
+                        "Icon-Green.png").toExternalForm(), false);
+        image2 = new Image(
+                SuperView.class.getResource(
+                        "Icon-Red2.png").toExternalForm(), false);
+        image3 = new Image(
+                SuperView.class.getResource(
+                        "Icon-Gray.png").toExternalForm(), false);
+        imagePattern = new ImagePattern(image1);
+        imagePattern2 = new ImagePattern(image2);
+        imagePattern3 = new ImagePattern(image3);
+        scene.getStylesheets().addAll(SuperView.class.getResource("LES.css").toExternalForm());
+        StyleManager.setStyleClass("Circle", circle1, circle2, circle3, circle4, circle5);
+        StyleManager.setStyleClass("Line", line);
     }
     
     /**
@@ -217,7 +226,7 @@ public class SuperView {
     /**
      * Adds function to the circles. When they're clicked, something should
      * happend. This is further implemented in both subclasses.
-     * @param circles 
+     * @param circles
      */
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
         for (ModuleCircle circle : circles) {
@@ -229,28 +238,29 @@ public class SuperView {
                     rotation.play();
                     if (circle.isSelected() == false) {
                         for (ModuleCircle c : circles) {
+//                            FileHandler.setActive(c);
                             if (c != circle) {
                                 c.setSelected(false);
-    }
+                            }
                         }
                         circle.setSelected(true);
-                        moduleText = new TextArea(circle.getText());
-                        moduleText.setEditable(false);
-                        moduleText.setMaxSize(
-                                MENU_WIDTH * 0.75, MENU_HEIGHT / 3);
-                        pane.setCenter(moduleText);
-    
+                        modulePane = new ModulePane(
+                                new TextArea(circle.getText()), buttonsBox,
+                                MENU_WIDTH, MENU_HEIGHT /2.25);
+                        pane.setCenter(modulePane);
+                        
+                        
                         FadeTransition ft = new FadeTransition(
-                                Duration.seconds(0.5), moduleText);
+                                Duration.seconds(0.5), modulePane);
                         ft.setFromValue(0);
                         ft.setToValue(1);
                         ft.setCycleCount(1);
                         ft.setAutoReverse(true);
                         ft.play();
-                        
+
                     } else if (circle.isSelected() == true) {
                         FadeTransition ft = new FadeTransition(
-                                Duration.seconds(0.5), moduleText);
+                                Duration.seconds(0.5), modulePane);
                         ft.setFromValue(1);
                         ft.setToValue(0);
                         ft.setCycleCount(1);

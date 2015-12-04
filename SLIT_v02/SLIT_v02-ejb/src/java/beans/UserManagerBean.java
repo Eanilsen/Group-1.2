@@ -19,6 +19,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
+
 /**
  *
  * @author Jons
@@ -70,17 +72,19 @@ public class UserManagerBean implements UserManagerBeanRemote {
     }
 
     /**
-     * @author JH selfexplaining :P
+     * @author JH
+     * selfexplaining :P
      * @param userID
      * @return
      */
     @Override
-    public String getUserName(int userID) {
+    public String getUserName(int userID){
         Users user = em.find(Users.class, userID);
         String name = user.getFirstname() + " " + user.getLastname();
         return name;
     }
 
+    
     public void persist(Object object) {
         em.persist(object);
         List<Users> myUsers = new ArrayList<>();
@@ -102,11 +106,12 @@ public class UserManagerBean implements UserManagerBeanRemote {
             System.out.println("Creating user " + u.getFirstname() + " " + u.getLastname());
             String name = u.getFirstname() + " " + u.getLastname();
             double progress = 0.22; //u.getProgressCollection();
-            UserDTO UserToAdd = new UserDTO(u.getIduser(), name, u.getEmail());
+            UserDTO UserToAdd = new UserDTO(u.getIduser(),name, u.getEmail());
             userDTO.add(UserToAdd);
         }
         return userDTO;
 
     }
 
+    
 }
