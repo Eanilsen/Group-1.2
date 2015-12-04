@@ -1,10 +1,15 @@
 package slit.GUI;
 
 import DTOs.UserDTO;
+import com.sun.javafx.property.adapter.PropertyDescriptor;
+import com.sun.javafx.scene.control.skin.ColorPalette;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.ProgressBar;
 import java.util.*;
+import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.scene.layout.VBox;
@@ -12,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import slit.main.Main;
 import slit.search.TreeSearch;
 
@@ -27,22 +33,35 @@ public class StudentList {
     private ArrayList<Text> emails;
     private ArrayList<ProgressBar> statuses;
     private TextField nameSearchBar;
-    private TextField emailSearchBar;
     private HBox searchBarBox;
 
     StudentList() {
+
         gridPane = new GridPane();
         scrollPane = new ScrollPane();
         names = new ArrayList<>();
         emails = new ArrayList<>();
         statuses = new ArrayList<>();
         nameSearchBar = new TextField("enter name");
-        emailSearchBar = new TextField("enter email");
+        nameSearchBar.setMinWidth(300);
         searchBarBox = new HBox(200);
+        System.out.println("Add listener to namesearch");
+        nameSearchBar.setOnKeyReleased((event) -> {
+            System.out.println("Searchbar key pressed. search for " + nameSearchBar.getText());
+            drawStudentList(nameSearchBar.getText());
+        });
+        StyleManager.setStyleClass("Pane", scrollPane);
     }
 
     protected ScrollPane drawStudentList() {
-        retrieveStudentInfo();
+        return drawStudentList("");
+    }
+
+    protected ScrollPane drawStudentList(String name) {
+        if (name == null) {
+            name = "";
+        }
+        gridPane.getChildren().clear();
 
         scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -50,37 +69,64 @@ public class StudentList {
         scrollPane.setFitToWidth(true);
 
         // decides how far appart the boxes should be
-        gridPane.setHgap(gridPane.getWidth()/3);
-        
+        gridPane.setHgap(200);
+        gridPane.setVgap(5);
+
+
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
-        VBox nameBox = new VBox(5);
-        VBox emailBox = new VBox(5);
-        VBox statusBox = new VBox(5);
+//        VBox nameBox = new VBox(5);
+//        VBox emailBox = new VBox(5);
+//        VBox statusBox = new VBox(10);
 
-        if (names.size() > 0 && emails.size() > 0 && statuses.size() > 0) {
-            for (int i = 0; i < names.size(); i++) {
-                if (names.get(i) instanceof Text) {
-                    nameBox.getChildren().add(names.get(i));
-                    names.get(i).setFont(new Font(18));
-                }
-            }
+//        if (names.size() > 0 && emails.size() > 0 && statuses.size() > 0) {
+//            for (int i = 0; i < names.size(); i++) {
+//                if (names.get(i) instanceof Text) {
+//                    nameBox.getChildren().add(names.get(i));
+//                    names.get(i).setFont(new Font(18));
+//                }
+//            }
+//
+//            for (int i = 0; i < emails.size(); i++) {
+//                if (emails.get(i) instanceof Text) {
+//                    emailBox.getChildren().add(emails.get(i));
+//                    emails.get(i).setFont(new Font(18));
+//                }
+//            }
+//
+//            for (int i = 0; i < statuses.size(); i++) {
+//                if (statuses.get(i) instanceof ProgressBar) {
+//                    statusBox.getChildren().add(statuses.get(i));
+//                }
+//            }
+//        }
+        List<UserDTO> users = TreeSearch.getSearchTree().getUsers(name);
 
-            for (int i = 0; i < emails.size(); i++) {
-                if (emails.get(i) instanceof Text) {
-                    emailBox.getChildren().add(emails.get(i));
-                    emails.get(i).setFont(new Font(18));
-                }
-            }
+        if (users == null || users.isEmpty()) {
+            gridPane.add(new Text("No user starting with " + name),0,0);
 
-            for (int i = 0; i < statuses.size(); i++) {
-                if (statuses.get(i) instanceof ProgressBar) {
-                    statusBox.getChildren().add(statuses.get(i));
-                }
+        } else {
+            int rowPosition = 0;
+            for (UserDTO u : users) {
+
+
+                Text userName = new Text(u.name);
+//                nameBox.getChildren().add(userName);
+                userName.setFont(new Font(17));
+
+                gridPane.add(userName, 0, rowPosition);
+
+                Text userMail = new Text(u.mail);
+//                emailBox.getChildren().add(usermail);
+                userMail.setFont(new Font(17));
+                gridPane.add(userMail, 1, rowPosition);
+
+//                statusBox.getChildren().add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id)));
+                gridPane.add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id)), 2, rowPosition);
+
+                rowPosition++;
             }
         }
-
-        
 
         topBox.getChildren().add(gridPane);
         scrollPane.setContent(topBox);
@@ -90,7 +136,7 @@ public class StudentList {
 
     protected HBox drawSearchBars() {
         searchBarBox.setAlignment(Pos.CENTER);
-        searchBarBox.getChildren().addAll(nameSearchBar, emailSearchBar);
+        searchBarBox.getChildren().addAll(nameSearchBar);
         return searchBarBox;
     }
 
@@ -101,19 +147,29 @@ public class StudentList {
         * string passed in to their constructor parameter while ProgressBar needs
         * a double value.
      */
-    private void retrieveStudentInfo() {
+    /**
+     * @deprecated @param name
+     */
+    private void retrieveStudentInfo(String name) {
         //note that this is just dummy code to test scrollbar functionality.
 //            List<UserDTO> userList = Main.getMyUserManager().getUserList();
-        List<UserDTO> userList = TreeSearch.getSearchTree().getUsers("");
-        for (int i = 0; i < userList.size(); i++) {
 
+        long timeNow = Calendar.getInstance(Locale.ENGLISH).getTimeInMillis();
+
+        List<UserDTO> userList = TreeSearch.getSearchTree().getUsers(name);
+        for (int i = 0; i < userList.size(); i++) {
+            names = new ArrayList<>();
             UserDTO u = userList.get(i);
             names.add(new Text(u.name));
             emails.add(new Text(u.mail));
 //                    names.add(new Text("name"));
 //                    emails.add(new Text("mail"));
             statuses.add(new ProgressBar(Main.getProgressBean().getUserProgress(u.id))); //ProgressManagerBean.getStudentsProgress(u.id); 
+
         }
+        System.out.println("time start = " + timeNow);
+        System.out.println("time now = " + Calendar.getInstance(Locale.ENGLISH).getTimeInMillis());
+        System.out.println("time to search for users  = " + (long) (Calendar.getInstance(Locale.ENGLISH).getTimeInMillis() - timeNow));
     }
 
     protected void hideStudentList() {

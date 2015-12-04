@@ -1,9 +1,11 @@
 package slit.GUI;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -24,6 +26,7 @@ public class StudentView extends SuperView {
     protected ProgressIndicator progressIndicator;
     protected Button uploadBtn;
     protected Button confirmBtn;
+    protected FileHandler fileHandler;
 
     /**
      * Constructor for StudetnView that initializes items and give them values.
@@ -33,7 +36,8 @@ public class StudentView extends SuperView {
 //        pane.setStyle("-fx-background-color: red;");
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
         progressIndicator = new ProgressIndicator(Main.getProgressBean().getCurrentUserProgress());
-        progressIndicator.setMinSize(100, 100);
+        progressIndicator.setMinSize(150, 150);
+        progressIndicator.setPadding(new Insets(20, 0, 0, 0));
         scene.getStylesheets().addAll(
                 TeacherView.class.getResource("LES.css").toExternalForm());
         StyleManager.setStyleClass("Pane", pane);
@@ -41,8 +45,9 @@ public class StudentView extends SuperView {
 
         uploadBtn = new Button("Upload File");
         try {
-            FileHandler.uploadAction(uploadBtn, getCurrentActiveModule());
-        } catch (IOException e) {
+            FileHandler.uploadAction(uploadBtn);
+        } catch (IOException ex) {
+            Logger.getLogger(StudentView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         confirmBtn = new Button("Confirm");
@@ -54,18 +59,7 @@ public class StudentView extends SuperView {
         buttonsBox = new HBox();
         buttonsBox.getChildren().addAll(uploadBtn, confirmBtn);
     }
-    
-        
-    public int getCurrentActiveModule(){
-        int currentModule = 2;
-        for (ModuleCircle module : moduleCircles){
-            if (module.isSelected()){
-                currentModule = module.getModuleID();
-            }
-        } 
-        System.out.println("Current module " + currentModule);
-        return currentModule;
-    }
+
 
     /**
      * drawMenu() adds items to the scene from StudentView and superclass
@@ -77,11 +71,10 @@ public class StudentView extends SuperView {
     @Override
     protected Scene drawMenu() {
         Button backButton = new Button("Logout");
-        HBox topBox = new HBox(MENU_WIDTH / 3.2);
-        topBox.getChildren().addAll(progressIndicator);
-        pane.setTop(topBox);
+
+        pane.setTop(progressIndicator);
         pane.setBottom(backButton);
-        topBox.setAlignment(Pos.CENTER);
+
 //        pane.setTop(progressIndicator);
 //        pane.setBottom(backButton);
         super.toLogin(backButton);

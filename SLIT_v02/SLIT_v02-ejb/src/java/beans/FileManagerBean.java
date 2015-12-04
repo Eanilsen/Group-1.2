@@ -10,7 +10,9 @@ import basicBeans.ModuleFacade;
 import basicBeans.ProgressFacade;
 import basicBeans.UsersFacade;
 import entities.File;
+import entities.Module;
 import entities.Progress;
+import static entities.Progress_.module;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,7 +31,7 @@ public class FileManagerBean implements FileManagerBeanRemote {
     @EJB
     private ProgressFacade pf;
     @EJB
-    private ModuleFacade mf;
+    private ModuleFacade mf = new ModuleFacade();
     @PersistenceContext(unitName = "SLIT_v02-ejbPU")
     private EntityManager em;
     @EJB
@@ -60,10 +62,14 @@ public class FileManagerBean implements FileManagerBeanRemote {
     public void addFilesDatabase(String name, byte[] content, Date uploadDate, 
                             int moduleID, int userID){
         
-        System.out.println("Creating Progress with user "+ mf.find(userID).getName());
+        //TODO Something is wrong here, looks like line 66
+        System.out.println("--Userid "+ userID);
+//        System.out.println("Creating Progress with user "+ mf.find(userID).getName());
         Progress progress = new Progress();
+        Module module = new Module();
        
         progress.setModule(mf.find(moduleID));
+        em.persist(module);
         progress.setUser(uf.find(userID));
         em.persist(progress);
         

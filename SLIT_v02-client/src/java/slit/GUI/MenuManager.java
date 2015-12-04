@@ -16,6 +16,7 @@ public class MenuManager {
     private static Login login;
     private static StudentView student;
     private static TeacherView teacher;
+    
     private static Stage stage = Launcher.getStage();
     
     

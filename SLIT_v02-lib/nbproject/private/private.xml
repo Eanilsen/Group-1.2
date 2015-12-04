@@ -8,16 +8,10 @@
             <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/DTOs/UserDTO.java</file>
         </group>
         <group name="les">
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/beans/InitializeDatabaseBeanRemote.java</file>
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/DTOs/DTO.java</file>
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/beans/ProgressManagerBeanRemote.java</file>
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/DTOs/RolesEnum.java</file>
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/DTOs/UserDTO.java</file>
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/DTOs/ProgressDTO.java</file>
-            <file>file:/D:/Information_Systems/202/github/Group-1.2/SLIT_v02-lib/src/DTOs/ModuleDTO.java</file>
+            <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02-lib/src/DTOs/UserDTO.java</file>
+            <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02-lib/src/DTOs/DTO.java</file>
+            <file>file:/D:/Information_Systems/SLIT-final/Group-1.2/SLIT_v02-lib/src/beans/UserManagerBeanRemote.java</file>
         </group>
-        <group name="Group-1.2-Lybeck">
-            <file>file:/C:/Users/Jorgen/Desktop/git_repository/Group-1.2/Group-1.2/SLIT_v02-lib/src/beans/FileManagerBeanRemote.java</file>
-        </group>
+        <group name="Group-1.2-Lybeck"/>
     </open-files>
 </project-private>

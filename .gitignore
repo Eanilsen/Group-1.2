@@ -48,3 +48,7 @@ hs_err_pid*
 /SLIT_v02-client/build/
 /SLIT_v02-lib/dist/
 /SLIT_v02/build/
+
+[alias]
+co = checkout
+br = branch

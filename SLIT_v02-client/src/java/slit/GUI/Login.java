@@ -5,6 +5,7 @@
  */
 package slit.GUI;
 
+import DTOs.RolesEnum;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import slit.main.Main;
 
 public class Login {
 
@@ -30,16 +32,18 @@ public class Login {
     private PasswordField password;
     private Button loginBtnS;
     private Button loginBtnT;
+    private Button loginBtnWithId;
     private Circle circle;
     private HBox hBox;
     private Image logo;
     private ImageView logoView;
 
     Login() {
-        username = new TextField("Username");
+        username = new TextField("1");
         password = new PasswordField();
         loginBtnS = new Button("Login Student");
         loginBtnT = new Button("Login Teacher");
+        loginBtnWithId = new Button("Login with ID");
         vBox = new VBox(5);
         pane = new BorderPane();
         scene = new Scene(pane, MENU_WIDTH, MENU_HEIGHT);
@@ -54,21 +58,26 @@ public class Login {
 
         StyleManager.setStyleClass("Pane1", pane);
         StyleManager.setStyleClass("Textfields", username, password);
-        StyleManager.setStyleClass("Button", loginBtnS, loginBtnT);
+        StyleManager.setStyleClass("Button", loginBtnS, loginBtnT, loginBtnWithId);
 
+    }
+    public int getID(){
+        return (int) Integer.parseInt(username.getText());
     }
 
     protected Scene drawMenu() {
         username.setMaxWidth(150);
         password.setMaxWidth(150);
+        loginBtnWithId.setMaxWidth(150);
         
         loginBtnS.setPrefWidth(150);
         loginBtnT.setPrefWidth(150);
         clickToOpenStudent(loginBtnS);
         clickToOpenTeacher(loginBtnT);
+        clickToOpenWithId(loginBtnWithId);
 
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(logoView, username, password, loginBtnS, loginBtnT);
+        vBox.getChildren().addAll(logoView, username, password, loginBtnWithId);
 
         pane.setCenter(vBox);
 
@@ -84,6 +93,24 @@ public class Login {
     private void clickToOpenTeacher(Button btn) {
         btn.setOnMousePressed(e -> {
             MenuManager.makeTeacher();
+        });
+    }
+            
+
+    private void clickToOpenWithId(Button btn) {
+        btn.setOnMousePressed(e -> {
+            Main.getMyUserManager().Login(Integer.parseInt(username.getText()));
+            RolesEnum currentRole = Main.getMyUserManager().getCurrentUserRole();
+            
+            if(currentRole!=null && (currentRole == RolesEnum.Teacher || currentRole == RolesEnum.HelpTeacher)){
+                MenuManager.makeTeacher();
+            }
+            else if (currentRole!= null && currentRole == RolesEnum.Student){
+                MenuManager.makeStudent();
+            }
+            else{
+                username.setText("ID not found for Teacher or Student");
+            }
         });
     }
 }

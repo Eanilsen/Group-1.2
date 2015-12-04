@@ -6,6 +6,7 @@
 package slit.GUI;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
@@ -14,7 +15,6 @@ import javafx.stage.Stage;
 import slit.main.Main;
 
 import java.sql.Date;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -39,16 +39,58 @@ public class FileHandler {
     /**
      * Code for button action, call uploadFile() here
      */
-    public static void uploadAction(Button btn, int selectedModule) throws IOException {
+    public static void uploadAction(Button btn) throws IOException {
         btn.setOnAction(e -> {
             fileChooser = new FileChooser();
             fileChooser.setTitle("Browse Module File");
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             file = fileChooser.showOpenDialog(stage);
-            
+            System.out.println("-----Before try Objectinputstream");
 //            mp.getButtonBox().getChildren().add(new Text(""+file.getName()));
             
-            uploadFile(file, selectedModule);
+//            try {
+//                try (ObjectInputStream input
+//                        = new ObjectInputStream(
+//                                new BufferedInputStream(
+//                                        new FileInputStream(file)))) {
+
+                    //Manage file input
+                    
+//                    System.out.println("Inside input " + input);
+//                    System.out.println("invoking input.read() " + input.read());
+//                    System.out.println("files path: " + file + " " + "files name: "
+//                            + file.getName());
+                    System.out.println("files path: " + file + " " + "files name: "
+                            + file.getName());
+                    //TODO someting wrong with user, and maybe module
+//                    file.createNewFile();
+                    name = file.getName();
+                    content = testContent.getBytes();//createStringFromFile(file).getBytes(StandardCharsets.UTF_8);//
+                    System.out.println("selected: "+SuperView.getSelected());
+                    date = new Date(System.currentTimeMillis());
+                    moduleID = SuperView.getSelected();//3
+                    userID = Main.getMyUserManager().getCurrentUserDTO().id;
+//                    input.close();
+                    
+//                }
+//                try (
+//                        ObjectOutputStream output
+//                        = new ObjectOutputStream(
+//                                new BufferedOutputStream(
+//                                        new FileOutputStream(file)))) {
+//                    //Manage file output
+//                    System.out.println("Inside output " + output);
+////                    output.writeObject(fdto);
+//                    output.close();
+//
+//                }
+//            } catch (EOFException ex) {
+//                //Closes the file
+//                System.out.println("All data were read!");
+//                ex.printStackTrace();
+//            } catch (IOException ex) {
+//                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         });
         
     }
@@ -59,62 +101,49 @@ public class FileHandler {
      * Code to upload in here
      * @param file 
      */
-    public static void uploadFile(File file, int selectedModule) {
-
-//       
-//            FileDTO fdto = new FileDTO(file, 1, "testName", "test".getBytes(),
-//                    new java.util.Date());
-            try {
-                try (ObjectInputStream input
-                        = new ObjectInputStream(
-                                new BufferedInputStream(
-                                        new FileInputStream(file)))) {
-
-                    //Manage file input
-                    
-                    System.out.println("Inside input " + input);
-                    System.out.println("invoking input.read() " + input.read());
-                    System.out.println("files path: " + file + " " + "files name: "
-                            + file.getName());
-                    
-                    file.createNewFile();
-                    name = file.getName();
-                    content = testContent.getBytes();
-                    date = new Date(System.currentTimeMillis());
-                    moduleID = selectedModule;
-                    userID = 3;
-                    
-                }
-                try (
-                        ObjectOutputStream output
-                        = new ObjectOutputStream(
-                                new BufferedOutputStream(
-                                        new FileOutputStream(file)))) {
-                    //Manage file output
-                    System.out.println("Inside output " + output);
-//                    output.writeObject(fdto);
-                    output.close();
-
-                }
-            } catch (EOFException ex) {
-                //Closes the file
-                System.out.println("All data were read!");
-            } catch (IOException ex) {
-                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        
+    public static void uploadFile(File file){
+            
     }
 
     public static void confirmAction(Button btn) throws IOException {
         btn.setOnAction(e -> {
-            confirmFile(file);
+            if (file != null) {
+                Main.getFileManager().addFilesDatabase(
+                        name, content,
+                        date, moduleID, userID);
+                //user 3 is student studentson, replace with currentUser()
+                //find a way to getContent() from the file aswell 
+            } else {
+                System.out.println("Please choose a valid file!");
+            }
+            System.out.println("File confirmed");
 
         });
     }
 
+    /**
+     * Takes the file object and return string
+     *
+     * @author Simen
+     * @param file
+     * @return
+     */
+    private static String createStringFromFile(java.io.File file) {
+        String total = "";
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getName()));
+
+            String count = "";
+            while ((count = bufferedReader.readLine()) != null) {
+                total = total + count;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     public static void confirmFile(File file) {
-        System.out.println("----Confirming file. Module ID is " + moduleID);
         if (file != null) {
             Main.getFileManager().addFilesDatabase(
                     name, content,

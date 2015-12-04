@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
  */
 public class TeacherView extends SuperView {
  
-    protected static final double MENU_WIDTH = 1000.0;
+    protected static final double MENU_WIDTH = 1200.0;
     protected static final double MENU_HEIGHT = 600.0;
     private VBox teacherBox;
     private Button studentListBtn;

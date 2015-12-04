@@ -50,9 +50,25 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
     @Override
     public double getUserProgress(int studentID) {
 
-        double progressPercentage = (double) getApprovedModules(studentID).size() / (double) moduleFacade.count();
-
+        double approved = (double) getApprovedModules(studentID).size();
+        System.out.println("approved modules = " + approved);
+        double moduleCount = (double) moduleFacade.count();
+        System.out.println("all modules = " + moduleCount);
+        
+        double progressPercentage =  approved/moduleCount;
+        System.out.println("return = " + progressPercentage);
         return progressPercentage;
+    }
+    
+    /**
+     *
+     * @param ID
+     * @param approved
+     */
+    @Override
+    public void setProgress(int ID, boolean approved){
+        progressFacade.find(ID).setApproved(approved);
+        
     }
 
     /**
@@ -184,7 +200,7 @@ public class ProgressManagerBean implements ProgressManagerBeanRemote {
 
     @Override
     public double getCurrentUserProgress() {
-        return getUserProgress(3);
+        return getUserProgress(UserManagerBean.getCurrentUser().getIduser());
     }
 
 }
