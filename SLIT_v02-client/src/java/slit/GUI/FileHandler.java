@@ -7,6 +7,8 @@ package slit.GUI;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
@@ -31,7 +33,7 @@ public class FileHandler {
     private static int moduleID;
     private static int userID;
     private static String testContent = "Test content";
-    
+
     private ModuleCircle mc = new ModuleCircle();
     private static ModulePane mp = new ModulePane();
     private int selectedModule;
@@ -45,33 +47,39 @@ public class FileHandler {
             fileChooser.setTitle("Browse Module File");
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             file = fileChooser.showOpenDialog(stage);
+            if (file.exists()) {
+                System.out.println(file.getPath());
+                System.out.println(file.canRead());
+            }
             System.out.println("-----Before try Objectinputstream");
 //            mp.getButtonBox().getChildren().add(new Text(""+file.getName()));
-            
+
 //            try {
 //                try (ObjectInputStream input
 //                        = new ObjectInputStream(
 //                                new BufferedInputStream(
 //                                        new FileInputStream(file)))) {
-
-                    //Manage file input
-                    
+            //Manage file input
 //                    System.out.println("Inside input " + input);
 //                    System.out.println("invoking input.read() " + input.read());
 //                    System.out.println("files path: " + file + " " + "files name: "
 //                            + file.getName());
-                    System.out.println("files path: " + file + " " + "files name: "
-                            + file.getName());
-                    //TODO someting wrong with user, and maybe module
+            System.out.println("files path: " + file + " " + "files name: "
+                    + file.getName());
+            //TODO someting wrong with user, and maybe module
 //                    file.createNewFile();
-                    name = file.getName();
-                    content = testContent.getBytes();//createStringFromFile(file).getBytes(StandardCharsets.UTF_8);//
-                    System.out.println("selected: "+SuperView.getSelected());
-                    date = new Date(System.currentTimeMillis());
-                    moduleID = SuperView.getSelected();//3
-                    userID = Main.getMyUserManager().getCurrentUserDTO().id;
+            name = file.getName();
+            try {
+                content = createStringFromFile(file).getBytes(StandardCharsets.UTF_8);//
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("selected: " + SuperView.getSelected());
+            date = new Date(System.currentTimeMillis());
+            moduleID = SuperView.getSelected();//3
+            userID = Main.getMyUserManager().getCurrentUserDTO().id;
+
 //                    input.close();
-                    
 //                }
 //                try (
 //                        ObjectOutputStream output
@@ -92,17 +100,15 @@ public class FileHandler {
 //                Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
 //            }
         });
-        
+
     }
-    
 
     /**
-     * @author Jorgen Lybeck
-     * Code to upload in here
-     * @param file 
+     * @author Jorgen Lybeck Code to upload in here
+     * @param file
      */
-    public static void uploadFile(File file){
-            
+    public static void uploadFile(File file) {
+
     }
 
     public static void confirmAction(Button btn) throws IOException {
@@ -128,19 +134,11 @@ public class FileHandler {
      * @param file
      * @return
      */
-    private static String createStringFromFile(java.io.File file) {
+    private static String createStringFromFile(java.io.File file)
+            throws IOException {
         String total = "";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getName()));
-
-            String count = "";
-            while ((count = bufferedReader.readLine()) != null) {
-                total = total + count;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return total;
+        byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+        return new String(encoded, StandardCharsets.UTF_8);
     }
 
     public static void confirmFile(File file) {
