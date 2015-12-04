@@ -72,6 +72,7 @@ public class Login {
         
         loginBtnS.setPrefWidth(150);
         loginBtnT.setPrefWidth(150);
+        loginBtnWithId.setPrefWidth(150);
         clickToOpenStudent(loginBtnS);
         clickToOpenTeacher(loginBtnT);
         clickToOpenWithId(loginBtnWithId);
