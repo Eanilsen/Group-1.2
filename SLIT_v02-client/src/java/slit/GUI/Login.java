@@ -69,6 +69,7 @@ public class Login {
     protected Scene drawMenu() {
         username.setMaxWidth(150);
         password.setMaxWidth(150);
+        loginBtnWithId.setMaxWidth(150);
         
         loginBtnS.setPrefWidth(150);
         loginBtnT.setPrefWidth(150);

@@ -30,15 +30,12 @@ import javafx.util.Duration;
 import slit.main.Main;
 
 /**
- * @author
- * @Date 24.11.2015
- * Desc:
- * SuperView is the superclass of TeacherView and StudentView. It handles 
- * everything which is the same for the subclasses. Information for the panes
- * and scenes of subclasses is managed here.
+ * @author @Date 24.11.2015 Desc: SuperView is the superclass of TeacherView and
+ * StudentView. It handles everything which is the same for the subclasses.
+ * Information for the panes and scenes of subclasses is managed here.
  */
 public class SuperView {
-	
+
     protected static final double MENU_WIDTH = 1000.0;
     protected static final double MENU_HEIGHT = 600.0;
     protected Scene scene;
@@ -47,7 +44,7 @@ public class SuperView {
     protected ModuleCircle circle2;
     protected ModuleCircle circle3;
     protected ModuleCircle circle4;
-    protected ModuleCircle circle5;    
+    protected ModuleCircle circle5;
     protected Line line;
     protected TextArea moduleText;
     protected ArrayList<ModuleCircle> moduleCircles;
@@ -65,33 +62,35 @@ public class SuperView {
     protected Label dateLabel;
     protected ModulePane modulePane;
     protected HBox buttonsBox;
+    protected static int selected;
 
     /**
      * Constructor for SuperView that initializes items and give them values.
      * This constructor is called in both subclasses.
      */
     SuperView() {
-    	pane = new BorderPane();
+        pane = new BorderPane();
         scene = new Scene(new BorderPane(), 0, 0);
         line = new Line();
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(3);
-        circle1 = new ModuleCircle(35, Main.getModuleManager().getDescription(1), 1);
-        circle2 = new ModuleCircle(35, Main.getModuleManager().getDescription(2), 2);
-        circle3 = new ModuleCircle(35, Main.getModuleManager().getDescription(3), 3);
-        circle4 = new ModuleCircle(35, Main.getModuleManager().getDescription(4), 4);
-        circle5 = new ModuleCircle(35, Main.getModuleManager().getDescription(5), 5);
-        
+        circle1 = new ModuleCircle(40, Main.getModuleManager().getDescription(1), 1);
+        circle2 = new ModuleCircle(40, Main.getModuleManager().getDescription(2), 2);
+        circle3 = new ModuleCircle(40, Main.getModuleManager().getDescription(3), 3);
+        circle4 = new ModuleCircle(40, Main.getModuleManager().getDescription(4), 4);
+        circle5 = new ModuleCircle(40, Main.getModuleManager().getDescription(5), 5);
+
         moduleCircles = new ArrayList<>();
         moduleCircles.add(circle1);
-        moduleCircles.add(circle2); 
+        moduleCircles.add(circle2);
         moduleCircles.add(circle3);
         moduleCircles.add(circle4);
         moduleCircles.add(circle5);
         
+        
         backButton = new Button("Logout");
         addImageResources();
-        
+
         userLabel = new Label();
         userLabel.setFont(Font.font("Courier", FontPosture.ITALIC, 20));
         timeLabel = new Label();
@@ -104,12 +103,9 @@ public class SuperView {
 
         startTimeAnimator();
         timeBox.getChildren().addAll(userLabel, timeLabel, dateLabel);
-        
+
         timeBox.setPadding(new Insets(0, 0, 20, 0));
         pane.setBottom(timeBox);
-        
-        pane.setTop(new Text("LA OSS TESTE!"));
-        
 
     }
 
@@ -130,10 +126,11 @@ public class SuperView {
         StyleManager.setStyleClass("Circle", circle1, circle2, circle3, circle4, circle5);
         StyleManager.setStyleClass("Line", line);
     }
-    
+
     /**
      * Adds items to the scene which should apply to both subclasses.
-     * @return 
+     *
+     * @return
      */
     protected Scene drawMenu() {
         circle1.setFill(imagePattern);
@@ -141,20 +138,20 @@ public class SuperView {
         circle3.setFill(imagePattern3);
         circle4.setFill(imagePattern);
         circle5.setFill(imagePattern3);
-        
+
         pane.getChildren().add(line);
-        
-        for(Circle c : moduleCircles) {
+
+        for (Circle c : moduleCircles) {
             pane.getChildren().add(c);
         }
-        
+
         displayModuleTextOnClick(moduleCircles);
-        
+
         bindShapes(line, circle1, circle2, circle3, circle4, circle5);
 
         return scene;
     }
-    
+
     public void startTimeAnimator() {
 
         EventHandler<ActionEvent> eventHandler = e -> {
@@ -167,7 +164,7 @@ public class SuperView {
         };
 
         Timeline animation = new Timeline(
-        new KeyFrame(Duration.millis(1000), eventHandler));
+                new KeyFrame(Duration.millis(1000), eventHandler));
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play();
     }
@@ -186,9 +183,9 @@ public class SuperView {
      * Also removes errors about unsafe compilation.
      */
     protected void bindShapes(
-            Line line, 
-            Circle circle1, 
-            Circle circle2, 
+            Line line,
+            Circle circle1,
+            Circle circle2,
             Circle circle3,
             Circle circle4,
             Circle circle5) {
@@ -196,22 +193,22 @@ public class SuperView {
             @Override
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
-                double x = (double)newVal;
+                double x = (double) newVal;
                 line.setStartX(0);
                 line.setEndX(x);
-                circle1.setCenterX(line.getStartX() + circle1.getRadius() +20);
+                circle1.setCenterX(line.getStartX() + circle1.getRadius() + 20);
                 circle2.setCenterX(line.getEndX() * 0.25 + 20);
                 circle3.setCenterX(line.getEndX() / 2);
                 circle4.setCenterX(line.getEndX() * 0.75 - 20);
                 circle5.setCenterX(line.getEndX() - circle5.getRadius() - 20);
             }
         });
-        
+
         scene.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> obser,
                     Number oldVal, Number newVal) {
-                double y = (double)newVal;
+                double y = (double) newVal;
                 line.setStartY(y / 4);
                 line.setEndY(y / 4);
                 circle1.setCenterY(y / 4);
@@ -226,6 +223,7 @@ public class SuperView {
     /**
      * Adds function to the circles. When they're clicked, something should
      * happend. This is further implemented in both subclasses.
+     *
      * @param circles
      */
     protected void displayModuleTextOnClick(ArrayList<ModuleCircle> circles) {
@@ -238,18 +236,21 @@ public class SuperView {
                     rotation.play();
                     if (circle.isSelected() == false) {
                         for (ModuleCircle c : circles) {
-//                            FileHandler.setActive(c);
                             if (c != circle) {
                                 c.setSelected(false);
+                                c.setRadius(40);
                             }
                         }
                         circle.setSelected(true);
+                        circle.setRadius(50);
+                        selected = circle.getModuleID();
+                        System.out.println("Selected value " + selected);
+                        
                         modulePane = new ModulePane(
                                 new TextArea(circle.getText()), buttonsBox,
-                                MENU_WIDTH, MENU_HEIGHT /2.25);
+                                MENU_WIDTH, MENU_HEIGHT / 2.25);
                         pane.setCenter(modulePane);
-                        
-                        
+
                         FadeTransition ft = new FadeTransition(
                                 Duration.seconds(0.5), modulePane);
                         ft.setFromValue(0);
@@ -257,6 +258,7 @@ public class SuperView {
                         ft.setCycleCount(1);
                         ft.setAutoReverse(true);
                         ft.play();
+                        
 
                     } else if (circle.isSelected() == true) {
                         FadeTransition ft = new FadeTransition(
@@ -267,6 +269,7 @@ public class SuperView {
                         ft.setAutoReverse(true);
                         ft.play();
                         circle.setSelected(false);
+                        circle.setRadius(40);
                     }
                 });
             }
@@ -275,11 +278,21 @@ public class SuperView {
 
     /**
      * takes you back to the login screen
-     * @param backButton 
+     *
+     * @param backButton
      */
-    public void toLogin(Button backButton){
+    public void toLogin(Button backButton) {
         backButton.setOnMouseClicked(e -> {
             MenuManager.makeLogin();
         });
+    }
+    
+    public static int getSelected(){
+        if (selected == 0) {
+            selected = 3;
+            return selected;
+        } else{
+            return selected;
+        }
     }
 }

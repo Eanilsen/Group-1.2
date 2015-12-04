@@ -72,7 +72,6 @@ public class PendingList {
 
         gridPane.setHgap(30);
         gridPane.setVgap(10);
-        //gridPane.setGridLinesVisible(true);
         gridPane.setMinWidth(90000);
 
 
@@ -101,7 +100,7 @@ public class PendingList {
 
                 Text moduleName = new Text(progressDTO.module.name);
                 gridPane.add(moduleName, 1, rowPosition);
-                
+
                 Button downloadButton = new Button("Download");
                 gridPane.add(downloadButton, 2, rowPosition);
 
@@ -150,13 +149,12 @@ public class PendingList {
                 Button confirm = new Button("Confirm");
                 confirm.setOnMouseClicked((event) -> {
                     System.out.println("Confirm Button was clicked ");
-                    if(selectedView!=null && selectedView == approvedImageView){
+                    if (selectedView != null && selectedView == approvedImageView) {
                         Main.getProgressBean().setProgress(progressDTO.id, true);
-                    }
-                    else if(selectedView != null && selectedView == disapprovedImageView){
+                    } else if (selectedView != null && selectedView == disapprovedImageView) {
                         Main.getProgressBean().setProgress(progressDTO.id, false);
                     }
-                    
+
                     drawPendingList();
                 });
                 gridPane.add(confirm, 6, rowPosition);
@@ -165,32 +163,6 @@ public class PendingList {
             }
         }
 
-//        if (names.size() > 0
-//                && buttons.size() > 0
-//                && radioButtonPairs.size() > 0) {
-//            for (int i = 0; i < names.size(); i++) {
-//                if (names.get(i) instanceof Text) {
-//                    gridPane.add(names.get(i), 0, i);
-//                }
-//            }
-//
-//            for (int i = 0; i < buttons.size(); i++) {
-//                if (buttons.get(i) instanceof Button) {
-//                    gridPane.add(buttons.get(i), 1, i);
-//                }
-//            }
-//
-//            for (int i = 0; i < radioButtonPairs.size(); i++) {
-//                if (radioButtonPairs.get(i) instanceof HBox) {
-//                    gridPane.add(radioButtonPairs.get(i), 2, i);
-//                }
-//            }
-//
-//            for (int i = 0; i < confirmButtons.size(); i++) {
-//                if (confirmButtons.get(i) instanceof Button) {
-////                    gridPane.add(confirmButtons.get(i), 3, i);
-//                }
-//            }
         topBox.getChildren()
                 .add(gridPane);
         scrollPane.setContent(topBox);

@@ -33,7 +33,6 @@ public class StudentList {
     private ArrayList<Text> emails;
     private ArrayList<ProgressBar> statuses;
     private TextField nameSearchBar;
-    private TextField emailSearchBar;
     private HBox searchBarBox;
 
     StudentList() {
@@ -44,13 +43,14 @@ public class StudentList {
         emails = new ArrayList<>();
         statuses = new ArrayList<>();
         nameSearchBar = new TextField("enter name");
-        emailSearchBar = new TextField("enter email");
+        nameSearchBar.setMinWidth(300);
         searchBarBox = new HBox(200);
         System.out.println("Add listener to namesearch");
         nameSearchBar.setOnKeyReleased((event) -> {
             System.out.println("Searchbar key pressed. search for " + nameSearchBar.getText());
             drawStudentList(nameSearchBar.getText());
         });
+        StyleManager.setStyleClass("Pane", scrollPane);
     }
 
     protected ScrollPane drawStudentList() {
@@ -72,7 +72,6 @@ public class StudentList {
 
         gridPane.setHgap(200);
         gridPane.setVgap(5);
-
 
 
         HBox topBox = new HBox(5);
@@ -114,7 +113,7 @@ public class StudentList {
 
     protected HBox drawSearchBars() {
         searchBarBox.setAlignment(Pos.CENTER);
-        searchBarBox.getChildren().addAll(nameSearchBar, emailSearchBar);
+        searchBarBox.getChildren().addAll(nameSearchBar);
         return searchBarBox;
     }
 
