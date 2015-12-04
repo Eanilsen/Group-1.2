@@ -69,10 +69,12 @@ public class PendingList {
         //scrollPane.setPrefWidth(1600);
 
         // decides how far appart the boxes should be
+
         gridPane.setHgap(30);
         gridPane.setVgap(10);
         //gridPane.setGridLinesVisible(true);
         gridPane.setMinWidth(90000);
+
 
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);

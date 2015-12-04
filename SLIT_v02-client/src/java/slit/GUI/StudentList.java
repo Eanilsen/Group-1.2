@@ -69,37 +69,15 @@ public class StudentList {
         scrollPane.setFitToWidth(true);
 
         // decides how far appart the boxes should be
+
         gridPane.setHgap(200);
         gridPane.setVgap(5);
 
 
+
         HBox topBox = new HBox(5);
         topBox.setAlignment(Pos.CENTER);
-//        VBox nameBox = new VBox(5);
-//        VBox emailBox = new VBox(5);
-//        VBox statusBox = new VBox(10);
 
-//        if (names.size() > 0 && emails.size() > 0 && statuses.size() > 0) {
-//            for (int i = 0; i < names.size(); i++) {
-//                if (names.get(i) instanceof Text) {
-//                    nameBox.getChildren().add(names.get(i));
-//                    names.get(i).setFont(new Font(18));
-//                }
-//            }
-//
-//            for (int i = 0; i < emails.size(); i++) {
-//                if (emails.get(i) instanceof Text) {
-//                    emailBox.getChildren().add(emails.get(i));
-//                    emails.get(i).setFont(new Font(18));
-//                }
-//            }
-//
-//            for (int i = 0; i < statuses.size(); i++) {
-//                if (statuses.get(i) instanceof ProgressBar) {
-//                    statusBox.getChildren().add(statuses.get(i));
-//                }
-//            }
-//        }
         List<UserDTO> users = TreeSearch.getSearchTree().getUsers(name);
 
         if (users == null || users.isEmpty()) {

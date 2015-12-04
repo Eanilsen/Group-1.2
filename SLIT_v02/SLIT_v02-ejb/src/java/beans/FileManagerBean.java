@@ -6,10 +6,16 @@
 package beans;
 
 import basicBeans.FileFacade;
+import basicBeans.ModuleFacade;
+import basicBeans.ProgressFacade;
+import basicBeans.UsersFacade;
 import entities.File;
+import entities.Progress;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -20,6 +26,14 @@ public class FileManagerBean implements FileManagerBeanRemote {
 
     @EJB
     private FileFacade ff;
+    @EJB
+    private ProgressFacade pf;
+    @EJB
+    private ModuleFacade mf;
+    @PersistenceContext(unitName = "SLIT_v02-ejbPU")
+    private EntityManager em;
+    @EJB
+    private UsersFacade uf;
     
     /**
      * Finds the name of the file
@@ -41,12 +55,27 @@ public class FileManagerBean implements FileManagerBeanRemote {
         File file = ff.find(id);
         return file.getUploadDate();
     }
+    
     @Override
-    public void createFile(java.io.File file){
-        File f = new File();
-//        f.setContent(file);
-//        ff.create(file);
-    }
+    public void addFilesDatabase(String name, byte[] content, Date uploadDate, 
+                            int moduleID, int userID){
+        
+        System.out.println("Creating Progress with user "+ mf.find(userID).getName());
+        Progress progress = new Progress();
+       
+        progress.setModule(mf.find(moduleID));
+        progress.setUser(uf.find(userID));
+        em.persist(progress);
+        
+        System.out.println("Creating File.....");
+        File file = new File();
+        file.setName(name);
+        file.setContent(content);
+        file.setUploadDate(uploadDate);
+        //might need to em.flush() here
+        file.setProgress(progress);
+        em.persist(file);
+    }   
     
     public void getContent(){
         File file = new File();
@@ -54,4 +83,8 @@ public class FileManagerBean implements FileManagerBeanRemote {
     }
     
 //    public List<FileDTO> getAllFiles
+
+    public void persist(Object object) {
+        em.persist(object);
+    }
 }
